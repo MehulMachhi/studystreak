@@ -15,7 +15,7 @@ class AnswerInline(admin.TabularInline):
 
     model = Student_answer
     extra = 1
-    fk_name = "student_exam"
+    fk_name = "student_answers"
 
 class StudentAnswerAdmin(admin.ModelAdmin):
     list_display = ("id", "user",)

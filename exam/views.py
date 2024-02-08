@@ -15,7 +15,6 @@ class ExamViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # answer_data = request.data.pop("answers")
-
         return super().create(request, *args, **kwargs)
 
 

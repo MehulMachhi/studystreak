@@ -10,7 +10,7 @@ class Studentanswer(models.Model):
     exam = models.ForeignKey(Exam, related_name="exam", on_delete=models.CASCADE, null=True, blank=True)
 
 class Student_answer(models.Model):
-    student_exam = models.ForeignKey(Studentanswer, related_name="student_exam", on_delete=models.CASCADE)
+    student_answers = models.ForeignKey(Studentanswer, related_name="student_exam", on_delete=models.CASCADE)
     question_number = (
         models.IntegerField()
     ) 
