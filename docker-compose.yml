@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  postgres_db:
+    image: postgres:latest
+    restart: on-failure
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=vultradmin
+      - POSTGRES_PASSWORD=AVNS_c-DiX8V3KpK9mjh11fl
+      
+    ports:
+      - '16751:16751'
+    volumes: 
+      - pgdb:/var/lib/postgresql/data
+  backend:
+    build: .
+    restart: on-failure
+    container_name: lmss
+    # command: sh -c "gunicorn --config gunicorn_config.py /app/powercrm.wsgi:application"
+    expose:
+      - "8000"
+    volumes:
+      - ./:/app
+      - staticfiles:/var/www/static/
+      - media:/var/www/media/
+      # - /var/certbot/conf:/etc/letsencrypt/:ro
+    env_file:
+      - ./.env
+    environment:
+      - STATIC_ROOT=/var/www/static/
+
+    depends_on:
+      - postgres_db
+    command: ["./wait-for-it.sh", "postgres_db:16751", "--", "./entrypoint.sh"]
+
+  nginx:
+    build: ./nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - staticfiles:/home/app/staticfiles/
+      - media:/home/app/media/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./certificates/:/etc/nginx/certificates/
+      - ./front/:/home/studystreak/
+    depends_on:
+      - backend
+volumes:
+  pgdb:
+  staticfiles:
+  media:
