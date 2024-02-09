@@ -90,7 +90,7 @@ from payment.views import start_payment, handle_payment_success
 from django.views.generic import TemplateView
 from LiveClass.views import liveclass_listwithid_view,StudentLiveClassEnrollmentAPIView, StudentRemoveLiveClassAPIView
 from Create_Test.views import createexamview, ResponsesView, moduleListView
-from ExamResponses.views import StudentAnswerListView
+from ExamResponse.views import StudentAnswerListView
 
 router = DefaultRouter()
 router.register("api/exam-blocks", ExamViewSet, basename="exam-blocks")

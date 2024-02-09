@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ExamresponsesConfig(AppConfig):
+class ExamresponseConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'ExamResponses'
+    name = 'ExamResponse'
