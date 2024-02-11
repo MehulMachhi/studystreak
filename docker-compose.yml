@@ -5,11 +5,11 @@ services:
     restart: on-failure
     container_name: postgres
     environment:
-      - POSTGRES_USER=vultradmin
-      - POSTGRES_PASSWORD=AVNS_c-DiX8V3KpK9mjh11fl
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       
     ports:
-      - '16751:16751'
+      - '5432:5432'
     volumes: 
       - pgdb:/var/lib/postgresql/data
   backend:

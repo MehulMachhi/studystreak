@@ -1,12 +1,14 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import dotenv_values
-import os 
-import datetime
-from datetime import timedelta
+
 config = dotenv_values(".env")
 from django.conf import settings
+
+from django.conf import settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -19,18 +21,23 @@ DEBUG = True
 #     "65.20.73.247",
 #     "localhost",
 # # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 
-ALLOWED_HOSTS = ["65.20.73.247", "localhost", "127.0.0.1", "studystreak.io","studystreak.in"]
-#ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "65.20.73.247",
+    "localhost",
+    "127.0.0.1",
+    "studystreak.io",
+    "studystreak.in",
+]
+# ALLOWED_HOSTS = ["*"]
 # settings.py
 
-ZOOM_API_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA1NDg5NTE5LCJpYXQiOjE3MDU0ODkyMTksImp0aSI6IjQ3MjY3NDE3MWViMjRkZGNiMTM2OGRjMTU5M2RhZTdkIiwidXNlcl9pZCI6Mn0.Gq4SNpGYNqI-nrU6G8iP902vX9SOnFIGjF_z66pzRe4'
+ZOOM_API_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA1NDg5NTE5LCJpYXQiOjE3MDU0ODkyMTksImp0aSI6IjQ3MjY3NDE3MWViMjRkZGNiMTM2OGRjMTU5M2RhZTdkIiwidXNlcl9pZCI6Mn0.Gq4SNpGYNqI-nrU6G8iP902vX9SOnFIGjF_z66pzRe4"
 
 JWT_AUTH = {
     # Authorization:Token xxx
-    'JWT_AUTH_HEADER_PREFIX':'JWT',
+    "JWT_AUTH_HEADER_PREFIX": "JWT",
 }
 
 
@@ -51,7 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    'rest_framework.authtoken',
+    "rest_framework.authtoken",
     "ckeditor",
     "website",
     "nested_admin",
@@ -66,14 +73,14 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
     "drf_spectacular",
     "django_filters",
-    'payment',
-    'LiveClass',
+    "payment",
+    "LiveClass",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",    
+    "allauth.socialaccount.providers.google",
     "Create_Test",
-    "ExamResponse",                  
+    "ExamResponse",
     # "dj_rest_auth",
     #  'rest_framework.authtoken',
     # "dj_rest_auth.registration",
@@ -89,8 +96,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'allauth.account.middleware.AccountMiddleware'
-    
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "lmss.urls"
@@ -130,7 +136,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-
 WSGI_APPLICATION = "lmss.wsgi.application"
 
 DATABASES = {
@@ -143,8 +148,6 @@ DATABASES = {
         "PORT": config["DB_PORT"],
     }
 }
-
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -274,42 +277,37 @@ SPECTACULAR_SETTINGS = {
 PASSWORD_RESET_TIMEOUT = 60 * 30
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ]
 }
 AUTHENTICATION_BACKENDS = [
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 DEFAULTS = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
-
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': settings.SECRET_KEY,
-    'VERIFYING_KEY': None,
-    'AUDIENCE': None,
-    'ISSUER': None,
-
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-
-    'JTI_CLAIM': 'jti',
-
-    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": settings.SECRET_KEY,
+    "VERIFYING_KEY": None,
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "JTI_CLAIM": "jti",
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
-ACCOUNT_LOGIN_REDIRECT_URL = 'home'
-ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+ACCOUNT_LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
 # {"web":
 #     {"client_id":"246152471027-8ql9ui19kphk2t0hp2pd57lb7bd1op3v.apps.googleusercontent.com",
 #      "project_id":"fresh-ocean-412305",
@@ -322,18 +320,17 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 #      "javascript_origins":["http://127.0.0.1:8000","http://localhost:8000"]}
 #     }
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
         ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
+        "AUTH_PARAMS": {
+            "access_type": "online",
         },
-        'OAUTH_PKCE_ENABLED': True,
+        "OAUTH_PKCE_ENABLED": True,
     }
-    
 }
 
-KEY_ID="rzp_test_QyWQWfJeARzOZG"
-KEY_SECRET="CbjpLbEoily2YroYWMuvNfxG"
+KEY_ID = "rzp_test_QyWQWfJeARzOZG"
+KEY_SECRET = "CbjpLbEoily2YroYWMuvNfxG"
