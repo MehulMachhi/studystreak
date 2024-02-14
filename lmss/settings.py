@@ -7,8 +7,6 @@ from dotenv import dotenv_values
 config = dotenv_values(".env")
 from django.conf import settings
 
-from django.conf import settings
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -334,3 +332,9 @@ SOCIALACCOUNT_PROVIDERS = {
 
 KEY_ID = "rzp_test_QyWQWfJeARzOZG"
 KEY_SECRET = "CbjpLbEoily2YroYWMuvNfxG"
+
+CSRF_TRUSTED_OROGINS = [
+    'https:studystreak.io',
+    'http:studystreak.io',
+    
+]
