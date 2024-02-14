@@ -334,7 +334,7 @@ KEY_ID = "rzp_test_QyWQWfJeARzOZG"
 KEY_SECRET = "CbjpLbEoily2YroYWMuvNfxG"
 
 CSRF_TRUSTED_OROGINS = [
-    'https:studystreak.io',
-    'http:studystreak.io',
+    'https:studystreak.in',
+    'http:studystreak.in',
     
 ]
