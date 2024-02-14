@@ -1,8 +1,9 @@
-from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
+from django.db import models
 # Create your models here.
 from exam.models import Exam, ExamType
-from django.contrib.auth.models import User
+
 
 class Typetest(models.TextChoices):
     practice = "Practice", "Practice"
@@ -14,14 +15,14 @@ class module(models.Model):
     Listening = models.ManyToManyField(Exam, null=True, blank=True, related_name="listening+")
     Speaking = models.ManyToManyField(Exam, null=True, blank=True, related_name="Speaking+")
     Writing = models.ManyToManyField(Exam, null=True, blank=True, related_name="writing+")
-    module_category = models.CharField(max_length = 220, null=True, blank=True)
     exam_test = models.CharField(max_length=20, choices=Typetest.choices, null=True, blank=True)
-
-    # category ielts pte gre
-    # practise test and full length test
-
+    
     def __str__(self):
-         return f"{self.Name}"
+        return f"{self.Name}"
+    
+    class Meta:
+        verbose_name = 'Create Practice Test'
+        verbose_name_plural = 'Create Practice Tests'
 
 class createexam(models.Model):
    

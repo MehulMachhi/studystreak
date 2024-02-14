@@ -1,6 +1,9 @@
 from django.contrib import admin
+
 from .models import createexam, module
+
 # Register your models here.
+
 
 class createexamadmin(admin.ModelAdmin):
     list_display = ("id", "ielts_names")
@@ -8,15 +11,20 @@ class createexamadmin(admin.ModelAdmin):
     def ielts_names(self, obj):
         return str(obj.IELTS.Name) if obj.IELTS else ""
 
+
 admin.site.register(createexam, createexamadmin)
 # admin.site.register(Responses)
 
 
 class moduleadmin(admin.ModelAdmin):
-    list_display = ("Name", "reading_list", "listening_list", "speaking_list", "writing_list", "module_category")
+    list_display = (
+        "Name",
+        "reading_list",
+        "listening_list",
+        "speaking_list",
+        "writing_list",
+    )
     list_filter = ("Name",)
-
-
 
     def reading_list(self, obj):
         return ", ".join([str(exam) for exam in obj.Reading.all()])
@@ -32,4 +40,6 @@ class moduleadmin(admin.ModelAdmin):
 
     # def reading_list(self, obj):
     #     return ",".join([str(exam) for exam in obj.writing.all()])
+
+
 admin.site.register(module, moduleadmin)
