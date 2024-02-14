@@ -7,16 +7,16 @@ from coursedetail.models import Quiz_Question, QuizOption
 from master.models import batch, CourseMaterial, AdditionalResource,LessonAttachment, LessonAssignment 
 # from coursedetail.serializers import QuizOptionListSerializers, Quiz_QuestionListSerializers
 
+class Quiz_QuestionListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Quiz_Question
+        fields = '__all__'
+
 class QuizOptionListSerializers(serializers.ModelSerializer):
     class Meta:
         model = QuizOption
         fields = '__all__'
 
-class Quiz_QuestionListSerializers(serializers.ModelSerializer):
-    quiz_options = QuizOptionListSerializers(many=True, read_only=True)
-    class Meta:
-        model = Quiz_Question
-        fields = '__all__'
 
 class LessonListSerializers(serializers.ModelSerializer):
     class Meta:
@@ -30,15 +30,8 @@ class LessonCreateSerializers(serializers.ModelSerializer):
 
 class LessonDetailSerializer(serializers.ModelSerializer):
     attachment_lession_count = serializers.SerializerMethodField()
-    # assignment_lession_count = serializers.SerializerMethodField()
-    attachment_lession = serializers.SerializerMethodField()
-    # assignment_lession = serializers.SerializerMethodField()
-    quiz_questions = serializers.SerializerMethodField()
-    quiz_options = serializers.SerializerMethodField()
     attachment_lession = LessonAttachmentSerializer(many=True, read_only=True)
-    # assignment_lession = LessonAssignmentSerializer(many=True, read_only=True)
-    quiz_questions_detail = Quiz_QuestionListSerializers(many=True, read_only=True)
-    quiz_options_detail = QuizOptionListSerializers(many=True, read_only=True)
+    quiz_question_options = serializers.SerializerMethodField()
 
     class Meta:
         model = Lesson
@@ -48,39 +41,28 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     def get_attachment_lession(self, lesson):
         return LessonAttachment.objects.filter(lesson=lesson)
 
-    # def get_assignment_lession(self, lesson):
-    #     return LessonAssignment.objects.filter(lesson=lesson)
-
-    def get_quiz_options(self, lesson):
-        quiz_questions = Quiz_Question.objects.filter(lesson=lesson)
-        quiz_options = QuizOption.objects.filter(name__lesson=lesson)
-        serialized_quiz_question = Quiz_QuestionListSerializers(quiz_questions, many=True).data
-        serialized_quiz_options = QuizOptionListSerializers(quiz_options, many=True).data
-        return {
-            'quiz_question': serialized_quiz_question,
-            'quiz_options': serialized_quiz_options
-        }
-
     def get_attachment_lession_count(self, lesson):
         attachments = LessonAttachment.objects.filter(lesson=lesson)
         serialized_attachments = LessonAttachmentSerializer(attachments, many=True).data
-        # return LessonAttachmentSerializer(attachments, many=True).data
-        # print(serialized_attachments)
-        # print("**")
         return {
             'count': len(serialized_attachments),
             'attachments': serialized_attachments
         }
 
-    def get_quiz_questions(self, lesson):
-        quiz_questions = Quiz_Question.objects.filter(lesson=lesson)
-        quiz_options = QuizOption.objects.filter(name__lesson=lesson)
-        serialized_quiz_question = Quiz_QuestionListSerializers(quiz_questions, many=True).data
-        serialized_quiz_options = QuizOptionListSerializers(quiz_options, many=True).data
-        return {
-            'quiz_question': serialized_quiz_question,
-            'quiz_options': serialized_quiz_options
-        }
+    def get_quiz_question_options(self, lesson):
+        quiz_questions = lesson.quiz_question_set.all()
+        serialized_quiz_questions = []
+        for question in quiz_questions:
+            quiz_options = question.quizoption_set.all()
+            serialized_options = QuizOptionListSerializers(quiz_options, many=True).data
+            serialized_quiz_questions.append({
+                'id': question.id,
+                'Question': question.Question,
+                'lesson': question.lesson.id,
+                'quiz_options': serialized_options
+            })
+        return serialized_quiz_questions
+##################################################################################
 
         # return Quiz_QuestionListSerializers(quiz_questions, many=True).data
     
@@ -131,6 +113,7 @@ class LessonDetailSerializer(serializers.ModelSerializer):
 #############################################################################
     
 class LessionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
+    
     class Meta:
         model = Lesson
         fields = '__all__'
