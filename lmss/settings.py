@@ -333,8 +333,8 @@ SOCIALACCOUNT_PROVIDERS = {
 KEY_ID = "rzp_test_QyWQWfJeARzOZG"
 KEY_SECRET = "CbjpLbEoily2YroYWMuvNfxG"
 
-CSRF_TRUSTED_OROGINS = [
-    'https:studystreak.in',
-    'http:studystreak.in',
+CSRF_TRUSTED_ORIGINS = [
+    'https://studystreak.in',
+    'http://studystreak.in',
     
 ]
