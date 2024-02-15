@@ -445,14 +445,7 @@ urlpatterns = [
         StudentRemoveLiveClassAPIView.as_view(),
         name="remove-live-class",
     ),
-    path(
-        "api/studentanswerlistview/",
-        StudentAnswerListView.as_view(),
-        name="studentanswerlistview",
-    ),
     path("api/moduleListView/", moduleListView.as_view(), name="moduleListView"),
-    path("api/createexamview/", createexamview.as_view(), name="createexamview"),
-    path("api/responsesview/", ResponsesView.as_view(), name="responsesview"),
     path(
         "api/remove-live-class/<int:pk>/",
         StudentRemoveLiveClassAPIView.as_view(),

@@ -159,7 +159,7 @@ class CountryInterestedListView(generics.ListCreateAPIView):
     queryset = Country.objects.all()
     serializer_class = CountryInterestedListSerializers
 
-class CountryRetUpdDelView(generics.ListCreateAPIView):
+class CountryRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Country.objects.all()
     serializer_class = CountryRetUpdDelSerializers
 
