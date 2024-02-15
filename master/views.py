@@ -203,7 +203,7 @@ class batchListView(generics.ListCreateAPIView):
     serializer_class = batchListSerializers
 
 
-class batchRetUpdDelView(generics.ListCreateAPIView):
+class batchRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = batch.objects.all()
     serializer_class = batchListSerializers
 
