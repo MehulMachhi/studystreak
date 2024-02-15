@@ -169,7 +169,7 @@ class StateListView(generics.ListCreateAPIView):
     serializer_class = StateListSerializers
 
 
-class StateRetUpdDelView(generics.ListCreateAPIView):
+class StateRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = State.objects.all()
     serializer_class = StateRetUpdDelSerializers
 
