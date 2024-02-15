@@ -192,7 +192,6 @@ urlpatterns = [
     path("api/sectionlistview/", SectionListView.as_view()),
     path("api/sectionretupddelview/<int:pk>/", SectionRetUpdDelView.as_view()),
     # path("api/batchview/", batchListView.as_view()),
-    path("api/batchRetUpdDelView/<int:pk>/", batchRetUpdDelView.as_view()),
     path("api/packagelistview/", PackageListView.as_view()),
     path("api/packageretupddelview/<int:pk>/", PackageRetUpdDelView.as_view()),
     path("api/homepagesliderlistview/", HomepageSliderListView.as_view()),

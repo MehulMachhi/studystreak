@@ -246,7 +246,7 @@ class CourseMaterialListView(generics.ListAPIView):
         count = queryset.count()
         return Response({'count': count, 'data': serializer.data})
     
-class CourseMaterialRetUpdDelView(generics.ListCreateAPIView):
+class CourseMaterialRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CourseMaterial.objects.all()
     serializer_class = CourseMaterialRetUpdDelSerializers
 
