@@ -62,7 +62,8 @@ from .serializers import (
     LessonAttachmentSerializer,
     CuponListSerializers,
     batchListSerializersCreateBatch,
-    Live_Class_Type_List_Serializers
+    Live_Class_Type_List_Serializers,
+    SectionRetUpdDelSerializers
 )
 
 # Create your views here.
@@ -189,9 +190,9 @@ class SectionListView(generics.ListCreateAPIView):
     serializer_class = SectionListSerializers
 
 
-class SectionRetUpdDelView(generics.ListCreateAPIView):
+class SectionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Section.objects.all()
-    serializer_class = SectionListSerializers
+    serializer_class = SectionRetUpdDelSerializers
 
 
 """############################################"""
