@@ -179,7 +179,7 @@ class CityListView(generics.ListCreateAPIView):
     serializer_class = CityListSerializers
 
 
-class CityRetUpdDelView(generics.ListCreateAPIView):
+class CityRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = City.objects.all()
     serializer_class = CityRetUpdDelSerializers
 
