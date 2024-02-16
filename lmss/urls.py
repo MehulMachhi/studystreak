@@ -68,6 +68,7 @@ from master.views import (
     TestTypeViewset,
     batchListView,
     batchRetUpdDelView,
+    CourseMaterialRetUpdDelView,
 )
 from package.views import (
     CoursePackageView,
@@ -456,6 +457,7 @@ urlpatterns = [
         name="studentanswerlistview",
     ),
     path("api/moduleListView/", moduleListView.as_view(), name="moduleListView"),
+    path("api/coursematerialretupddelview/<int:pk>/", CourseMaterialRetUpdDelView.as_view(), name="coursematerialretupddelview"),
 ] + router.urls
 
 admin.site.site_header = "StudyStreak Admin"
