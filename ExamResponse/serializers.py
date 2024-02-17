@@ -46,7 +46,6 @@ class SpeakingAnswerSerializer(serializers.ModelSerializer):
 
 class StudentanswerSerializers(serializers.ModelSerializer):
     student_exam = StudentAnswerSerializers(many=True, required=False)
-    speaking_data = SpeakingAnswerSerializer(many=True, required=False)
 
     class Meta:
         model = Studentanswer
@@ -55,21 +54,11 @@ class StudentanswerSerializers(serializers.ModelSerializer):
             "user",
             "exam",
             "student_exam",
-            "speaking_data",
         )
 
     def create(self, validated_data):
         studentanswer = Studentanswer.objects.create(**validated_data)
-
         student_exam_data = validated_data.pop("student_exam", None)
-        speaking_data = validated_data.pop("speaking_data", None)
-
-        if speaking_data:
-            for speaking_answer_data in speaking_data:
-                SpeakingResponse.objects.create(
-                    student_answers=studentanswer, **speaking_answer_data
-                )
-
         if student_exam_data:
             for answer_data in student_exam_data:
                 Student_answer.objects.create(

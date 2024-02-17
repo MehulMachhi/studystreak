@@ -19,7 +19,7 @@ from exam.views import (
     ExamViewSet,
     FullLengthTestViewSet,
 )
-from ExamResponse.views import StudentAnswerListView
+from ExamResponse.views import SpeakingAnswerListView, StudentAnswerListView
 from Listening_Exam.views import ListeningExamListView, ListeningExamRetUpdDelViews
 from LiveClass.views import (
     Liveclass_Create_View,
@@ -41,6 +41,7 @@ from master.views import (
     CountryListView,
     CountryRetUpdDelView,
     CourseMaterialListView,
+    CourseMaterialRetUpdDelView,
     CourseOverviewListView,
     CourseOverviewRetUpdDelView,
     CreateBatchAPIView,
@@ -68,7 +69,6 @@ from master.views import (
     TestTypeViewset,
     batchListView,
     batchRetUpdDelView,
-    CourseMaterialRetUpdDelView,
 )
 from package.views import (
     CoursePackageView,
@@ -457,7 +457,16 @@ urlpatterns = [
         name="studentanswerlistview",
     ),
     path("api/moduleListView/", moduleListView.as_view(), name="moduleListView"),
-    path("api/coursematerialretupddelview/<int:pk>/", CourseMaterialRetUpdDelView.as_view(), name="coursematerialretupddelview"),
+    path(
+        "api/coursematerialretupddelview/<int:pk>/",
+        CourseMaterialRetUpdDelView.as_view(),
+        name="coursematerialretupddelview",
+    ),
+    path(
+        "api/SaveSpeakingResponse/",
+        SpeakingAnswerListView.as_view(),
+        name="save_speaking_response",
+    ),
 ] + router.urls
 
 admin.site.site_header = "StudyStreak Admin"
