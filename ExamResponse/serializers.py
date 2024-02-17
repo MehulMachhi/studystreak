@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Student_answer, Studentanswer
+from .models import SpeakingResponse, Student_answer, Studentanswer
 
 
 class StudentAnswerSerializers(serializers.ModelSerializer):
@@ -38,17 +38,42 @@ class StudentAnswerSerializers(serializers.ModelSerializer):
 #         return serialized_answers
 
 
+class SpeakingAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpeakingResponse
+        fields = "__all__"
+
+
 class StudentanswerSerializers(serializers.ModelSerializer):
-    student_exam = StudentAnswerSerializers(many=True)
+    student_exam = StudentAnswerSerializers(many=True, required=False)
+    speaking_data = SpeakingAnswerSerializer(many=True, required=False)
 
     class Meta:
         model = Studentanswer
-        fields = ("id", "user", "exam", "student_exam")
+        fields = (
+            "id",
+            "user",
+            "exam",
+            "student_exam",
+            "speaking_data",
+        )
 
     def create(self, validated_data):
-        student_exam_data = validated_data.pop("student_exam")
         studentanswer = Studentanswer.objects.create(**validated_data)
-        for answer_data in student_exam_data:
-            Student_answer.objects.create(student_answers=studentanswer, **answer_data)
+
+        student_exam_data = validated_data.pop("student_exam", None)
+        speaking_data = validated_data.pop("speaking_data", None)
+
+        if speaking_data:
+            for speaking_answer_data in speaking_data:
+                SpeakingResponse.objects.create(
+                    student_answers=studentanswer, **speaking_answer_data
+                )
+
+        if student_exam_data:
+            for answer_data in student_exam_data:
+                Student_answer.objects.create(
+                    student_answers=studentanswer, **answer_data
+                )
 
         return studentanswer

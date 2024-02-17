@@ -30,8 +30,9 @@ class StudentAnswerAdmin(admin.ModelAdmin):
     speaking_inline = [SpeakingAnswerInline]
 
     def get_inlines(self, request, obj):
-        if obj.exam.exam_type == ExamType.speaking:
-            return self.speaking_inline
+        if obj is not None:
+            if obj.exam.exam_type == ExamType.speaking:
+                return self.speaking_inline
         else:
             return self.inlines
 

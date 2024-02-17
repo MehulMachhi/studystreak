@@ -53,7 +53,7 @@ class Exam(models.Model):
         Category, on_delete=models.CASCADE, null=True, blank=True
     )
     audio_file = models.FileField(upload_to="examblockaudio/", null=True, blank=True)
-    array = models.JSONField(null=True, blank=True)
+    question_structure = models.JSONField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.exam_name}-{self.exam_type}"
