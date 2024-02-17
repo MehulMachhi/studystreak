@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Answer, Exam, FullLengthTest
+from .models import Answer, Exam
 
 # Register your models here.
 
@@ -17,15 +17,30 @@ class AnswerInline(admin.TabularInline):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ("question_number", "answer_text", "exam")
     list_filter = ("question_number", "exam")
+
+
 admin.site.register(Answer, AnswerAdmin)
 
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
-    list_display = ['exam_name', 'exam_type', 'no_of_questions', 'block_type', "exam_category",
-    'difficulty_level', 'block_threshold', ]
-    list_filter = ["exam_name", "exam_type", 'block_type', 'difficulty_level','exam_category']
+    list_display = [
+        "exam_name",
+        "exam_type",
+        "no_of_questions",
+        "block_type",
+        "exam_category",
+        "difficulty_level",
+        "block_threshold",
+    ]
+    list_filter = [
+        "exam_name",
+        "exam_type",
+        "block_type",
+        "difficulty_level",
+        "exam_category",
+    ]
     fieldsets = (
         (
             None,
@@ -33,9 +48,7 @@ class ExamAdmin(admin.ModelAdmin):
                 "fields": (
                     "exam_name",
                     "exam_type",
-                  
                     "exam_category",
-                   
                 ),
             },
         ),

@@ -1,9 +1,6 @@
-from .serializers import *
 from rest_framework import generics
-from .models import Student_answer
-from rest_framework import viewsets
-from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
+from .serializers import *
 
 # class StudentAnswerListView(generics.ListCreateAPIView):
 #     # queryset = StudentAnswer
@@ -13,6 +10,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 #     def create(self, request, *args, **kwargs):
 #         return super().create(request, *args, **kwargs)
+
 
 class StudentAnswerListView(generics.ListCreateAPIView):
     queryset = Studentanswer.objects.all()
