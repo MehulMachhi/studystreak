@@ -54,6 +54,7 @@ class StudentanswerSerializers(serializers.ModelSerializer):
             "user",
             "exam",
             "student_exam",
+            "gpt_response",
         )
 
     def create(self, validated_data):

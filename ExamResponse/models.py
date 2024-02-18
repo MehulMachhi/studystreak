@@ -12,7 +12,7 @@ class Studentanswer(models.Model):
     )
     exam = models.ForeignKey(Exam, related_name="exam", on_delete=models.CASCADE)
     band = models.FloatField(null=True, blank=True)
-
+    gpt_response = models.TextField(null=True, blank=True)
 
 class Student_answer(models.Model):
     student_answers = models.ForeignKey(
