@@ -23,14 +23,13 @@ class createexamserializers(serializers.ModelSerializer):
             raise serializers.ValidationError("Backend has more than one exam_type, please remove one of them.")
         
         if listening:
-            exam_type = 'Listening'
+            return 'Listening'
         elif speaking:
-            exam_type = 'Speaking'
+            return 'Speaking'
         elif writing:
-            exam_type = 'Writing'
-            
-        return exam_type
-
+            return 'Writing'
+        else:
+            return ""
 class ResponsesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Responses
