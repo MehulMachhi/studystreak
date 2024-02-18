@@ -18,6 +18,7 @@ class createexamserializers(serializers.ModelSerializer):
         speaking= obj.IELTS.Speaking.exists()
         writing= obj.IELTS.Writing.exists()
         
+        print(listening, speaking, writing)
         count = reduce(lambda x, y: bool(x) + bool(y), [listening, speaking, writing])
         if count >= 2:
             raise serializers.ValidationError("Backend has more than one exam_type, please remove one of them.")
