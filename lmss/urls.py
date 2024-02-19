@@ -418,7 +418,7 @@ urlpatterns = [
         name="save_speaking_response",
     ),
     path('api/tutorcourses/', CourseTutorListView.as_view(), name='course-list'),
-    path('api/grouplistview/', CourseInstructorListView.as_view(), name='course-list'),
+    path('api/instructorcourses/', CourseInstructorListView.as_view(), name='course-list'),
 
 ] + router.urls
 
