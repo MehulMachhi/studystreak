@@ -104,7 +104,7 @@ class OutcomesListView(generics.ListCreateAPIView):
     serializer_class = OutcomesListSerializers
 
 
-class OutcomesRetUpdDelView(generics.ListCreateAPIView):
+class OutcomesRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Outcomes.objects.all()
     serializer_class = OutcomesRetUpdDelSerializers
 
