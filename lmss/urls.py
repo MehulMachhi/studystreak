@@ -9,7 +9,7 @@ from assessment.views import assessmentListView, assessmentRetUpdDelView
 from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
                                 LessonListView)
 from Courses.views import (Course_list_forpackage, CourseListView,
-                           CourseRetUpdDelView,CourseTutorListView, GroupListView)
+                           CourseRetUpdDelView,CourseTutorListView, CourseInstructorListView)
 from Create_Test.views import ResponsesView, createexamview, moduleListView
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
@@ -418,7 +418,7 @@ urlpatterns = [
         name="save_speaking_response",
     ),
     path('api/tutorcourses/', CourseTutorListView.as_view(), name='course-list'),
-    path('api/grouplistview/', GroupListView.as_view(), name='course-list'),
+    path('api/grouplistview/', CourseInstructorListView.as_view(), name='course-list'),
 
 ] + router.urls
 

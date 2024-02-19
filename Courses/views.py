@@ -7,7 +7,7 @@ from .serializers import (
     CourseListSerializers,
     CourseRetUpdDelSerializers,
     Course_List_Serializers_forpackage,
-    CourseSerializer
+    UserSerializer,UserSerializerforinstructor
    
 )
 from master.models import CourseMaterial, AdditionalResource
@@ -20,6 +20,8 @@ LessonAttachmentSerializer,LessonAssignmentSerializer,)
 from master.models import batch, CourseMaterial, AdditionalResource,LessonAttachment, LessonAssignment 
 from django.contrib.auth.models import Group
 from .serializers import GroupSerializer
+from django.contrib.auth.models import User
+
 class CourseListView(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseListSerializers
@@ -64,12 +66,13 @@ class Course_list_forpackage(generics.ListAPIView):
 
 ################# Get List of all users ##################
 
-class CourseTutorListView(generics.ListCreateAPIView):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
+class CourseTutorListView(generics.ListAPIView):
+    queryset = User.objects.filter(groups__name='Tutor')
+    serializer_class = UserSerializer
 
 
 
-class GroupListView(generics.ListAPIView):
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+class CourseInstructorListView(generics.ListAPIView):
+    # queryset = Group.objects.all()
+    queryset = User.objects.filter(groups__name='Instructor')
+    serializer_class = UserSerializerforinstructor
