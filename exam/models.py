@@ -1,8 +1,7 @@
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
-
-from master.models import ExamType, TestType, Category
+from master.models import Category, ExamType, TestType
 
 
 class BlockType(models.TextChoices):
@@ -17,7 +16,7 @@ class Difficulty(models.TextChoices):
     hard = "Hard", "Hard"
 
 
-class ExamType(models.TextChoices):
+class ExamType(models.TextChoices):  # noqa: F811
     reading = "Reading", "Reading"
     listening = "Listening", "Listening"
     speaking = "Speaking", "Speaking"
@@ -32,14 +31,18 @@ class Exam(models.Model):
         max_length=200,
         choices=ExamType.choices,
         default=ExamType.reading,
-        help_text="(Reading, Listening, Speaking, Writing)",null=True, blank=True
+        help_text="(Reading, Listening, Speaking, Writing)",
+        null=True,
+        blank=True,
     )
     # test_type = models.ForeignKey(TestType, on_delete=models.SET_NULL, null=True)
     # question_type = models.ManyToManyField(QuestionType, null=True)
     passage = RichTextUploadingField("contents", null=True, blank=True)
     no_of_questions = models.IntegerField(default=4, null=True, blank=True)
     question = RichTextField(null=True, blank=True)
-    block_type = models.CharField(max_length=200, choices=BlockType.choices, null=True, blank=True)
+    block_type = models.CharField(
+        max_length=200, choices=BlockType.choices, null=True, blank=True
+    )
     difficulty_level = models.CharField(
         max_length=200, choices=Difficulty.choices, null=True, blank=True
     )
@@ -47,8 +50,11 @@ class Exam(models.Model):
     type_of_module = models.ForeignKey(
         "master.ModuleType", on_delete=models.SET_NULL, null=True, blank=True
     )
-    exam_category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    exam_category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, null=True, blank=True
+    )
     audio_file = models.FileField(upload_to="examblockaudio/", null=True, blank=True)
+    question_structure = models.JSONField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.exam_name}-{self.exam_type}"
@@ -77,12 +83,26 @@ class FullLengthTest(models.Model):
     )
     difficulty_level = models.CharField(max_length=20, choices=Difficulty.choices)
     reading = models.ManyToManyField(
-        Exam, limit_choices_to={"exam_type": "Reading"}, related_name="reading", null=True, blank=True
+        Exam,
+        limit_choices_to={"exam_type": "Reading"},
+        related_name="reading",
+        null=True,
+        blank=True,
     )
     listening = models.ManyToManyField(
-        Exam, limit_choices_to={"exam_type": "Listening"}, related_name="listening", null=True, blank=True
+        Exam,
+        limit_choices_to={"exam_type": "Listening"},
+        related_name="listening",
+        null=True,
+        blank=True,
     )
     writing = models.ManyToManyField(
-        Exam, limit_choices_to={"exam_type": "Writing"}, related_name="writing", null=True, blank=True
+        Exam,
+        limit_choices_to={"exam_type": "Writing"},
+        related_name="writing",
+        null=True,
+        blank=True,
     )
-    speaking = models.ManyToManyField(Exam, limit_choices_to={"exam_type": "Speaking"}, null=True, blank=True)
+    speaking = models.ManyToManyField(
+        Exam, limit_choices_to={"exam_type": "Speaking"}, null=True, blank=True
+    )

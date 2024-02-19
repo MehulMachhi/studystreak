@@ -1,119 +1,69 @@
-from assessment.views import assessmentListView, assessmentRetUpdDelView
-from coursedetail.views import LessionRetUpdDelView, LessonCreateView, LessonListView
-from Courses.views import Course_list_forpackage, CourseListView, CourseRetUpdDelView,CourseTutorListView,GroupListView
-from Create_Test.views import ResponsesView, createexamview, moduleListView
 from django.contrib import admin
 from django.urls import include, path
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularRedocView,
-    SpectacularSwaggerView,
-)
-from exam.views import (
-    AnswerListView,
-    AnswerRetUpdDelView,
-    AnswerViewSet,
-    ExamListFilterView,
-    ExamListView,
-    ExamRetUpdDelView,
-    ExamViewSet,
-    FullLengthTestViewSet,
-)
-from ExamResponse.views import StudentAnswerListView
-from Listening_Exam.views import ListeningExamListView, ListeningExamRetUpdDelViews
-from LiveClass.views import (
-    Liveclass_Create_View,
-    LiveClassListView,
-    LiveClassUsersView,
-    StudentLiveClassEnrollmentAPIView,
-    StudentRemoveLiveClassAPIView,
-    liveclass_list_view,
-    liveclass_listwithid_view,
-)
-from master.views import (
-    AdditionalResourceListAPIView,
-    BatchListByPackageView,
-    CategoryListView,
-    CategoryRetUpdDelView,
-    CityListView,
-    CityRetUpdDelView,
-    CountryInterestedListView,
-    CountryListView,
-    CountryRetUpdDelView,
-    CourseMaterialListView,
-    CourseOverviewListView,
-    CourseOverviewRetUpdDelView,
-    CreateBatchAPIView,
-    CuponListView,
-    LanguageListView,
-    LanguageRetUpdDelView,
-    LessonAssignmentListAPIView,
-    LessonAttachmentListAPIView,
-    LevelListView,
-    LevelRetUpdDelView,
-    Live_Class_Type_List_View,
-    OutcomesListView,
-    OutcomesRetUpdDelView,
-    PackageTypeListView,
-    PackageTypeRetUpdDelView,
-    QuestionTypeView,
-    RequirementsListView,
-    RequirementsRetUpdDelView,
-    SectionListView,
-    SectionRetUpdDelView,
-    SEOMetakeywordsListView,
-    SEOMetakeywordsRetUpdDelView,
-    StateListView,
-    StateRetUpdDelView,
-    TestTypeViewset,
-    batchListView,
-    batchRetUpdDelView,
-    CourseMaterialRetUpdDelView,
-)
-from package.views import (
-    CoursePackageView,
-    EnrollPackageStudentView,
-    EnrollPackageView,
-    PackageCreateView,
-    PackageListView,
-    PackageRetUpdDelView,
-    UserWisePackageWithCourseID,
-)
+from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView,
+                                   SpectacularSwaggerView)
+from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView
+
+from assessment.views import assessmentListView, assessmentRetUpdDelView
+from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
+                                LessonListView)
+from Courses.views import (Course_list_forpackage, CourseListView,
+                           CourseRetUpdDelView,CourseTutorListView, GroupListView)
+from Create_Test.views import ResponsesView, createexamview, moduleListView
+from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
+                        ExamListFilterView, ExamListView, ExamRetUpdDelView,
+                        ExamViewSet, FullLengthTestViewSet)
+from ExamResponse.views import SpeakingAnswerListView, StudentAnswerListView
+from Listening_Exam.views import (ListeningExamListView,
+                                  ListeningExamRetUpdDelViews)
+from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
+                             LiveClassUsersView,
+                             StudentLiveClassEnrollmentAPIView,
+                             StudentRemoveLiveClassAPIView,
+                             liveclass_list_view, liveclass_listwithid_view)
+from master.views import (AdditionalResourceListAPIView,
+                          BatchListByPackageView, CategoryListView,
+                          CategoryRetUpdDelView, CityListView,
+                          CityRetUpdDelView, CountryInterestedListView,
+                          CountryListView, CountryRetUpdDelView,
+                          CourseMaterialListView, CourseMaterialRetUpdDelView,
+                          CourseOverviewListView, CourseOverviewRetUpdDelView,
+                          CreateBatchAPIView, CuponListView, LanguageListView,
+                          LanguageRetUpdDelView, LessonAssignmentListAPIView,
+                          LessonAttachmentListAPIView, LevelListView,
+                          LevelRetUpdDelView, Live_Class_Type_List_View,
+                          OutcomesListView, OutcomesRetUpdDelView,
+                          PackageTypeListView, PackageTypeRetUpdDelView,
+                          QuestionTypeView, RequirementsListView,
+                          RequirementsRetUpdDelView, SectionListView,
+                          SectionRetUpdDelView, SEOMetakeywordsListView,
+                          SEOMetakeywordsRetUpdDelView, StateListView,
+                          StateRetUpdDelView, TestTypeViewset, batchListView,
+                          batchRetUpdDelView)
+from package.views import (CoursePackageView, EnrollPackageStudentView,
+                           EnrollPackageView, PackageCreateView,
+                           PackageListView, PackageRetUpdDelView,
+                           UserWisePackageWithCourseID)
 from payment.views import handle_payment_success, start_payment
 from QuestionBank.views import *  # noqa: F403
 from Reading_Exam.views import *  # noqa: F403
-from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenRefreshView
 from Speaking_Exam.views import *  # noqa: F403
-from students.views import (
-    Student_List_View_Dashboard,
-    StudentRetUpdDelUserView,
-    StudentRetUpdDelView,
-    StudentView,
-)
-from studystreak_api.views import (
-    ChangePasswordView,
-    GetUserRole,
-    GetUserView,
-    LoginView,
-    PasswordResetView,
-    ProfileView,
-    RegistrationView,
-    SendPasswordResetView,
-    UserResetPasswordView,
-    confirm_user,
-    get_csrf_token,
-)
-from website.views import (
-    BlogListView,
-    BlogRetUpdDelViews,
-    HomepageSection1ListView,
-    HomepageSection1RetUpdDelView,
-    HomepageSection2ListView,
-    HomepageSection2RetUpdDelViews,
-    HomepageSliderListView,
-    HomepageSliderRetUpdDelView,
-)
+from students.views import (Student_List_View_Dashboard,
+                            StudentRetUpdDelUserView, StudentRetUpdDelView,
+                            StudentView)
+from studystreak_api.views import (ChangePasswordView, GetUserRole,
+                                   GetUserView, LoginView, PasswordResetView,
+                                   ProfileView, RegistrationView,
+                                   SendPasswordResetView,
+                                   UserResetPasswordView, confirm_user,
+                                   get_csrf_token)
+from website.views import (BlogListView, BlogRetUpdDelViews,
+                           HomepageSection1ListView,
+                           HomepageSection1RetUpdDelView,
+                           HomepageSection2ListView,
+                           HomepageSection2RetUpdDelViews,
+                           HomepageSliderListView, HomepageSliderRetUpdDelView)
 from Writing_Exam.views import *  # noqa: F403
 
 router = DefaultRouter()
@@ -457,7 +407,16 @@ urlpatterns = [
         name="studentanswerlistview",
     ),
     path("api/moduleListView/", moduleListView.as_view(), name="moduleListView"),
-    path("api/coursematerialretupddelview/<int:pk>/", CourseMaterialRetUpdDelView.as_view(), name="coursematerialretupddelview"),
+    path(
+        "api/coursematerialretupddelview/<int:pk>/",
+        CourseMaterialRetUpdDelView.as_view(),
+        name="coursematerialretupddelview",
+    ),
+    path(
+        "api/SaveSpeakingResponse/",
+        SpeakingAnswerListView.as_view(),
+        name="save_speaking_response",
+    ),
     path('api/tutorcourses/', CourseTutorListView.as_view(), name='course-list'),
     path('api/grouplistview/', GroupListView.as_view(), name='course-list'),
 

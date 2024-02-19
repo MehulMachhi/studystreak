@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Student_answer, Studentanswer
+from .models import SpeakingResponse, Student_answer, Studentanswer
 
 
 class StudentAnswerSerializers(serializers.ModelSerializer):
@@ -38,17 +38,34 @@ class StudentAnswerSerializers(serializers.ModelSerializer):
 #         return serialized_answers
 
 
+class SpeakingAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpeakingResponse
+        fields = "__all__"
+
+
 class StudentanswerSerializers(serializers.ModelSerializer):
-    student_exam = StudentAnswerSerializers(many=True)
+    student_exam = StudentAnswerSerializers(many=True, required=True)
 
     class Meta:
         model = Studentanswer
-        fields = ("id", "user", "exam", "student_exam")
+        fields = (
+            "id",
+            "user",
+            "exam",
+            "student_exam",
+            "gpt_response",
+        )
 
     def create(self, validated_data):
-        student_exam_data = validated_data.pop("student_exam")
+        student_exam_data = validated_data.pop("student_exam", None)
         studentanswer = Studentanswer.objects.create(**validated_data)
-        for answer_data in student_exam_data:
-            Student_answer.objects.create(student_answers=studentanswer, **answer_data)
+        print(student_exam_data)
+        
+        if student_exam_data:
+            for answer_data in student_exam_data:
+                Student_answer.objects.create(
+                    student_answers=studentanswer, **answer_data
+                )
 
         return studentanswer
