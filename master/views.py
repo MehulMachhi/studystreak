@@ -94,7 +94,7 @@ class RequirementsListView(generics.ListCreateAPIView):
     serializer_class = RequirementsListSerializers
 
 
-class RequirementsRetUpdDelView(generics.ListCreateAPIView):
+class RequirementsRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Requirements.objects.all()
     serializer_class = RequirementsRetUpdDelSerializers
 
