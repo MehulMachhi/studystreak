@@ -1,6 +1,6 @@
 from assessment.views import assessmentListView, assessmentRetUpdDelView
 from coursedetail.views import LessionRetUpdDelView, LessonCreateView, LessonListView
-from Courses.views import Course_list_forpackage, CourseListView, CourseRetUpdDelView
+from Courses.views import Course_list_forpackage, CourseListView, CourseRetUpdDelView,CourseTutorListView,GroupListView
 from Create_Test.views import ResponsesView, createexamview, moduleListView
 from django.contrib import admin
 from django.urls import include, path
@@ -458,6 +458,9 @@ urlpatterns = [
     ),
     path("api/moduleListView/", moduleListView.as_view(), name="moduleListView"),
     path("api/coursematerialretupddelview/<int:pk>/", CourseMaterialRetUpdDelView.as_view(), name="coursematerialretupddelview"),
+    path('api/tutorcourses/', CourseTutorListView.as_view(), name='course-list'),
+    path('api/grouplistview/', GroupListView.as_view(), name='course-list'),
+
 ] + router.urls
 
 admin.site.site_header = "StudyStreak Admin"

@@ -22,6 +22,7 @@ class ExamType(models.TextChoices):
     listening = "Listening", "Listening"
     speaking = "Speaking", "Speaking"
     writing = "Writing", "Writing"
+    general = "General", "General"
 
 
 # Create your models here.
