@@ -43,5 +43,5 @@ jobs:
         host: 65.20.73.247 #${{ secrets.HOST }}
         password: amitv9493 #${{ secrets.SSH_PASSWORD }}
         script: |
-          cd /home/ubuntu/studystreak-new
+          cd /home/ubuntu/studystreak-new/studystreak
           git pull
