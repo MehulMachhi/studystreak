@@ -1,4 +1,32 @@
-name: Deploy on Push
+# name: Deploy on Push
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v2
+
+#       - name: Accept VPS Host Key
+#         run: |
+#           mkdir -p ~/.ssh
+#           ssh-keyscan 65.20.73.247 >> ~/.ssh/known_hosts
+
+#       - name: Pull Changes on VPS
+#         run: |
+#           ssh ubuntu@65.20.73.247 "cd /home/ubuntu/studystreak-new && git pull"
+
+#       # - name: Restart Docker Containers
+#       #   run: |
+#       #     ssh user@your-vps-ip "cd /path/to/your/repo && docker-compose down && docker-compose up -d"
+
+name: CD
 
 on:
   push:
@@ -8,20 +36,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Accept VPS Host Key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan 65.20.73.247 >> ~/.ssh/known_hosts
-
-      - name: Pull Changes on VPS
-        run: |
-          ssh ubuntu@65.20.73.247 "cd /home/ubuntu/studystreak-new && git pull"
-
-      # - name: Restart Docker Containers
-      #   run: |
-      #     ssh user@your-vps-ip "cd /path/to/your/repo && docker-compose down && docker-compose up -d"
+    - name: Deploy to <65.20.73.247>
+      uses: appleboy/ssh-action@master
+      with:
+        username: ${{ secrets.USERNAME }}
+        host: ${{ secrets.HOST }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: 'cd /home/ubuntu/studystreak-new && git pull'
+          
