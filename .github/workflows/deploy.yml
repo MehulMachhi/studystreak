@@ -25,7 +25,6 @@
 #       # - name: Restart Docker Containers
 #       #   run: |
 #       #     ssh user@your-vps-ip "cd /path/to/your/repo && docker-compose down && docker-compose up -d"
-
 name: CD
 
 on:
@@ -40,8 +39,9 @@ jobs:
     - name: Deploy to <65.20.73.247>
       uses: appleboy/ssh-action@master
       with:
-        username: ${{ secrets.USERNAME }}
-        host: ${{ secrets.HOST }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: 'cd /home/ubuntu/studystreak-new && git pull'
-          
+        username: ubuntu #${{ secrets.USERNAME }}
+        host: 65.20.73.247 #${{ secrets.HOST }}
+        password: amitv9493 #${{ secrets.SSH_PASSWORD }}
+        script: |
+          cd /home/ubuntu/studystreak-new
+          git pull
