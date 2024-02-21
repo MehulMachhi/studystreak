@@ -1,0 +1,22 @@
+name: Deploy on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Pull Changes on VPS
+        run: |
+          ssh ubuntu@65.20.73.247 "cd /home/ubuntu/studystreak-new && git pull"
+
+      # - name: Restart Docker Containers
+      #   run: |
+      #     ssh user@your-vps-ip "cd /path/to/your/repo && docker-compose down && docker-compose up -d"
