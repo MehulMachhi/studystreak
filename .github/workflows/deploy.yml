@@ -25,7 +25,7 @@
 #       # - name: Restart Docker Containers
 #       #   run: |
 #       #     ssh user@your-vps-ip "cd /path/to/your/repo && docker-compose down && docker-compose up -d"
-name: CD
+name: Deploy on Push
 
 on:
   push:
