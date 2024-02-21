@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Accept VPS Host Key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan 65.20.73.247 >> ~/.ssh/known_hosts
+
       - name: Pull Changes on VPS
         run: |
           ssh ubuntu@65.20.73.247 "cd /home/ubuntu/studystreak-new && git pull"
