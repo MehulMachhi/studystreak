@@ -45,3 +45,4 @@ jobs:
         script: |
           cd /home/ubuntu/studystreak-new/studystreak
           git pull
+          docker compose up backend --build -d
