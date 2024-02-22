@@ -25,6 +25,7 @@ class StudentAnswerAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",
+       
     )
     inlines = [AnswerInline]
     speaking_inline = [SpeakingAnswerInline]
@@ -35,7 +36,7 @@ class StudentAnswerAdmin(admin.ModelAdmin):
                 return self.speaking_inline
         return super().get_inlines(request, obj)
 
-    readonly_fields = ("band",)
+    # readonly_fields = ("band",)
 
 
 admin.site.register(Studentanswer, StudentAnswerAdmin)
