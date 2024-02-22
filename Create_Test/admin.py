@@ -23,7 +23,7 @@ class moduleadmin(admin.ModelAdmin):
         "listening_list",
         "speaking_list",
         "writing_list",
-        "a_w_a_list",
+        "awa_list",
         "integrated_reasoning_list",
         "quantitative_reasoning_list",
         "verbal_reasoning_list",
@@ -43,8 +43,8 @@ class moduleadmin(admin.ModelAdmin):
         return ", ".join([str(exam) for exam in obj.Writing.all()])
     
     
-    def a_w_a_list(self, obj):
-        return self.display_related_exams(obj.a_w_a.all())
+    def awa_list(self, obj):
+        return self.display_related_exams(obj.awa.all())
     
     def integrated_reasoning_list(self, obj):
         return self.display_related_exams(obj.integrated_reasoning.all())

@@ -28,7 +28,7 @@ class module(models.Model):
     exam_test = models.CharField(
         max_length=20, choices=Typetest.choices, null=True, blank=True
     )
-    a_w_a = models.ManyToManyField(
+    awa = models.ManyToManyField(
         Exam, null=True, blank=True, related_name="a_w_a+"
     )
     integrated_reasoning = models.ManyToManyField(
