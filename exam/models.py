@@ -16,6 +16,9 @@ class Difficulty(models.TextChoices):
     hard = "Hard", "Hard"
 
 
+
+
+
 class ExamType(models.TextChoices):  # noqa: F811 
     reading = "Reading", "Reading"
     listening = "Listening", "Listening"
