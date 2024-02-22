@@ -16,12 +16,16 @@ class Difficulty(models.TextChoices):
     hard = "Hard", "Hard"
 
 
-class ExamType(models.TextChoices):  # noqa: F811
+class ExamType(models.TextChoices):  # noqa: F811 
     reading = "Reading", "Reading"
     listening = "Listening", "Listening"
     speaking = "Speaking", "Speaking"
     writing = "Writing", "Writing"
     general = "General", "General"
+    a_w_a = "a_w_a", "a_w_a"
+    integrated_reasoning="integrated_reasoning", "integrated_reasoning"
+    quantitative_reasoning = "quantitative_reasoning","quantitative_reasoning"
+    verbal_reasoning = "verbal_reasoning", "verbal_reasoning"
 
 
 # Create your models here.

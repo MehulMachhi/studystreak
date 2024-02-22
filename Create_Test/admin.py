@@ -23,6 +23,10 @@ class moduleadmin(admin.ModelAdmin):
         "listening_list",
         "speaking_list",
         "writing_list",
+        "a_w_a_list",
+        "integrated_reasoning_list",
+        "quantitative_reasoning_list",
+        "verbal_reasoning_list",
     )
     list_filter = ("Name",)
 
@@ -37,6 +41,22 @@ class moduleadmin(admin.ModelAdmin):
 
     def writing_list(self, obj):
         return ", ".join([str(exam) for exam in obj.Writing.all()])
+    
+    
+    def a_w_a_list(self, obj):
+        return self.display_related_exams(obj.a_w_a.all())
+    
+    def integrated_reasoning_list(self, obj):
+        return self.display_related_exams(obj.integrated_reasoning.all())
+    
+    def quantitative_reasoning_list(self, obj):
+        return self.display_related_exams(obj.quantitative_reasoning.all())
+    
+    def verbal_reasoning_list(self, obj):
+        return self.display_related_exams(obj.verbal_reasoning.all())
+
+    def display_related_exams(self, exams):
+        return ", ".join([str(exam) for exam in exams]) if exams.exists() else "-"
 
     # def reading_list(self, obj):
     #     return ",".join([str(exam) for exam in obj.writing.all()])

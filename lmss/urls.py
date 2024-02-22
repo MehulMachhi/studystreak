@@ -406,7 +406,6 @@ urlpatterns = [
         StudentAnswerListView.as_view(),
         name="studentanswerlistview",
     ),
-    path("api/moduleListView/", moduleListView.as_view(), name="moduleListView"),
     path(
         "api/coursematerialretupddelview/<int:pk>/",
         CourseMaterialRetUpdDelView.as_view(),
