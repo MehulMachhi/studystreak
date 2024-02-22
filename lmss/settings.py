@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "Create_Test",
     "ExamResponse",
+    'django_admin_listfilter_dropdown',
     # "dj_rest_auth",
     #  'rest_framework.authtoken',
     # "dj_rest_auth.registration",
