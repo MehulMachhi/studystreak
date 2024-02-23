@@ -39,6 +39,7 @@ class RelatedDropdownFilter(RelatedFieldListFilter):
 class moduleadmin(admin.ModelAdmin):
     list_display = (
         "Name",
+        "exam_test",
         "reading_list",
         "listening_list",
         "speaking_list",

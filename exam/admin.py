@@ -27,12 +27,13 @@ class ExamAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     list_display = [
         "exam_name",
+        "block_type",
         "exam_type",
         "no_of_questions",
-        "block_type",
         "exam_category",
         "difficulty_level",
         "block_threshold",
+       
     ]
     list_filter = [
         "exam_name",
