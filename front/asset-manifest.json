@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.a0b70849.css",
-    "main.js": "/static/js/main.41ca3551.js",
+    "main.css": "/static/css/main.88d7c53e.css",
+    "main.js": "/static/js/main.a6473e31.js",
     "static/media/register__bg.png": "/static/media/register__bg.8f3340b40d006c7271d9.png",
     "static/media/blog_7.png": "/static/media/blog_7.ad28b4e16bb1b8845095.png",
     "static/media/blog_6.png": "/static/media/blog_6.d2b53c8250f4c3df1d44.png",
@@ -34,11 +34,11 @@
     "static/media/blog-details__7.png": "/static/media/blog-details__7.d4f0ce89edc694ef9ffb.png",
     "static/media/machine-learning.png": "/static/media/machine-learning.2ab753ec11aac345bc37.png",
     "index.html": "/index.html",
-    "main.a0b70849.css.map": "/static/css/main.a0b70849.css.map",
-    "main.41ca3551.js.map": "/static/js/main.41ca3551.js.map"
+    "main.88d7c53e.css.map": "/static/css/main.88d7c53e.css.map",
+    "main.a6473e31.js.map": "/static/js/main.a6473e31.js.map"
   },
   "entrypoints": [
-    "static/css/main.a0b70849.css",
-    "static/js/main.41ca3551.js"
+    "static/css/main.88d7c53e.css",
+    "static/js/main.a6473e31.js"
   ]
 }
