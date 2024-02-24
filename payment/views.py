@@ -1,4 +1,5 @@
 
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,7 +14,7 @@ class CreateOrderAPIView(APIView):
             order_respone = rz_client.create_order(amount=serializer.validated_data['amount'],
                                    currency=serializer.validated_data['currency'])
         
-        return Response(order_respone)
+        return Response(order_respone, status=status.HTTP_201_CREATED)
 
 class TransactionView(APIView):
     
