@@ -46,8 +46,7 @@ from package.views import (CoursePackageView, EnrollPackageStudentView,
                            EnrollPackageView, PackageCreateView,
                            PackageListView, PackageRetUpdDelView,
                            UserWisePackageWithCourseID)
-from payment.views import (CreateOrderAPIView, TransactionView,
-                           handle_payment_success, start_payment)
+from payment.views import CreateOrderAPIView, TransactionView
 from QuestionBank.views import *  # noqa: F403
 from Reading_Exam.views import *  # noqa: F403
 from Speaking_Exam.views import *  # noqa: F403
@@ -327,8 +326,6 @@ urlpatterns = [
         EnrollPackageStudentView.as_view(),
         name="enrollpackagestudentview",
     ),
-    path("api/pay/", start_payment, name="payment"),
-    path("api/payment/success/", handle_payment_success, name="payment_success"),
     path("api/cuponlistview/", CuponListView.as_view(), name="cuponlistview"),
     path(
         "api/courselistforpackage/",
