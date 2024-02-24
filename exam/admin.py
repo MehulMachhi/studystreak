@@ -50,6 +50,7 @@ class ExamAdmin(admin.ModelAdmin):
                     "exam_name",
                     "exam_type",
                     "exam_category",
+                    "question_structure",
                 ),
             },
         ),
