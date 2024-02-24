@@ -336,3 +336,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://studystreak.in",
     "http://studystreak.in",
 ]
+
+
+RAZORPAY_KEY_ID = config['RAZORPAY_KEY_ID']
+RAZORPAY_KEY_SECRET = config['RAZORPAY_KEY_SECRET']

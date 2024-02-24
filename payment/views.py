@@ -1,19 +1,35 @@
 import json
 
-
 import razorpay
+from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Order
-from .serializers import OrderSerializer
+from .razorpay_api import RazorPayClient
+from .serializers import RazorPaySerializer, TransactionSerializer
 
-from dotenv import dotenv_values
+rz_client = RazorPayClient()
+class CreateOrderAPIView(APIView):
+    def post(self, request, format=None):
+        serializer = RazorPaySerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            order_respone = rz_client.create_order(amount=serializer.validated_data['amount'],
+                                   currency=serializer.validated_data['currency'])
+        
+        return Response(order_respone)
 
-# config = dotenv_values(".env")
-
-# from lmss.settings import KEY_ID, KEY_SECRET
-from django.conf import settings
-
+class TransactionView(APIView):
+    
+    def post(self, request):
+        serializer = TransactionSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            rz_client.verify_payment(razorpay_order_id=serializer.validated_data['order_id'],
+                                     razorpay_payment_id=serializer.validated_data['payment_id'],
+                                    razorpay_signature=serializer.validated_data['signature'])
+            serializer.save()
+            return Response({'payment_status':True}, status=200)
 @api_view(['POST'])
 def start_payment(request):
     # request.data is coming from frontend
@@ -26,7 +42,7 @@ def start_payment(request):
     # create razorpay order
     payment = client.order.create({"amount": int(amount) * 100, 
                                    "currency": "INR", 
-                                   "payment_capture": "1"})
+                                })
 
     # we are saving an order with isPaid=False
     order = Order.objects.create(order_product=name, 
