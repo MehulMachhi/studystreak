@@ -1,4 +1,5 @@
 
+from requests.exceptions import HTTPError
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -36,8 +37,13 @@ class TransactionView(APIView):
             serializer.save()
             return Response({'payment_status':True}, status=200)
  
+
+
 class ZoomAPiView(APIView):
-    def get(self, request):
+    def post(self, request, format=None):
         client = zoomClient
-        token = client.access_token
-        return Response(token)
+        try:
+            response_data = client.create_meeting(data=request.data)
+            return Response(response_data,200)
+        except HTTPError as e:
+            return Response(e,400)

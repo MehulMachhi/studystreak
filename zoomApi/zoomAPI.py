@@ -82,7 +82,7 @@ class ZOomClient:
     
     def validate(self):
         try:
-            with open("zoom_token.json", "r") as f:
+            with open(".zoom_token", "r") as f:
                 token_data = json.load(f)
                 if time.time() >= token_data["expiry"]:
                     logger.info('Token is expired. Setting up a new token.')
@@ -106,11 +106,15 @@ class ZOomClient:
             self.validate()
         else:
             return self
-    def create_meeting(self, topic, start_time, duration, timezone):
+        
+    def create_meeting(self,data:dict):
         url = f'{base_url}/v2/users/me/meetings'
         header = {
             'Authorization': f'Bearer {self.access_token}',
             'Content-Type':'application/json',
         }
+        json_data = json.dumps(data, indent=2)
+        
         response = requests.post(url, headers=header, data=json_data)
-        return response.text
+        response.raise_for_status()
+        return response.json()

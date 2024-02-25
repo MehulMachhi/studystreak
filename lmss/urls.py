@@ -419,7 +419,7 @@ urlpatterns = [
     path('api/instructorcourses/', CourseInstructorListView.as_view(), name='course-list'),
     path('api/create/order/', CreateOrderAPIView.as_view(), name='create-order'),
     path('api/confirm/order/', TransactionView.as_view(), name='confirm-order'),
-    path('api/zoom/',ZoomAPiView.as_view()),
+    path('api/create-meeting/',ZoomAPiView.as_view()),
     path("api/save-video-data/", YoutubeDataApiView.as_view()),
     
 
