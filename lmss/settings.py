@@ -278,6 +278,9 @@ PASSWORD_RESET_TIMEOUT = 60 * 30
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    'DEFAULT_PERMISSION_CLASSES':[
+      "rest_framework.permissions.IsAuthenticated",  
     ]
 }
 AUTHENTICATION_BACKENDS = [

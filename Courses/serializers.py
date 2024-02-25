@@ -1,9 +1,13 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Course
-from master.serializers import AdditionalResourceListSerializers, CourseMaterialListSerializers
-from coursedetail.serializers import LessonListSerializers, LessonDetailSerializer
-from django.contrib.auth.models import User
+from coursedetail.serializers import (LessonDetailSerializer,
+                                      LessonListSerializers)
+from master.serializers import (AdditionalResourceListSerializers,
+                                CourseMaterialListSerializers)
+
+from .models import Course, YoutubeDataRecord
+
 
 class CourseListSerializers(serializers.ModelSerializer):
     lessons = LessonListSerializers(many=True, read_only=True)
@@ -86,6 +90,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 from django.contrib.auth.models import Group
 
+
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
@@ -100,3 +105,11 @@ class UserSerializerforinstructor(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username',]
+        
+class YoutubeDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = YoutubeDataRecord
+        fields = "__all__"
+        extra_kwargs = {
+            'student':{'read_only':True},
+        }

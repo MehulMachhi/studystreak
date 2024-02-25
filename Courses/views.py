@@ -14,11 +14,12 @@ from master.serializers import (AdditionalResourceListSerializers,
                                 LessonAssignmentSerializer,
                                 LessonAttachmentSerializer)
 
-from .models import Course
+from .models import Course, YoutubeDataRecord
 from .serializers import (Course_List_Serializers_forpackage,
                           CourseCreateSerializers, CourseListSerializers,
                           CourseRetUpdDelSerializers, GroupSerializer,
-                          UserSerializer, UserSerializerforinstructor)
+                          UserSerializer, UserSerializerforinstructor,
+                          YoutubeDataSerializer)
 
 
 class CourseListView(generics.ListCreateAPIView):
@@ -77,3 +78,13 @@ class CourseInstructorListView(generics.ListAPIView):
     # queryset = Group.objects.all()
     queryset = User.objects.filter(groups__name='Instructor')
     serializer_class = UserSerializerforinstructor
+    
+class YoutubeDataApiView(generics.CreateAPIView):
+    queryset = YoutubeDataRecord.objects.all()
+    serializer_class = YoutubeDataSerializer
+    
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        data['student'] = self.request.user.student
+        return super().perform_create(serializer)
+    
