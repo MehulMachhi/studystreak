@@ -46,7 +46,7 @@ from package.views import (CoursePackageView, EnrollPackageStudentView,
                            EnrollPackageView, PackageCreateView,
                            PackageListView, PackageRetUpdDelView,
                            UserWisePackageWithCourseID)
-from payment.views import CreateOrderAPIView, TransactionView
+from payment.views import CreateOrderAPIView, TransactionView, ZoomAPiView
 from QuestionBank.views import *  # noqa: F403
 from Reading_Exam.views import *  # noqa: F403
 from Speaking_Exam.views import *  # noqa: F403
@@ -419,7 +419,7 @@ urlpatterns = [
     path('api/instructorcourses/', CourseInstructorListView.as_view(), name='course-list'),
     path('api/create/order/', CreateOrderAPIView.as_view(), name='create-order'),
     path('api/confirm/order/', TransactionView.as_view(), name='confirm-order'),
-    
+    path('api/zoom/',ZoomAPiView.as_view()),
     
 
 ] + router.urls

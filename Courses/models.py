@@ -1,9 +1,10 @@
 # Courses/models.py
 
-from django.contrib.auth.models import User, Group
+from ckeditor.fields import RichTextField
+from django.contrib.auth.models import Group, User
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from ckeditor.fields import RichTextField
+
 from coursedetail.models import Lesson
 from master.models import Category, Language, Level, Outcomes, Requirements
 
@@ -65,3 +66,13 @@ class Course(models.Model):
 
     def __str__(self):
         return self.Course_Title
+
+class YoutubeDataRecord(models.Model):
+    student = models.ForeignKey("students.Student", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    timestamp = models.CharField()
+    lesson = models.ForeignKey("coursedetail.Lesson", on_delete=models.CASCADE, related_name = 'youtube_data', null=True, blank=True)
+    
+    class Meta:
+        db_table = 'youtubeDataRecord'
+        

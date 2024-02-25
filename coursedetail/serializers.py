@@ -1,10 +1,15 @@
-from rest_framework import serializers
-from .models import  Lesson
-from rest_framework import generics
-from master.serializers import (AdditionalResourceListSerializers, CourseMaterialListSerializers,
-LessonAttachmentSerializer,LessonAssignmentSerializer,)
+from rest_framework import generics, serializers
+
 from coursedetail.models import Quiz_Question, QuizOption
-from master.models import batch, CourseMaterial, AdditionalResource,LessonAttachment, LessonAssignment 
+from master.models import (AdditionalResource, CourseMaterial,
+                           LessonAssignment, LessonAttachment, batch)
+from master.serializers import (AdditionalResourceListSerializers,
+                                CourseMaterialListSerializers,
+                                LessonAssignmentSerializer,
+                                LessonAttachmentSerializer)
+
+from .models import Lesson
+
 # from coursedetail.serializers import QuizOptionListSerializers, Quiz_QuestionListSerializers
 
 class Quiz_QuestionListSerializers(serializers.ModelSerializer):
@@ -32,12 +37,21 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     attachment_lession_count = serializers.SerializerMethodField()
     attachment_lession = LessonAttachmentSerializer(many=True, read_only=True)
     quiz_question_options = serializers.SerializerMethodField()
-
+    last_paused = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Lesson
         fields = '__all__'
-        depth = 4
-
+        depth = 4   
+    
+    def get_last_paused(self, obj):
+        user = self.context.get('user',None)
+        try:
+            data = obj.youtube_data.get(student=user)
+            if data.exists():
+                return data.timestamp
+        except Exception as e:
+            return ""
+    
     def get_attachment_lession(self, lesson):
         return LessonAttachment.objects.filter(lesson=lesson)
 

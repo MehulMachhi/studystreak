@@ -3,8 +3,17 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from zoomApi.zoomAPI import ZOomClient
+
 from .razorpay_api import RazorPayClient
 from .serializers import RazorPaySerializer, TransactionSerializer
+
+token_url = "https://zoom.us/oauth/token"
+base_url = 'https://zoom.us'
+Account_id = "hy5Qo6Z-T8-HWmI2vHf4og"
+client_id = "qjhZVzGQpq3dMgNyPLdZw"
+client_secret = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
+zoomClient = ZOomClient(Account_id, client_id, client_secret)
 
 rz_client = RazorPayClient()
 class CreateOrderAPIView(APIView):
@@ -27,3 +36,8 @@ class TransactionView(APIView):
             serializer.save()
             return Response({'payment_status':True}, status=200)
  
+class ZoomAPiView(APIView):
+    def get(self, request):
+        client = zoomClient
+        token = client.access_token
+        return Response(token)

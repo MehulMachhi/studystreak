@@ -1,26 +1,25 @@
-from rest_framework import generics
+from django.contrib.auth.models import Group, User
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Course
+from rest_framework import generics
 from rest_framework.filters import SearchFilter
-from .serializers import (
-    CourseCreateSerializers,
-    CourseListSerializers,
-    CourseRetUpdDelSerializers,
-    Course_List_Serializers_forpackage,
-    UserSerializer,UserSerializerforinstructor
-   
-)
-from master.models import CourseMaterial, AdditionalResource
-from master.serializers import CourseMaterialListSerializers, AdditionalResourceListSerializers
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from master.serializers import (AdditionalResourceListSerializers, CourseMaterialListSerializers,
-LessonAttachmentSerializer,LessonAssignmentSerializer,)
+
 # from coursedetail.models import Quiz_Question, QuizOption
 # from coursedetail.serializers import QuizOptionListSerializers, Quiz_QuestionListSerializers
-from master.models import batch, CourseMaterial, AdditionalResource,LessonAttachment, LessonAssignment 
-from django.contrib.auth.models import Group
-from .serializers import GroupSerializer
-from django.contrib.auth.models import User
+from master.models import (AdditionalResource, CourseMaterial,
+                           LessonAssignment, LessonAttachment, batch)
+from master.serializers import (AdditionalResourceListSerializers,
+                                CourseMaterialListSerializers,
+                                LessonAssignmentSerializer,
+                                LessonAttachmentSerializer)
+
+from .models import Course
+from .serializers import (Course_List_Serializers_forpackage,
+                          CourseCreateSerializers, CourseListSerializers,
+                          CourseRetUpdDelSerializers, GroupSerializer,
+                          UserSerializer, UserSerializerforinstructor)
+
 
 class CourseListView(generics.ListCreateAPIView):
     queryset = Course.objects.all()
@@ -53,10 +52,12 @@ class CourseListView(generics.ListCreateAPIView):
         return Response(data)
 
 class CourseRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Course.objects.all()
     serializer_class = CourseRetUpdDelSerializers
-
-
+    
+    def get_serializer_context(self):
+        return {'user':self.request.user}
 ################# List of all course to use in package model ##################
 
 class Course_list_forpackage(generics.ListAPIView):

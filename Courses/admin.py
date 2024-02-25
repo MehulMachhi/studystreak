@@ -5,8 +5,12 @@ from import_export.admin import ImportExportModelAdmin
 
 from master.models import AdditionalResource, CourseMaterial
 
-from .models import Course
+from .models import Course, YoutubeDataRecord
 
+
+@admin.register(YoutubeDataRecord)
+class YoutubeDataRecordAdmin(admin.ModelAdmin):...
+    
 
 class CourseMaterialInline(admin.TabularInline):
     model = CourseMaterial

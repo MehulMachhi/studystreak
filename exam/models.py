@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
+
 from master.models import Category, ExamType, TestType
 
 
@@ -62,6 +63,7 @@ class Exam(models.Model):
     )
     audio_file = models.FileField(upload_to="examblockaudio/", null=True, blank=True)
     question_structure = models.JSONField(null=True, blank=True)
+    passage_image = models.ImageField(upload_to='passage-images', null=True, blank=True)
 
     def __str__(self):
         return f"{self.exam_name}-{self.exam_type}"

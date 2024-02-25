@@ -70,6 +70,7 @@ class ExamAdmin(admin.ModelAdmin):
                 "fields": (
                     "audio_file",
                     "passage",
+                    'passage_image',
                     "no_of_questions",
                     "question",
                 ),
