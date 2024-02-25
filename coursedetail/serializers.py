@@ -50,8 +50,9 @@ class LessonDetailSerializer(serializers.ModelSerializer):
         user = self.context.get('user',None)
     
         data = obj.youtube_data.filter(student=user)
-        print(data)
-        return len(data)
+        if (data.exists()):
+            return data[0].timestamp
+        return ""
 
     
     def get_attachment_lession(self, lesson):
