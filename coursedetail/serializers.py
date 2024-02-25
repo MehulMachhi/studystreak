@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import generics, serializers
 
 from coursedetail.models import Quiz_Question, QuizOption
@@ -10,6 +12,7 @@ from master.serializers import (AdditionalResourceListSerializers,
 
 from .models import Lesson
 
+logger = logging.getLogger(__name__)
 # from coursedetail.serializers import QuizOptionListSerializers, Quiz_QuestionListSerializers
 
 class Quiz_QuestionListSerializers(serializers.ModelSerializer):
@@ -45,14 +48,14 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     
     def get_last_paused(self, obj):
         user = self.context.get('user',None)
-        print(user)
+        logger.info(user)
         try:
             data = obj.youtube_data.get(student=user)
             if data.exists():
-                print(data)
+                logger.info(data)
                 return data.timestamp
         except Exception as e:
-            print(e)
+            logger.info(e)
             return ""
     
     def get_attachment_lession(self, lesson):
