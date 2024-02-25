@@ -44,7 +44,7 @@ services:
       - media:/home/app/media/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./certificates/:/etc/nginx/certificates/
-      - ./front/:/home/studystreak/
+      - /home/ubuntu/front/:/home/studystreak/
     depends_on:
       - backend
 volumes:
