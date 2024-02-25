@@ -49,12 +49,9 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     def get_last_paused(self, obj):
         user = self.context.get('user',None)
 
-        try:
-            data = obj.youtube_data.get(student=user)
-            return data.timestamp
-        except Exception as e:
-            print(e)
-            return ""
+        data = obj.youtube_data.filter(student=user)[0]
+        return data.timestamp
+
     
     def get_attachment_lession(self, lesson):
         return LessonAttachment.objects.filter(lesson=lesson)

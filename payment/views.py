@@ -12,8 +12,7 @@ token_url = "https://zoom.us/oauth/token"
 base_url = 'https://zoom.us'
 Account_id = "hy5Qo6Z-T8-HWmI2vHf4og"
 client_id = "qjhZVzGQpq3dMgNyPLdZw"
-client_secret = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
-zoomClient = ZOomClient(Account_id, client_id, client_secret)
+client_secret = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"xzoomClient = ZOomClient(Account_id, client_id, client_secret)
 
 rz_client = RazorPayClient()
 class CreateOrderAPIView(APIView):
