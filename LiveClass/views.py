@@ -76,10 +76,11 @@ class Liveclass_Create_View(generics.ListCreateAPIView):
     
     def perform_create(self, serializer):
         data = serializer.validated_data
+        formatted_string = data['start_time'].strftime("%Y-%m-%dT%H:%M:%S")
         zoom_data = {
             "agenda":data['meeting_description'],
             'topic':data['meeting_title'],
-            "start_time": "2019-12-11T10:35:01",
+            "start_time": formatted_string,
             "timezone": "Asia/Kolkata",
             "password": data['zoom_meeting_password'],
             "email_notification":True,

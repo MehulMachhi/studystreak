@@ -98,14 +98,8 @@ class ZOomClient:
         return self
         
     def check_and_set_token(self):
-        if self.access_token and time.time() > self.expiry:
-            logger.info("Got the access token in cls. running the validation")
-            self.validate()
-        elif self.access_token is None:
-            logger.info('unable to get the token from cls. running validate()')
-            self.validate()
-        else:
-            return self
+        self.validate()
+        return self
         
     def create_meeting(self,data:dict):
         url = f'{base_url}/v2/users/me/meetings'
