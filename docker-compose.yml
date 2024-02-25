@@ -37,14 +37,14 @@ services:
     build: ./nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "5000:80"
       - "443:443"
     volumes:
       - staticfiles:/home/app/staticfiles/
       - media:/home/app/media/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./certificates/:/etc/nginx/certificates/
-      - /home/ubuntu/front/:/home/studystreak/
+      - /home/studystreak/StudyStreak/build/:/home/studystreak/
     depends_on:
       - backend
 volumes:
