@@ -40,13 +40,13 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     attachment_lession_count = serializers.SerializerMethodField()
     attachment_lession = LessonAttachmentSerializer(many=True, read_only=True)
     quiz_question_options = serializers.SerializerMethodField()
-    last_paused = serializers.SerializerMethodField(read_only=True)
+    timestamp = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Lesson
         fields = '__all__'
         depth = 4   
     
-    def get_last_paused(self, obj):
+    def get_timestamp(self, obj):
         user = self.context.get('user',None)
     
         data = obj.youtube_data.filter(student=user)
