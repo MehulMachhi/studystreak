@@ -4,17 +4,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from zoomApi.zoomAPI import ZOomClient
-
 from .razorpay_api import RazorPayClient
 from .serializers import RazorPaySerializer, TransactionSerializer
-
-token_url = "https://zoom.us/oauth/token"
-base_url = 'https://zoom.us'
-Account_id = "hy5Qo6Z-T8-HWmI2vHf4og"
-client_id = "qjhZVzGQpq3dMgNyPLdZw"
-client_secret = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
-zoomClient = ZOomClient(Account_id, client_id, client_secret)
 
 rz_client = RazorPayClient()
 class CreateOrderAPIView(APIView):
@@ -39,11 +30,11 @@ class TransactionView(APIView):
  
 
 
-class ZoomAPiView(APIView):
-    def post(self, request, format=None):
-        client = zoomClient
-        try:
-            response_data = client.create_meeting(data=request.data)
-            return Response(response_data,200)
-        except HTTPError as e:
-            return Response(e,400)
+class ZoomAPiView(APIView):...
+    # def post(self, request, format=None):
+    #     client = zoomClient
+    #     try:
+    #         response_data = client.create_meeting(data=request.data)
+    #         return Response(response_data,200)
+    #     except HTTPError as e:
+    #         return Response(e,400)

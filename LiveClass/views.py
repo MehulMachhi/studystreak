@@ -1,21 +1,29 @@
-from django.shortcuts import render
+import json
+from datetime import datetime
 
+import requests
+from django.conf import settings
+from django.http import JsonResponse
+from django.shortcuts import render
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 # Create your views here.
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.http import JsonResponse
-from rest_framework import generics
-import requests, json
-from datetime import datetime
-from rest_framework.permissions import IsAuthenticated
-from .models import Live_Class
-from .serializers import LiveClassListSerializer, LiveClassCreateSerializer, LiveClassListWithIDSerializer
+
 from master.models import batch
 from students.models import Student
+from zoomApi.zoomAPI import ZOomClient
+
+from .models import Live_Class
+from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
+                          LiveClassListWithIDSerializer)
+
+zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
 
 
 from zoomus import ZoomClient
+
 Account_id = "gZOcFtX-S3GRietpBWVT-Q"
 client_id='vy_n2AFIQJyEIF_4d8g9A'
 client_secret='kdxcpDLmMyj4QZcOawul86ktHJm7bMVv'
@@ -51,12 +59,44 @@ class liveclass_list_view(generics.ListAPIView):
 class Liveclass_Create_View(generics.ListCreateAPIView):
     queryset = Live_Class.objects.all()
     serializer_class = LiveClassCreateSerializer
+# {
+#     "id": 1,
+#     "meeting_title": "IELTS ESSIENTIALS DAY 2",
+#     "meeting_description": "SDFDASF",
+#     "start_time": "2024-02-18T14:30:00+05:30",
+#     "end_time": "2024-02-18T15:30:00+05:30",
+#     "zoom_meeting_id": "https://meet.google.com/tpk-bihj-snm",
+#     "zoom_meeting_password": "",
+#     "select_batch": null,
+#     "liveclasstype": null
+# }
+    def create(self, request, *args, **kwargs):
 
+        return super().create(request, *args, **kwargs)
+    
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        zoom_data = {
+            "agenda":data['meeting_description'],
+            'topic':data['meeting_title'],
+            "start_time": "2019-12-11T10:35:01",
+            "timezone": "Asia/Kolkata",
+            "password": data['zoom_meeting_password'],
+            "email_notification":True,
+            'approval_type':0,
+            "close_registration":True
+        }
+        zoom_returned_data = zc.create_meeting(zoom_data)
+        print(zoom_returned_data)
+        data['zoom_meeting_id'] = zoom_returned_data['join_url']
+        return super().perform_create(serializer)
 
 
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+
 from students.serializers import StudentSerializers
+
 
 class liveclass_listwithid_view(generics.ListAPIView):
     serializer_class = LiveClassListWithIDSerializer
@@ -68,9 +108,10 @@ class liveclass_listwithid_view(generics.ListAPIView):
 
 
 from django.db import IntegrityError
-from package.serializers import EnrollmentSerializer
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
+
+from package.serializers import EnrollmentSerializer
 
 
 ################## code work ########################
