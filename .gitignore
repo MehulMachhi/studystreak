@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-./zoom_token.json
+.zoom_token
 build/
 develop-eggs/
 dist/

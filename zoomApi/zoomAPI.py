@@ -73,7 +73,7 @@ class ZOomClient:
             "access_token": token["access_token"],
             "expiry": (expiry_time:= time.time() + int(token["expires_in"])),
         }
-        with open("zoom_token.json", "w") as f:
+        with open(".zoom_token", "w") as f:
             json.dump(token_data, f)
 
         self.__class__.access_token = token["access_token"]
