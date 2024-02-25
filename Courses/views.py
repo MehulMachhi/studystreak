@@ -79,12 +79,22 @@ class CourseInstructorListView(generics.ListAPIView):
     queryset = User.objects.filter(groups__name='Instructor')
     serializer_class = UserSerializerforinstructor
     
-class YoutubeDataApiView(generics.CreateAPIView):
+from rest_framework.views import APIView
+
+
+class YoutubeDataApiView(APIView):
     queryset = YoutubeDataRecord.objects.all()
-    serializer_class = YoutubeDataSerializer
     
-    def perform_create(self, serializer):
-        data = serializer.validated_data
-        data['student'] = self.request.user.student
-        return super().perform_create(serializer)
-    
+    def post(self, request):
+        serializer = YoutubeDataSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            data = serializer.validated_data
+            print(data)
+            timestamp = data.pop('timestamp')
+            data['student'] = request.user.student
+            instance, created = self.queryset.update_or_create(**data, defaults={'timestamp':timestamp})
+            data['timestamp'] = timestamp
+            if created:
+                return Response(serializer.data, 201)
+            else:
+                return Response(serializer.data, 200)
