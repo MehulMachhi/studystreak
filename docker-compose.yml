@@ -37,7 +37,7 @@ services:
     build: ./nginx
     restart: unless-stopped
     ports:
-      - "5000:80"
+      - "80:80"
       - "443:443"
     volumes:
       - staticfiles:/home/app/staticfiles/
