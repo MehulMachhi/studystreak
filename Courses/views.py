@@ -57,7 +57,7 @@ class CourseRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CourseRetUpdDelSerializers
     
     def get_serializer_context(self):
-        return {'user':self.request.user}
+        return {'user':self.request.user.student}
 ################# List of all course to use in package model ##################
 
 class Course_list_forpackage(generics.ListAPIView):
