@@ -4,10 +4,11 @@ from .models import Student
 from rest_framework import generics
 from django.contrib.auth.models import AnonymousUser, User
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
 
 class StudentView(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Student.objects.all()
     serializer_class = StudentSerializers
