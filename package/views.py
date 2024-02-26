@@ -258,8 +258,39 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
 
 ######################### code working | ###############################
 
+# class EnrollPackageView(APIView):
+#     permission_classes = [IsAuthenticated]
+#     def post(self, request, *args, **kwargs):
+#         serializer = EnrollmentSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user = self.request.user
+
+#             try:
+#                 student = Student.objects.get(user=user)
+#             except Student.DoesNotExist:
+#                 return Response({"detail": "Student not found for the authenticated user."}, status=status.HTTP_404_NOT_FOUND)
+
+#             batch_ids = serializer.validated_data.get('batch_ids', [])
+#             batches = batch.objects.filter(pk__in=batch_ids)
+#             print(f"User: {user}, Student: {student}, Batch IDs: {batch_ids}")
+
+#             already_enrolled_batches = student.select_batch.filter(pk__in=batch_ids)
+#             if already_enrolled_batches.exists():
+#                 return Response({"detail": f"We are sorry, but you are already enrolled in a batch"},
+#                                 status=status.HTTP_400_BAD_REQUEST)
+
+#             new_batches = batches.exclude(pk__in=already_enrolled_batches)
+#             student.select_batch.add(*new_batches)
+
+#             print(f"Batches added to select_batch: {new_batches}")
+
+#             return Response({"detail": f"Successfully enrolled  in batches."}, status=status.HTTP_201_CREATED)
+
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class EnrollPackageView(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
         serializer = EnrollmentSerializer(data=request.data)
         if serializer.is_valid():
@@ -272,7 +303,6 @@ class EnrollPackageView(APIView):
 
             batch_ids = serializer.validated_data.get('batch_ids', [])
             batches = batch.objects.filter(pk__in=batch_ids)
-            print(f"User: {user}, Student: {student}, Batch IDs: {batch_ids}")
 
             already_enrolled_batches = student.select_batch.filter(pk__in=batch_ids)
             if already_enrolled_batches.exists():
@@ -282,9 +312,10 @@ class EnrollPackageView(APIView):
             new_batches = batches.exclude(pk__in=already_enrolled_batches)
             student.select_batch.add(*new_batches)
 
-            print(f"Batches added to select_batch: {new_batches}")
+            
+            new_batch_count = new_batches.count()
 
-            return Response({"detail": f"Successfully enrolled  in batches."}, status=status.HTTP_201_CREATED)
+            return Response({"detail": f"Successfully enrolled in {new_batch_count} batches."}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

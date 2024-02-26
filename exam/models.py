@@ -16,7 +16,13 @@ class Difficulty(models.TextChoices):
     hard = "Hard", "Hard"
 
 
-
+class Category_Type(models.TextChoices):
+    IELTS = "IELTS", "IELTS"
+    GRE = "GRE", "GRE"
+    GMAT = "GMAT", "GMAT"
+    PTE = "PTE", "PTE"
+    GENERAL = "GENERAL", "GENERAL"
+    DUOLINGO = "DUOLINGO", "DUOLINGO"
 
 
 class ExamType(models.TextChoices):  # noqa: F811 
@@ -57,8 +63,8 @@ class Exam(models.Model):
     type_of_module = models.ForeignKey(
         "master.ModuleType", on_delete=models.SET_NULL, null=True, blank=True
     )
-    exam_category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, null=True, blank=True
+    exam_category = models.CharField(
+        choices=Category_Type.choices, null=True, blank=True
     )
     audio_file = models.FileField(upload_to="examblockaudio/", null=True, blank=True)
     question_structure = models.JSONField(null=True, blank=True)
