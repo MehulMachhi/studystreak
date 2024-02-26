@@ -102,6 +102,7 @@ class ZOomClient:
         return self
         
     def create_meeting(self,data:dict):
+        validate()
         url = f'{base_url}/v2/users/me/meetings'
         header = {
             'Authorization': f'Bearer {self.access_token}',
