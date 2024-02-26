@@ -48,10 +48,10 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     
     def get_timestamp(self, obj):
         user = self.context.get('user',None)
-    
-        data = obj.youtube_data.filter(student=user)
-        if (data.exists()):
-            return data[0].timestamp
+        if user:
+            data = obj.youtube_data.filter(student=user)
+            if (data.exists()):
+                return data[0].timestamp
         return ""
 
     

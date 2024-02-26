@@ -20,6 +20,7 @@ from .serializers import (Course_List_Serializers_forpackage,
                           CourseRetUpdDelSerializers, GroupSerializer,
                           UserSerializer, UserSerializerforinstructor,
                           YoutubeDataSerializer)
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class CourseListView(generics.ListCreateAPIView):
@@ -54,11 +55,16 @@ class CourseListView(generics.ListCreateAPIView):
 
 class CourseRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     queryset = Course.objects.all()
     serializer_class = CourseRetUpdDelSerializers
     
     def get_serializer_context(self):
-        return {'user':self.request.user.student}
+        try:
+            return {'user':self.request.user.student}
+        except Exception as e :
+            return {'user':None}
+        
 ################# List of all course to use in package model ##################
 
 class Course_list_forpackage(generics.ListAPIView):
