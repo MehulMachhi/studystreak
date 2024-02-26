@@ -21,7 +21,7 @@ from LiveClass.models import Live_Class
 from LiveClass.serializers import LiveClassListSerializer
 # from coursedetail.models import Quiz_Question, QuizOption
 # from coursedetail.serializers import QuizOptionListSerializers, Quiz_QuestionListSerializers
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
 
 class PackageListView(generics.ListCreateAPIView):
@@ -125,6 +125,7 @@ class CoursePackageView(generics.RetrieveAPIView):
 
 
 class UserWisePackageWithCourseID(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = StudentListSerializers
 
