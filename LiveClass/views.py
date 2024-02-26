@@ -21,7 +21,7 @@ from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
 
 zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
 from zoomus import ZoomClient
-from rest_framework.serializer import ValidationError
+from rest_framework.serializers import ValidationError
 Account_id = "gZOcFtX-S3GRietpBWVT-Q"
 client_id='vy_n2AFIQJyEIF_4d8g9A'
 client_secret='kdxcpDLmMyj4QZcOawul86ktHJm7bMVv'
