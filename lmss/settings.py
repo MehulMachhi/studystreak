@@ -275,14 +275,14 @@ SPECTACULAR_SETTINGS = {
 
 PASSWORD_RESET_TIMEOUT = 60 * 30
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
-    'DEFAULT_PERMISSION_CLASSES':[
-      "rest_framework.permissions.IsAuthenticated",  
-    ]
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": [
+#         "rest_framework_simplejwt.authentication.JWTAuthentication",
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES':[
+#       "rest_framework.permissions.IsAuthenticated",  
+#     ]
+# }
 AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
@@ -336,3 +336,5 @@ BASE_URL = 'https://zoom.us'
 ACCOUNT_ID = "hy5Qo6Z-T8-HWmI2vHf4og"
 CLIENT_ID = "qjhZVzGQpq3dMgNyPLdZw"
 CLIENT_SECRET = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
+
+

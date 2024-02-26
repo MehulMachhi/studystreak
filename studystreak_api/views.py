@@ -80,6 +80,8 @@ class RegistrationView(APIView):
             recipient_list = [user.email]
             current_site = get_current_site(request)
             token = account_activation_token.make_token(user)
+            print(token)
+            print("***")
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             # link = f"{current_site.domain}/confirm/{uid}/{token}"
             context = {

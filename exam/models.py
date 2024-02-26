@@ -67,6 +67,13 @@ class Exam(models.Model):
 
     def __str__(self):
         return f"{self.exam_name}-{self.exam_type}"
+    def image_img(self):
+        if self.item_image:
+            return u'<img src="%s" width="50" height="50" />' % self.item_image.url
+        else:
+            return '(Sin imagen)'
+    image_img.short_description = 'Thumb'
+    image_img.allow_tags = True
 
     class Meta:
         verbose_name = "Exam_Block"

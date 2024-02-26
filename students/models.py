@@ -93,8 +93,8 @@ class Student(models.Model):
     referal_code = models.CharField(max_length=20, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    student_exam_block = models.ManyToManyField(Exam, null=True, blank=True)
-    student_module = models.ManyToManyField(module, null=True, blank=True)
+    student_mock_test = models.ManyToManyField(Exam, null=True, blank=True)
+    student_pt_flt = models.ManyToManyField(module, null=True, blank=True)
     
     def __str__(self):
         return self.user.get_full_name()

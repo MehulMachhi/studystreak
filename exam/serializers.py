@@ -8,7 +8,6 @@ class AnswerSerializer(serializers.ModelSerializer):
         model = Answer
         fields = ("id", "question_number", "answer_text")
 
-
 class ExamSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
 
