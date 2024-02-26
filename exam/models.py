@@ -6,9 +6,8 @@ from master.models import Category, ExamType, TestType
 
 
 class BlockType(models.TextChoices):
-    practice = "Practice", "Practice"
-    full_length = "Full Length", "Full Length"
     assignments = "Assignments", "Assignments"
+    mock_test = "Mock Test", "Mock Test"
 
 
 class Difficulty(models.TextChoices):
