@@ -20,10 +20,8 @@ from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
                           LiveClassListWithIDSerializer)
 
 zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
-
-
 from zoomus import ZoomClient
-
+from rest_framework.serializer import ValidationError
 Account_id = "gZOcFtX-S3GRietpBWVT-Q"
 client_id='vy_n2AFIQJyEIF_4d8g9A'
 client_secret='kdxcpDLmMyj4QZcOawul86ktHJm7bMVv'
@@ -87,9 +85,11 @@ class Liveclass_Create_View(generics.ListCreateAPIView):
             'approval_type':0,
             "close_registration":True
         }
-        zoom_returned_data = zc.create_meeting(zoom_data)
-        print(zoom_returned_data)
-        data['zoom_meeting_id'] = zoom_returned_data['join_url']
+        try:
+            zoom_returned_data = zc.create_meeting(zoom_data)
+            data['zoom_meeting_id'] = zoom_returned_data['join_url']
+        except Exception as e:
+            return 
         return super().perform_create(serializer)
 
 

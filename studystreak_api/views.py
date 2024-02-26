@@ -58,6 +58,8 @@ def get_tokens_for_user(user):
 
 
 class RegistrationView(APIView):
+    permission_classes = []
+    authentication_classes = []
     # renderer_classes = [UserRenderes]
     # def post(self,request):
     #     serializer = RegisterSerializer(data=request.data)

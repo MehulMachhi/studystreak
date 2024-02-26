@@ -113,4 +113,5 @@ class ZOomClient:
         response = requests.post(url, headers=header, data=json_data)
         logger.info('Response when creating the zoom meeting.')
         logger.info(response.text)
+        response.raise_for_status()
         return response.json()
