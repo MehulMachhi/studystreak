@@ -421,7 +421,7 @@ urlpatterns = [
     path('api/confirm/order/', TransactionView.as_view(), name='confirm-order'),
     path('api/create-meeting/',ZoomAPiView.as_view()),
     path("api/save-video-data/", YoutubeDataApiView.as_view(), name='creat'),
-    path('api/update_student_fields/', UpdateStudentFields.as_view(), name='update_student_fields'),
+    path('api/student-test-submit/', UpdateStudentFields.as_view(), name='update_student_fields'),
     
 
 ] + router.urls

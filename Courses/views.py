@@ -24,6 +24,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class CourseListView(generics.ListCreateAPIView):
+    permission_classes = []
     queryset = Course.objects.all()
     serializer_class = CourseListSerializers
 
