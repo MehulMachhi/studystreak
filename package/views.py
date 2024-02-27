@@ -49,6 +49,9 @@ class PackageRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     #         return Response(data)
 
 class CoursePackageView(generics.RetrieveAPIView):
+    permission_classes = []
+    authentication_classes = []
+
     queryset = Course.objects.all()
     serializer_class = CoursePackageSerializer
    
