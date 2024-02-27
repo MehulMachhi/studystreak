@@ -70,6 +70,8 @@ from .serializers import (
 
 
 class CategoryListView(generics.ListCreateAPIView):
+    permission_classes = []
+    authentication_classes = []
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializers
 
@@ -80,6 +82,8 @@ class CategoryRetUpdDelView(generics.ListCreateAPIView):
 
 
 class LevelListView(generics.ListCreateAPIView):
+    permission_classes = []
+    authentication_classes = []
     queryset = Level.objects.all()
     serializer_class = LevelListSerializers
 

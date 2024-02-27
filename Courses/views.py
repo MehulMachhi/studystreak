@@ -24,6 +24,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class CourseListView(generics.ListCreateAPIView):
+    permission_classes = []
+    authentication_classes = []
     queryset = Course.objects.all()
     serializer_class = CourseListSerializers
 
@@ -54,8 +56,8 @@ class CourseListView(generics.ListCreateAPIView):
         return Response(data)
 
 class CourseRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    permission_classes = []
+    authentication_classes = []
     queryset = Course.objects.all()
     serializer_class = CourseRetUpdDelSerializers
     
