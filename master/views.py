@@ -232,6 +232,9 @@ class TestTypeViewset(ModelViewSet):
 #         # return batch.objects.filter(add_package=package)
 #         return batch.objects.filter(add_package = self.kwargs["package_id"])
 class BatchListByPackageView(generics.ListAPIView):
+    permission_classes = []
+    authentication_classes = []
+
     serializer_class = batchListSerializers
 
     def get_queryset(self):
