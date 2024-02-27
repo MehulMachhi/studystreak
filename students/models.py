@@ -95,6 +95,8 @@ class Student(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     student_pt = models.ManyToManyField(module, null=True, blank=True, related_name="+")
     student_flt = models.ManyToManyField(module, null=True, blank=True)
+    student_mock = models.ManyToManyField(module, null=True, blank=True, related_name="mock")
+
     
     def __str__(self):
         return self.user.get_full_name()

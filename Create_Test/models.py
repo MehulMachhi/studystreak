@@ -9,6 +9,7 @@ from exam.models import Exam
 class Typetest(models.TextChoices):
     practice = "Practice", "Practice"
     full_length = "Full Length", "Full Length"
+    Mock_Test = "Mock Test", "Mock Test"
 
 
 class module(models.Model):

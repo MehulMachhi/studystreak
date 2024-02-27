@@ -56,6 +56,8 @@ class UpdateStudentFields(APIView):
             existing_exams = student_instance.student_pt.filter(Name=module_instance.Name)
         elif typetest == 'Full Length':
             existing_exams = student_instance.student_flt.filter(Name=module_instance.Name)
+        elif typetest == 'Mock Test':
+            existing_exams = student_instance.student_mock.filter(Name=module_instance.Name)
         else:
             return Response({"detail": "Invalid Typetest"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -69,6 +71,9 @@ class UpdateStudentFields(APIView):
         elif typetest == 'Full Length':
             student_flt_data = {'Name': module_instance.Name}  
             student_instance.student_flt.create(**student_flt_data)
+        elif typetest == 'Mock Test':
+            student_mock_data = {'Name': module_instance.Name}  
+            student_instance.student_mock.create(**student_mock_data)
         
         return Response({"detail": "Student fields updated successfull"}, status=status.HTTP_200_OK)
     

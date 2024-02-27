@@ -108,6 +108,7 @@ class StudentAdmin(ExportMixin, admin.ModelAdmin):
             "fields": (
                 "student_pt",
                 "student_flt",
+                "student_mock",
             ),
         },
     ),
