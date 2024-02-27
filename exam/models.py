@@ -19,6 +19,7 @@ class Difficulty(models.TextChoices):
 class Category_Type(models.TextChoices):
     IELTS = "IELTS", "IELTS"
     GRE = "GRE", "GRE"
+    TOFEL = "TOFEL", "TOFEL"
     GMAT = "GMAT", "GMAT"
     PTE = "PTE", "PTE"
     GENERAL = "GENERAL", "GENERAL"
