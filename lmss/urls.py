@@ -11,7 +11,7 @@ from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
-from Create_Test.views import ResponsesView, createexamview, moduleListView
+from Create_Test.views import ResponsesView, createexamview, moduleListView, UpdateStudentFields
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
@@ -421,6 +421,7 @@ urlpatterns = [
     path('api/confirm/order/', TransactionView.as_view(), name='confirm-order'),
     path('api/create-meeting/',ZoomAPiView.as_view()),
     path("api/save-video-data/", YoutubeDataApiView.as_view(), name='creat'),
+    path('api/update_student_fields/', UpdateStudentFields.as_view(), name='update_student_fields'),
     
 
 ] + router.urls

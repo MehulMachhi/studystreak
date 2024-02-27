@@ -70,8 +70,6 @@ from .serializers import (
 
 
 class CategoryListView(generics.ListCreateAPIView):
-    permission_classes = []
-    authentication_classes = []
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializers
 
@@ -82,8 +80,6 @@ class CategoryRetUpdDelView(generics.ListCreateAPIView):
 
 
 class LevelListView(generics.ListCreateAPIView):
-    permission_classes = []
-    authentication_classes = []
     queryset = Level.objects.all()
     serializer_class = LevelListSerializers
 
@@ -232,9 +228,6 @@ class TestTypeViewset(ModelViewSet):
 #         # return batch.objects.filter(add_package=package)
 #         return batch.objects.filter(add_package = self.kwargs["package_id"])
 class BatchListByPackageView(generics.ListAPIView):
-    permission_classes = []
-    authentication_classes = []
-
     serializer_class = batchListSerializers
 
     def get_queryset(self):
