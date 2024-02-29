@@ -148,9 +148,16 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
                         serialized_course = CourseListSerializers(course).data
                         serialized_package = PackageListForStudentSerializers(package).data
 
+                        student_pt_length = len(student.student_pt.all())
+                        student_flt_length = len(student.student_flt.all())
+                        student_mock_length = len(student.student_mock.all())
+
                         package_list.append({
                             'student_id': student.id,
                             'student_name': student.user.username,
+                            'student_pt': student_pt_length,
+                            'student_flt': student_flt_length,
+                            'student_mock': student_mock_length,
                             'selected_batch': batch.batch_name,
                             'batch_id': batch.id,
                             'course': serialized_course,
@@ -160,6 +167,9 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
                         package_list.append({
                             'student_id': student.id,
                             'student_name': student.user.username,
+                            'student_pt': len(student.student_pt.all()),
+                            'student_flt': len(student.student_flt.all()),
+                            'student_mock': len(student.student_mock.all()),
                             'selected_batch': batch.batch_name,
                             'batch_id': batch.id,
                             'course': None,
@@ -169,6 +179,9 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
                 package_list.append({
                     'student_id': student.id,
                     'student_name': student.user.username,
+                    'student_pt': len(student.student_pt.all()),
+                    'student_flt': len(student.student_flt.all()),
+                    'student_mock': len(student.student_mock.all()),
                     'selected_batch': None,
                     'batch_id': None,
                     'course': None,
