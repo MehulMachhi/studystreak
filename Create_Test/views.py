@@ -112,7 +112,8 @@ class FilterReadingListModuleView(generics.ListAPIView):
     serializer_class = FilterListModuleSerializers
 
     def get_queryset(self):
-        return module.objects.filter(Reading__isnull=False)
+        # return module.objects.filter(Reading__isnull=False)
+        return module.objects.exclude(Reading=None)
     
 class FilterWritingListModuleView(generics.ListAPIView):
     serializer_class = FilterListModuleSerializers
