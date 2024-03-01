@@ -23,6 +23,7 @@ from LiveClass.serializers import LiveClassListSerializer
 # from coursedetail.serializers import QuizOptionListSerializers, Quiz_QuestionListSerializers
 from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
+from LiveClass.serializers import LiveClassListSerializer
 
 class PackageListView(generics.ListCreateAPIView):
     queryset = Package.objects.all()
@@ -153,6 +154,10 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
                         student_mock_length = len(student.student_mock.all())
                         student_enroll_live_class = student.Live_class_enroll.all()
 
+
+                        live_class_serializer = LiveClassListSerializer(student_enroll_live_class, many=True)
+                        serialized_live_class = live_class_serializer.data
+
                         package_list.append({
                             'student_id': student.id,
                             'student_name': student.user.username,
@@ -163,7 +168,7 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
                             'batch_id': batch.id,
                             'course': serialized_course,
                             'package': serialized_package,
-                            'Live_class_enroll':student_enroll_live_class
+                            'Live_class_enroll':serialized_live_class
                         })
                     else:
                         package_list.append({
