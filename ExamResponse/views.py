@@ -16,9 +16,6 @@ class StudentAnswerListView(generics.ListCreateAPIView):
 #     serializer_class = StudentanswerSpeakingResponseSerializers
 #     parser_classes = [MultiPartParser, FormParser]
 class SpeakingAnswerListView(generics.ListCreateAPIView):
-    #  parser_classes = [MultiPartParser, FormParser, JSONParser]
-    #  queryset = Studentanswer.objects.all()
-    #  serializer_class = StudentanswerSpeakingResponseSerializers
     parser_classes = [MultiPartParser, FormParser, JSONParser]
     queryset = Studentanswer.objects.all()
     serializer_class = StudentanswerSpeakingResponseSerializers
