@@ -9,6 +9,12 @@ class StudentAnswerSerializers(serializers.ModelSerializer):
         fields = ("id", "question_number", "answer_text")
         depth = 2
 
+class StudentSpeakingSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = SpeakingResponse
+        fields = ("id", "question_number", "answer_audio")
+        depth = 2
+
     # def get_student_answers(self, obj):
     #     student_answers = Student_answer.objects.filter(student_exam=obj)
     #     return StudentAnswerAnswerSerializers(student_answers, many=True).data
@@ -54,7 +60,8 @@ class StudentanswerSerializers(serializers.ModelSerializer):
             "user",
             "exam",
             "student_exam",
-            "gpt_response",
+            "AI_Assessment",
+            "Tutor_Assessment",
             "band",
         
         )
@@ -66,8 +73,34 @@ class StudentanswerSerializers(serializers.ModelSerializer):
         
         if student_exam_data:
             for answer_data in student_exam_data:
-                Student_answer.objects.create(
+                SpeakingResponse.objects.create(
                     student_answers=studentanswer, **answer_data
                 )
 
         return studentanswer
+
+
+class StudentanswerSpeakingResponseSerializers(serializers.ModelSerializer):
+    student_exams = StudentSpeakingSerializers(many=True, required=True)
+
+    class Meta:
+        model = Studentanswer
+        fields = (
+            "id",
+            "user",
+            "exam",
+            "student_exams",
+            "AI_Assessment",
+            "Tutor_Assessment",
+            "band",
+        )
+
+    def create(self, validated_data):
+        student_exam_data = validated_data.pop("student_exams", None)
+        studentanswer = SpeakingResponse.objects.create(**validated_data)
+        
+        if student_exam_data:
+            for answer_data in student_exam_data:
+                SpeakingResponse.objects.create(student_answers=studentanswer, **answer_data)
+        return studentanswer
+

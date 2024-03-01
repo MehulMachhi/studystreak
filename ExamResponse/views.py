@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 from .models import *
-from .serializers import SpeakingAnswerSerializer, StudentanswerSerializers
+from .serializers import SpeakingAnswerSerializer, StudentanswerSerializers, StudentanswerSpeakingResponseSerializers
 
 
 class StudentAnswerListView(generics.ListCreateAPIView):
@@ -11,7 +11,17 @@ class StudentAnswerListView(generics.ListCreateAPIView):
     serializer_class = StudentanswerSerializers
 
 
+# class SpeakingAnswerListView(generics.ListCreateAPIView):
+#     queryset = SpeakingResponse.objects.all()
+#     serializer_class = StudentanswerSpeakingResponseSerializers
+#     parser_classes = [MultiPartParser, FormParser]
 class SpeakingAnswerListView(generics.ListCreateAPIView):
-    queryset = SpeakingResponse.objects.all()
-    serializer_class = SpeakingAnswerSerializer
-    parser_classes = [MultiPartParser, FormParser]
+    #  parser_classes = [MultiPartParser, FormParser, JSONParser]
+    #  queryset = Studentanswer.objects.all()
+    #  serializer_class = StudentanswerSpeakingResponseSerializers
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    queryset = Studentanswer.objects.all()
+    serializer_class = StudentanswerSpeakingResponseSerializers
+
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)
