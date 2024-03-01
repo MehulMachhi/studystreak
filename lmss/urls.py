@@ -12,7 +12,8 @@ from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
 from Create_Test.views import (ResponsesView, createexamview, moduleListView, UpdateStudentFields,MockTestStudentSubmit,
-                               FilterListeningListModuleView, FilterReadingListModuleView)
+                               FilterListeningListModuleView, FilterReadingListModuleView, FilterSpeakingListModuleView,
+                               FilterWritingListModuleView)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
@@ -426,8 +427,8 @@ urlpatterns = [
     path('api/student-mocktest-submit/', MockTestStudentSubmit.as_view(), name='MockTestStudentSubmit'),
     path('api/filterlisteninglistmoduleview/', FilterListeningListModuleView.as_view(), name='FilterListModuleView'),
     path('api/filterreadinglistmoduleview/', FilterReadingListModuleView.as_view(), name='FilterReadingListModuleView'),
-    
-
+    path('api/filterspeakinglistmoduleview/', FilterSpeakingListModuleView.as_view(), name='FilterSpeakingListModuleView'),
+    path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
 ] + router.urls
 
 admin.site.site_header = "StudyStreak Admin"
