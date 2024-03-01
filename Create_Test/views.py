@@ -9,6 +9,7 @@ from .serializers import (
     ModuleListSerializers,
     ResponsesSerializers,
     createexamserializers,
+    FilterListModuleSerializers,
 )
 from students.models import Student
 # Create your views here.
@@ -65,8 +66,8 @@ class UpdateStudentFields(APIView):
             # return Response({"detail": f"The {typetest} exam '{module_instance.Name}' already add"}, status=status.HTTP_400_BAD_REQUEST)
     
         if typetest == 'Practice':
-            student_pt_data = {'Name': module_instance.Name} 
-            student_instance.student_pt.create(**student_pt_data)
+            # student_pt_data = {'Name': module_instance.Name} 
+            student_instance.student_pt.add(module_instance)
         elif typetest == 'Full Length':
             student_flt_data = {'Name': module_instance.Name}  
             student_instance.student_flt.create(**student_flt_data)
@@ -74,34 +75,6 @@ class UpdateStudentFields(APIView):
         
         return Response({"detail": "Student fields updated successfull"}, status=status.HTTP_200_OK)
     
-# class MockTestStudentSubmit(APIView):
-    # def post(self, request):
-    #     student_id = request.data.get("student_id")
-    #     exam_id = request.data.get("exam_id")
-    #     typetest = request.data.get("typetest")
-
-    #     try:
-    #         student_instance = Student.objects.get(pk=student_id)
-    #     except Student.DoesNotExist:
-    #         return Response({"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
-
-    #     try:
-    #         module_instance = Exam.objects.get(pk=exam_id)
-    #     except Exam.DoesNotExist:
-    #         return Response({"details": "Exam not found"}, status=status.HTTP_404_NOT_FOUND)
-
-    #     if typetest == "Mock Test":
-    #         existing_students = Student.objects.filter(student_mock__exam_name=module_instance.exam_name)
-    #         if existing_students.exists():
-    #             return Response({"detail": "students are already add"}, status=status.HTTP_400_BAD_REQUEST)
-
-    #         student_mock_data = {"exam_name": module_instance.exam_name}
-    #         student_instance.student_mock.create(**student_mock_data)
-    #     else:
-    #         return Response({"detail": "Invalid TypeTest"}, status=status.HTTP_400_BAD_REQUEST)
-
-    #     return Response({"details": "Student Updated Successfully"}, status=status.HTTP_200_OK)
-
 class MockTestStudentSubmit(APIView):
     def post(self, request):
         student_id = request.data.get("student_id")
@@ -128,3 +101,15 @@ class MockTestStudentSubmit(APIView):
             return Response({"detail": "Invalid TypeTest"}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({"details": "Student Updated Successfully"}, status=status.HTTP_200_OK)
+    
+class FilterListeningListModuleView(generics.ListAPIView):
+    serializer_class = FilterListModuleSerializers
+
+    def get_queryset(self):
+        return module.objects.filter(Listening__isnull=False)
+      
+class FilterReadingListModuleView(generics.ListAPIView):
+    serializer_class = FilterListModuleSerializers
+
+    def get_queryset(self):
+        return module.objects.filter(Reading__isnull=False)

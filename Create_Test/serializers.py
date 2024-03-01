@@ -50,3 +50,9 @@ class ModuleCreateSerializers(serializers.ModelSerializer):
     class Meta:
         model = module
         fields = "__all__"
+
+class FilterListModuleSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = module
+        fields = "__all__"
+        depth=2

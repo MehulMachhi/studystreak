@@ -50,6 +50,7 @@ class moduleadmin(admin.ModelAdmin):
         "verbal_reasoning_list",
     )
 
+    list_filter = ("Reading", "Listening", "Speaking", "Writing", "exam_test")
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
