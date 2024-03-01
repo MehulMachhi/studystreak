@@ -193,7 +193,6 @@ class UserWisePackageWithCourseID(generics.ListAPIView):
             'package_count': package_count,
             'student_packages': package_list,
         }
-
         return Response(data)
 
 ################# new code ############
