@@ -69,11 +69,10 @@ class StudentanswerSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         student_exam_data = validated_data.pop("student_exam", None)
         studentanswer = Studentanswer.objects.create(**validated_data)
-        print(student_exam_data)
         
         if student_exam_data:
             for answer_data in student_exam_data:
-                SpeakingResponse.objects.create(
+                Student_answer.objects.create(
                     student_answers=studentanswer, **answer_data
                 )
 
