@@ -1,13 +1,19 @@
 from django.contrib import admin
-
-from .models import createexam, module
-from django_admin_listfilter_dropdown.filters import (
-    DropdownFilter, ChoiceDropdownFilter, RelatedDropdownFilter
-)
 # Register your models here.
 from django.contrib.admin import RelatedFieldListFilter
-from exam.models import ExamType
 from django.utils.translation import gettext_lazy as _
+from django_admin_listfilter_dropdown.filters import (ChoiceDropdownFilter,
+                                                      DropdownFilter,
+                                                      RelatedDropdownFilter)
+
+from exam.models import ExamType
+
+from .models import FullLengthTest, createexam, module
+
+
+@admin.register(FullLengthTest)
+class Admin(admin.ModelAdmin):...
+    
 
 class createexamadmin(admin.ModelAdmin):
     list_display = ("id", "ielts_names")
