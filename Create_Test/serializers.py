@@ -78,4 +78,10 @@ class FLTserializer(serializers.ModelSerializer):
         model = FullLengthTest
         fields = "__all__"
         depth = 2
-    
+
+    def validate(self, attrs):
+        count = sum(bool(attrs[key]) for key in ["Listening", "Speaking", "Writing", "Reading"])
+        if count > 1:
+            raise serializers.ValidationError("Backend has more than one exam_type, please remove and keep one of them.")
+
+        return super().validate(attrs)
