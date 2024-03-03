@@ -24,7 +24,6 @@ from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
 from ExamResponse.serializers import SpeakingAnswerSerializer
 from ExamResponse.views import (FLTAnswerCreateView,
                                 PracticeTestAnswerCreateView,
-                                SpeakingAnswerCreateView,
                                 SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
