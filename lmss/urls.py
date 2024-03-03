@@ -14,7 +14,7 @@ from Courses.views import (Course_list_forpackage, CourseInstructorListView,
 from Create_Test.views import (FilterListeningListModuleView,
                                FilterReadingListModuleView,
                                FilterSpeakingListModuleView,
-                               FilterWritingListModuleView,
+                               FilterWritingListModuleView, FLTTestView,
                                MockTestStudentSubmit, ResponsesView,
                                UpdateStudentFields, createexamview,
                                moduleListView)
@@ -437,6 +437,7 @@ urlpatterns = [
     path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
     path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
     path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
+    path('api/create/flt/', FLTTestView.as_view()),
     
 ] + router.urls
 

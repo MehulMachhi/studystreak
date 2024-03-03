@@ -35,11 +35,13 @@ class PracticeTestAnswerCreateView(APIView):
         serializer = PracticeTestAnswerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True): 
             serializer.save()  
-            return Response(None, 200)
+            return Response({'msg':'created'}, 201)
+    
         
 class FLTAnswerCreateView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = FLTAnswerSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response(None, 200)   
+            return Response({'msg':'created'}, 201)
+            

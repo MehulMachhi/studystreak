@@ -1,19 +1,17 @@
 # Create your views here.
-from rest_framework import generics
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Responses, createexam, module
-from .serializers import (
-    ModuleCreateSerializers,
-    ModuleListSerializers,
-    ResponsesSerializers,
-    createexamserializers,
-    FilterListModuleSerializers,
-)
-from students.models import Student
+
 # Create your views here.
 from exam.models import Exam
+from students.models import Student
+
+from .models import FullLengthTest, Responses, createexam, module
+from .serializers import (FilterListModuleSerializers, FLTserializer,
+                          ModuleCreateSerializers, ModuleListSerializers,
+                          ResponsesSerializers, createexamserializers)
+
 
 class createexamview(generics.ListCreateAPIView):
     queryset = createexam.objects.all()
@@ -128,3 +126,6 @@ class FilterSpeakingListModuleView(generics.ListAPIView):
     def get_queryset(self):
         return module.objects.filter(Speaking__isnull = False)
     
+class FLTTestView(generics.ListCreateAPIView):
+    queryset = FullLengthTest.objects.all()
+    serializer_class = FLTserializer

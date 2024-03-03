@@ -2,7 +2,7 @@ from functools import reduce
 
 from rest_framework import serializers
 
-from .models import Responses, createexam, module
+from .models import FullLengthTest, Responses, createexam, module
 
 
 class createexamserializers(serializers.ModelSerializer):
@@ -56,3 +56,10 @@ class FilterListModuleSerializers(serializers.ModelSerializer):
         model = module
         fields = "__all__"
         depth=2
+
+
+class FLTserializer(serializers.ModelSerializer):
+    class Meta:
+        model = FullLengthTest
+        fields = "__all__"
+        depth = 1
