@@ -1,9 +1,11 @@
+from typing import Iterable
+
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 # Create your models here.
-from exam.models import Exam, ExamType
+from exam.models import Difficulty, Exam, ExamType
 
 
 class Typetest(models.TextChoices):
@@ -38,9 +40,14 @@ class module(models.Model):
     verbal_reasoning = models.ManyToManyField(
         Exam, null=True, blank=True, related_name="verbal_reasoning+"
     )
-
+    difficulty_level = models.CharField(max_length=10, choices = Difficulty.choices, default=Difficulty.easy)
+    
+    
     def __str__(self):
         return f"{self.Name}"
+    
+    def save(self,*args, **kwargs):
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Create Practice Test"
@@ -115,3 +122,5 @@ class FullLengthTest(models.Model):
         related_name="flt_writing",
         limit_choices_to={"Writing__exam_type": ExamType.writing},
     )
+    
+    difficulty_level = models.CharField(max_length=20, choices=Difficulty.choices, default=Difficulty.easy)
