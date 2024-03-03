@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from Create_Test.models import module
+from Create_Test.models import FullLengthTest, module
 from exam.models import Exam
 from students.models import Student
 
@@ -133,3 +133,26 @@ class PracticeTestAnswerSerializer(serializers.Serializer):
                     )
 
         return practice_test_instance
+
+
+class FLTAnswerSerializer(serializers.Serializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
+    Full_Length_Exam =  serializers.PrimaryKeyRelatedField(queryset=FullLengthTest.objects.all(), required=True)
+    answer_data = StudentExamSerializer(many=True, required=True)
+    exam_type = serializers.CharField(max_length=40, required=True, )
+        
+    def create(self, validated_data):
+        answer_data = validated_data.pop('answer_data')
+        if answer_data:
+            for i in answer_data:
+                FLT_test_instance  = Studentanswer.objects.create(**validated_data,
+                                                                  exam= i['exam_id'],)
+                                                                   
+                                                                  
+                for j in i['data']:
+                    Student_answer.objects.create(
+                        student_answers=FLT_test_instance, **j
+                        
+                    )
+
+        return FLT_test_instance

@@ -21,7 +21,8 @@ from Create_Test.views import (FilterListeningListModuleView,
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
-from ExamResponse.views import (PracticeTestAnswerCreateView,
+from ExamResponse.views import (FLTAnswerCreateView,
+                                PracticeTestAnswerCreateView,
                                 SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
@@ -435,6 +436,8 @@ urlpatterns = [
     path('api/filterspeakinglistmoduleview/', FilterSpeakingListModuleView.as_view(), name='FilterSpeakingListModuleView'),
     path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
     path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
+    path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
+    
 ] + router.urls
 
 admin.site.site_header = "StudyStreak Admin"

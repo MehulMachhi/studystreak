@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 from .models import *
-from .serializers import (PracticeTestAnswerSerializer,
+from .serializers import (FLTAnswerSerializer, PracticeTestAnswerSerializer,
                           SpeakingAnswerSerializer, StudentanswerSerializers,
                           StudentanswerSpeakingResponseSerializers,
                           StudentExamSerializer)
@@ -36,3 +36,10 @@ class PracticeTestAnswerCreateView(APIView):
         if serializer.is_valid(raise_exception=True): 
             serializer.save()  
             return Response(None, 200)
+        
+class FLTAnswerCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = FLTAnswerSerializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(None, 200)   
