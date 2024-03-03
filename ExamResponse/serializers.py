@@ -156,3 +156,10 @@ class FLTAnswerSerializer(serializers.Serializer):
                     )
 
         return FLT_test_instance
+    
+
+class PracticeAnswersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = module
+        fields = "__all__"
+        depth = 2

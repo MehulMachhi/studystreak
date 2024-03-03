@@ -2,7 +2,8 @@ from rest_framework import generics
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 from .models import *
-from .serializers import (FLTAnswerSerializer, PracticeTestAnswerSerializer,
+from .serializers import (FLTAnswerSerializer, PracticeAnswersSerializer,
+                          PracticeTestAnswerSerializer,
                           SpeakingAnswerSerializer, StudentanswerSerializers,
                           StudentanswerSpeakingResponseSerializers,
                           StudentExamSerializer)
@@ -44,3 +45,42 @@ class FLTAnswerCreateView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({'msg':'created'}, 201)
+        
+from django.shortcuts import get_object_or_404
+
+from Create_Test.models import module
+from exam.serializers import AnswerSerializer
+from ExamResponse.models import Studentanswer
+
+from .serializers import StudentAnswerSerializers
+
+
+class PracticeAnswersView(APIView):
+    
+    def get(self, request, pk):
+        try:
+            module_instance = module.objects.get(pk=pk)
+        except module.DoesNotExist:
+            return Response(status=404)
+        res_data = {'correct_answers':{},
+                    'student_answers':{}}
+                    
+        practice_instace_data = ['Reading', 'Listening', 'Speaking', 'Writing']
+        for i in practice_instace_data:
+            for j in getattr(module_instance, i).all():
+                serializer = AnswerSerializer(j.answers.all(), many=True)
+                
+                studentanswer_instance = Studentanswer.objects.filter(Practise_Exam=module_instance,user=request.user, exam = j)
+                if (studentanswer_instance.exists()):
+                    student_data = StudentAnswerSerializers(studentanswer_instance[0].student_exam.all(), many=True).data
+                    if not res_data["student_answers"].get(i, None):
+                        res_data['student_answers'][i] = [{'block_id':j.id, "answers":student_data}]
+                    else:
+                        res_data['student_answers'][i].append({'block_id':j.id, "answers":student_data})
+                if not res_data["correct_answers"].get(i, None):
+                    res_data['correct_answers'][i] = [{'block_id':j.id, "answers":serializer.data}]
+                else:
+                    res_data['correct_answers'][i].append({'block_id':j.id, "answers":serializer.data})
+                studentanswer_instance
+                
+        return Response(res_data)

@@ -22,7 +22,7 @@ from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
 from ExamResponse.serializers import SpeakingAnswerSerializer
-from ExamResponse.views import (FLTAnswerCreateView,
+from ExamResponse.views import (FLTAnswerCreateView, PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
                                 SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
@@ -440,6 +440,7 @@ urlpatterns = [
     path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
     path('api/create/flt/', FLTTestCreateView.as_view()),
     path('api/get/flt/',FLTTestListView.as_view()),
+    path('api/practice-answers/<int:pk>/', PracticeAnswersView.as_view()),
     
 ] + router.urls
 
