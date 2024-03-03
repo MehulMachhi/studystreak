@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from Create_Test.models import FullLengthTest, module
-from exam.models import Exam
+from exam.models import Exam, ExamType
 from students.models import Student
 
 from .models import SpeakingResponse, Student_answer, Studentanswer
@@ -139,7 +139,7 @@ class FLTAnswerSerializer(serializers.Serializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
     Full_Length_Exam =  serializers.PrimaryKeyRelatedField(queryset=FullLengthTest.objects.all(), required=True)
     answer_data = StudentExamSerializer(many=True, required=True)
-    exam_type = serializers.CharField(max_length=40, required=True, )
+    exam_type = serializers.ChoiceField(choices = ExamType.choices) #(max_length=40, required=True, )
         
     def create(self, validated_data):
         answer_data = validated_data.pop('answer_data')
