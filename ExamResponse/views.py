@@ -44,4 +44,3 @@ class FLTAnswerCreateView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({'msg':'created'}, 201)
-            

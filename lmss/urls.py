@@ -14,15 +14,17 @@ from Courses.views import (Course_list_forpackage, CourseInstructorListView,
 from Create_Test.views import (FilterListeningListModuleView,
                                FilterReadingListModuleView,
                                FilterSpeakingListModuleView,
-                               FilterWritingListModuleView, FLTTestView,
-                               MockTestStudentSubmit, ResponsesView,
-                               UpdateStudentFields, createexamview,
-                               moduleListView)
+                               FilterWritingListModuleView, FLTTestCreateView,
+                               FLTTestListView, MockTestStudentSubmit,
+                               ResponsesView, UpdateStudentFields,
+                               createexamview, moduleListView)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
+from ExamResponse.serializers import SpeakingAnswerSerializer
 from ExamResponse.views import (FLTAnswerCreateView,
                                 PracticeTestAnswerCreateView,
+                                SpeakingAnswerCreateView,
                                 SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
@@ -437,7 +439,8 @@ urlpatterns = [
     path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
     path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
     path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
-    path('api/create/flt/', FLTTestView.as_view()),
+    path('api/create/flt/', FLTTestCreateView.as_view()),
+    path('api/get/flt/',FLTTestListView.as_view()),
     
 ] + router.urls
 

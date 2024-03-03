@@ -1,7 +1,8 @@
-from typing import Iterable
+from typing import Collection, Iterable
 
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
@@ -46,13 +47,12 @@ class module(models.Model):
     def __str__(self):
         return f"{self.Name}"
     
-    def save(self,*args, **kwargs):
-        return super().save(*args, **kwargs)
+
 
     class Meta:
         verbose_name = "Create Practice Test"
         verbose_name_plural = "Create Practice Tests"
-
+        
 
 class createexam(models.Model):
     IELTS = models.ForeignKey("module", on_delete=models.CASCADE, null=True, blank=True)
