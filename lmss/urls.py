@@ -11,13 +11,18 @@ from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
-from Create_Test.views import (ResponsesView, createexamview, moduleListView, UpdateStudentFields,MockTestStudentSubmit,
-                               FilterListeningListModuleView, FilterReadingListModuleView, FilterSpeakingListModuleView,
-                               FilterWritingListModuleView)
+from Create_Test.views import (FilterListeningListModuleView,
+                               FilterReadingListModuleView,
+                               FilterSpeakingListModuleView,
+                               FilterWritingListModuleView,
+                               MockTestStudentSubmit, ResponsesView,
+                               UpdateStudentFields, createexamview,
+                               moduleListView)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
-from ExamResponse.views import SpeakingAnswerListView, StudentAnswerListView
+from ExamResponse.views import (PracticeTestAnswerCreateView,
+                                SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
 from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
@@ -429,6 +434,7 @@ urlpatterns = [
     path('api/filterreadinglistmoduleview/', FilterReadingListModuleView.as_view(), name='FilterReadingListModuleView'),
     path('api/filterspeakinglistmoduleview/', FilterSpeakingListModuleView.as_view(), name='FilterSpeakingListModuleView'),
     path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
+    path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
 ] + router.urls
 
 admin.site.site_header = "StudyStreak Admin"

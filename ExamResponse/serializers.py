@@ -1,5 +1,9 @@
 from rest_framework import serializers
 
+from Create_Test.models import module
+from exam.models import Exam
+from students.models import Student
+
 from .models import SpeakingResponse, Student_answer, Studentanswer
 
 
@@ -102,4 +106,30 @@ class StudentanswerSpeakingResponseSerializers(serializers.ModelSerializer):
             for answer_data in student_exam_data:
                 SpeakingResponse.objects.create(student_answers=studentanswer, **answer_data)
         return studentanswer
+    
+from django.contrib.auth.models import User
 
+
+class StudentExamSerializer(serializers.Serializer):
+    exam_id = serializers.PrimaryKeyRelatedField(queryset=Exam.objects.all(), required=True)
+    data = StudentAnswerSerializers(many=True, required=True)
+    
+
+
+class PracticeTestAnswerSerializer(serializers.Serializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
+    Practise_Exam =  serializers.PrimaryKeyRelatedField(queryset=module.objects.all(), required=True)
+    answer_data = StudentExamSerializer(many=True, required=True)
+        
+    def create(self, validated_data):
+        answer_data = validated_data.pop('answer_data')
+        if answer_data:
+            for i in answer_data:
+                practice_test_instance  = Studentanswer.objects.create(**validated_data, exam= i['exam_id'])
+                for j in i['data']:
+                    Student_answer.objects.create(
+                        student_answers=practice_test_instance, **j
+                        
+                    )
+
+        return practice_test_instance
