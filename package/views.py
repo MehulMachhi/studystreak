@@ -392,14 +392,12 @@ class PackageCreateView(generics.CreateAPIView):
     queryset = Package.objects.all()
     serializer_class = PackageCreateSerializers
     print(serializer_class)
-    print("**")
 
 class EnrollPackageStudentView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         serializer = EnrollmentPackageSerializer(data=request.data)
-        print("****")
         if serializer.is_valid():
             user = self.request.user
             print(user)

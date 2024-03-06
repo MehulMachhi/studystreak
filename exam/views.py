@@ -63,7 +63,6 @@ class ExamListFilterView(generics.ListAPIView):
 class AnswerListView(generics.ListAPIView):
     serializer_class = AnswerListSerializers
     # queryset = Answer.objects.all()
-    print("***")
     # def get_queryset(self):
     #     # exam_id = self.kwargs.get('exam_id')
     #     # queryset = Answer.objects.filter(exam=exam_id)
