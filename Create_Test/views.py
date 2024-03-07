@@ -3,13 +3,12 @@ from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 # Create your views here.
 from exam.models import Exam
 from students.models import Student
 
 from .models import FullLengthTest, Responses, createexam, module
-from .serializers import (FilterListModuleSerializers, FLTserializer,
+from .serializers import (FLTCreateSerializer, FilterListModuleSerializers, FLTserializer,
                           ModuleCreateSerializers, ModuleListSerializers,
                           ResponsesSerializers, createexamserializers)
 
@@ -157,9 +156,6 @@ class FilterSpeakingListModuleView(generics.ListAPIView):
         return module.objects.filter(Speaking__isnull=False)
 
 
-class FLTTestCreateView(generics.CreateAPIView):
-    queryset = FullLengthTest.objects.all()
-    serializer_class = FLTserializer
 
 
 class FLTTestListView(generics.ListAPIView):
@@ -174,3 +170,7 @@ class FLTTestListView(generics.ListAPIView):
             qs = qs.filter(Q(difficulty_level=difficulty_level))
         
         return qs 
+    
+class FLTCreateView(generics.CreateAPIView):
+    queryset = FullLengthTest.objects.all()
+    serializer_class = FLTCreateSerializer

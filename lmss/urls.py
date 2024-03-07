@@ -11,10 +11,10 @@ from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
-from Create_Test.views import (FilterListeningListModuleView,
+from Create_Test.views import (FLTCreateView, FilterListeningListModuleView,
                                FilterReadingListModuleView,
                                FilterSpeakingListModuleView,
-                               FilterWritingListModuleView, FLTTestCreateView,
+                               FilterWritingListModuleView,
                                FLTTestListView, MockTestStudentSubmit,
                                ResponsesView, UpdateStudentFields,
                                createexamview, moduleListView)
@@ -438,10 +438,10 @@ urlpatterns = [
     path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
     path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
     path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
-    path('api/create/flt/', FLTTestCreateView.as_view()),
     path('api/get/flt/',FLTTestListView.as_view()),
     path('api/practice-answers/<int:pk>/', PracticeAnswersView.as_view()),
     path('api/flt-answers/<int:flt_id>/',FLTAnswers.as_view()),
+    path("api/create-flt/", FLTCreateView.as_view()),
     
 ] + router.urls
 

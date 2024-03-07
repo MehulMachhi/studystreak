@@ -61,13 +61,7 @@ class PracticeTestAnswerCreateView(APIView):
             serializer.save()  
             return Response({'msg':'created'}, 201)
     
-        
-class FLTAnswerCreateView(APIView):
-    def post(self, request, *args, **kwargs):
-        serializer = FLTAnswerSerializer(data = request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response({'msg':'created'}, 201)
+
         
 from django.shortcuts import get_object_or_404
 
@@ -86,8 +80,9 @@ class PracticeAnswersView(APIView):
         except module.DoesNotExist:
             return Response(status=404)
 
-        res_data = get_answers(module_instance)
-                
+        res_data = get_answers(self,module_instance)
+        res_data["name"] = module_instance.Name
+        res_data["difficulty_level"] = module_instance.difficulty_level
         return Response(res_data)
     
 
@@ -122,3 +117,11 @@ class FLTAnswers(APIView):
         #     ],
         #     200
         # )
+
+        
+class FLTAnswerCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = FLTAnswerSerializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'msg':'created'}, 201)

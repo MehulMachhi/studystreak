@@ -90,37 +90,38 @@ class Responses(models.Model):
 
 
 class FullLengthTest(models.Model):
+    name = models.CharField(max_length=255,null=True, blank=True)
     reading_set = models.ForeignKey(
         module,
-        on_delete=models.CASCADE,
         null=True,
         blank=True,
-        limit_choices_to={"Reading__exam_type": ExamType.reading},
+        on_delete=models.CASCADE,
+        # limit_choices_to={"Reading__exam_type": ExamType.reading},
         related_name="flt_reading",
     )
     listening_set = models.ForeignKey(
         module,
-        on_delete=models.CASCADE,
         null=True,
         blank=True,
+        on_delete=models.CASCADE,
         related_name="flt_listening",
-        limit_choices_to={"Listening__exam_type": ExamType.listening},
+        # limit_choices_to={"Listening__exam_type": ExamType.listening},
     )
     speaking_set = models.ForeignKey(
         module,
-        on_delete=models.CASCADE,
         null=True,
         blank=True,
+        on_delete=models.CASCADE,
         related_name="flt_speaking",
-        limit_choices_to={"Speaking__exam_type": ExamType.speaking},
+        # limit_choices_to={"Speaking__exam_type": ExamType.speaking},
     )
     writing_set = models.ForeignKey(
         module,
-        on_delete=models.CASCADE,
         null=True,
         blank=True,
+        on_delete=models.CASCADE,
         related_name="flt_writing",
-        limit_choices_to={"Writing__exam_type": ExamType.writing},
+        # limit_choices_to={"Writing__exam_type": ExamType.writing},
     )
     
     difficulty_level = models.CharField(max_length=20, choices=Difficulty.choices, default=Difficulty.easy)

@@ -72,16 +72,20 @@ class FilterListModuleSerializers(serializers.ModelSerializer):
         fields = "__all__"
         depth = 2
 
-
+class FLTCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FullLengthTest
+        fields = "__all__"
+        
 class FLTserializer(serializers.ModelSerializer):
     class Meta:
         model = FullLengthTest
         fields = "__all__"
         depth = 2
 
-    def validate(self, attrs):
-        count = sum(bool(attrs[key]) for key in ["Listening", "Speaking", "Writing", "Reading"])
-        if count > 1:
-            raise serializers.ValidationError("Backend has more than one exam_type, please remove and keep one of them.")
+    # def validate(self, attrs):
+    #     count = sum(bool(attrs[key]) for key in ["Listening", "Speaking", "Writing", "Reading"])
+    #     if count > 1:
+    #         raise serializers.ValidationError("Backend has more than one exam_type, please remove and keep one of them.")
 
-        return super().validate(attrs)
+    #     return super().validate(attrs)
