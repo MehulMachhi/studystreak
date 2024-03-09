@@ -11,18 +11,19 @@ from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
-from Create_Test.views import (FLTCreateView, FilterListeningListModuleView,
+from Create_Test.views import (FilterListeningListModuleView,
                                FilterReadingListModuleView,
                                FilterSpeakingListModuleView,
-                               FilterWritingListModuleView,
-                               FLTTestListView, MockTestStudentSubmit,
-                               ResponsesView, UpdateStudentFields,
-                               createexamview, moduleListView)
+                               FilterWritingListModuleView, FLTCreateView,
+                               FLTTestListView, FLTTestRetrieveView,
+                               MockTestStudentSubmit, ResponsesView,
+                               UpdateStudentFields, createexamview,
+                               moduleListView)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet)
-from ExamResponse.serializers import SpeakingAnswerSerializer
-from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers, PracticeAnswersView,
+from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
+                                PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
                                 SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
@@ -439,6 +440,8 @@ urlpatterns = [
     path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
     path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
     path('api/get/flt/',FLTTestListView.as_view()),
+    path('api/get/flt/<int:pk>/',FLTTestRetrieveView.as_view()),
+    
     path('api/practice-answers/<int:pk>/', PracticeAnswersView.as_view()),
     path('api/flt-answers/<int:flt_id>/',FLTAnswers.as_view()),
     path("api/create-flt/", FLTCreateView.as_view()),

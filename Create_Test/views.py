@@ -3,14 +3,16 @@ from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 # Create your views here.
 from exam.models import Exam
 from students.models import Student
 
 from .models import FullLengthTest, Responses, createexam, module
-from .serializers import (FLTCreateSerializer, FilterListModuleSerializers, FLTserializer,
-                          ModuleCreateSerializers, ModuleListSerializers,
-                          ResponsesSerializers, createexamserializers)
+from .serializers import (FilterListModuleSerializers, FLTCreateSerializer,
+                          FLTserializer, ModuleCreateSerializers,
+                          ModuleListSerializers, ResponsesSerializers,
+                          createexamserializers)
 
 
 class createexamview(generics.ListCreateAPIView):
@@ -161,16 +163,28 @@ class FilterSpeakingListModuleView(generics.ListAPIView):
 class FLTTestListView(generics.ListAPIView):
     queryset = FullLengthTest.objects.all()
     serializer_class = FLTserializer
-    
+
     def get_queryset(self):
-        qs =  super().get_queryset()
-        difficulty_level =self.request.query_params.get('difficulty_level')
+        qs = super().get_queryset()
+        difficulty_level = self.request.query_params.get("difficulty_level")
         print(difficulty_level)
         if difficulty_level:
             qs = qs.filter(Q(difficulty_level=difficulty_level))
-        
-        return qs 
-    
+
+        return qs
+
+
 class FLTCreateView(generics.CreateAPIView):
     queryset = FullLengthTest.objects.all()
     serializer_class = FLTCreateSerializer
+
+
+class FLTTestRetrieveView(generics.RetrieveAPIView):
+    queryset = FullLengthTest.objects.all()
+    serializer_class = FLTserializer
+    serializer_class = FLTCreateSerializer
+
+
+class FLTTestRetrieveView(generics.RetrieveAPIView):  # noqa: F811
+    queryset = FullLengthTest.objects.all()
+    serializer_class = FLTserializer
