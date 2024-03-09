@@ -5,7 +5,6 @@ from pathlib import Path
 from dotenv import dotenv_values
 
 config = dotenv_values(".env")
-from django.conf import settings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -80,6 +79,7 @@ INSTALLED_APPS = [
     "Create_Test",
     "ExamResponse",
     'django_admin_listfilter_dropdown',
+    'gamification',
     # "dj_rest_auth",
     #  'rest_framework.authtoken',
     # "dj_rest_auth.registration",
