@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from Create_Test.models import FullLengthTest, module
@@ -11,6 +12,7 @@ class StudentAnswerSerializers(serializers.ModelSerializer):
         model = Student_answer
         fields = ("id", "question_number", "answer_text")
         depth = 2
+
 
 class StudentSpeakingSerializers(serializers.ModelSerializer):
     class Meta:
@@ -66,18 +68,25 @@ class StudentanswerSerializers(serializers.ModelSerializer):
             "AI_Assessment",
             "Tutor_Assessment",
             "band",
-        
         )
 
     def create(self, validated_data):
         student_exam_data = validated_data.pop("student_exam", None)
         studentanswer = Studentanswer.objects.create(**validated_data)
-        
+
         if student_exam_data:
-            for answer_data in student_exam_data:
-                Student_answer.objects.create(
-                    student_answers=studentanswer, **answer_data
-                )
+            if validated_data.get("exam_type",None) == ExamType.speaking:
+                for answer_data in student_exam_data:
+                    SpeakingResponse.objects.create(
+                        student_answers=studentanswer,
+                        question_number=answer_data.get("question_number"),
+                        answer_audio = answer_data.get("answeer_text")
+                    )
+            else:
+                for answer_data in student_exam_data:
+                    Student_answer.objects.create(
+                        student_answers=studentanswer, **answer_data
+                    )
 
         return studentanswer
 
@@ -100,72 +109,94 @@ class StudentanswerSpeakingResponseSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         student_exam_data = validated_data.pop("student_exams", None)
         studentanswer = SpeakingResponse.objects.create(**validated_data)
-        
+
         if student_exam_data:
             for answer_data in student_exam_data:
-                SpeakingResponse.objects.create(student_answers=studentanswer, **answer_data)
+                SpeakingResponse.objects.create(
+                    student_answers=studentanswer, **answer_data
+                )
         return studentanswer
-    
-from django.contrib.auth.models import User
+
+
 
 
 class StudentExamSerializer(serializers.Serializer):
-    exam_id = serializers.PrimaryKeyRelatedField(queryset=Exam.objects.all(), required=True)
+    exam_id = serializers.PrimaryKeyRelatedField(
+        queryset=Exam.objects.all(), required=True
+    )
     data = StudentAnswerSerializers(many=True, required=True)
-    
 
 
 class PracticeTestAnswerSerializer(serializers.Serializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
-    Practise_Exam =  serializers.PrimaryKeyRelatedField(queryset=module.objects.all(), required=True)
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), required=True
+    )
+    Practise_Exam = serializers.PrimaryKeyRelatedField(
+        queryset=module.objects.all(), required=True
+    )
     answer_data = StudentExamSerializer(many=True, required=True)
-        
+
     def create(self, validated_data):
-        answer_data = validated_data.pop('answer_data')
+        answer_data = validated_data.pop("answer_data")
         if answer_data:
             for i in answer_data:
-                practice_test_instance  = Studentanswer.objects.create(**validated_data, exam= i['exam_id'])
-                for j in i['data']:
-                    Student_answer.objects.create(
-                        student_answers=practice_test_instance, **j
-                        
-                    )
+                practice_test_instance = Studentanswer.objects.create(
+                    **validated_data, exam=i["exam_id"]
+                )
+                if i["exam_id"].test_type == ExamType.speaking:
+                    for j in i["data"]:
+                        SpeakingResponse.objects.create(
+                            student_answers=practice_test_instance, **j
+                        )
+                else:
+                    for j in i["data"]:
+
+                        Student_answer.objects.create(
+                            student_answers=practice_test_instance, **j
+                        )
 
         return practice_test_instance
 
 
 class FLTAnswerSerializer(serializers.Serializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
-    Full_Length_Exam =  serializers.PrimaryKeyRelatedField(queryset=FullLengthTest.objects.all(), required=True)
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), required=True
+    )
+    Full_Length_Exam = serializers.PrimaryKeyRelatedField(
+        queryset=FullLengthTest.objects.all(), required=True
+    )
     answer_data = StudentExamSerializer(many=True, required=True)
-    exam_type = serializers.ChoiceField(choices = ExamType.choices) #(max_length=40, required=True, )
-        
+    exam_type = serializers.ChoiceField(
+        choices=ExamType.choices
+    )  # (max_length=40, required=True, )
+
     def create(self, validated_data):
-        answer_data = validated_data.pop('answer_data')
+        answer_data = validated_data.pop("answer_data")
         if answer_data:
             for i in answer_data:
-                FLT_test_instance  = Studentanswer.objects.create(**validated_data,
-                                                                  exam= i['exam_id'],)
-                                                                   
-                if i['exam_id'].test_type == ExamType.speaking:
-                    for j in i['data']:
+                FLT_test_instance = Studentanswer.objects.create(
+                    **validated_data,
+                    exam=i["exam_id"],
+                )
+
+                if i["exam_id"].test_type == ExamType.speaking:
+                    for j in i["data"]:
                         SpeakingResponse.objects.create(
-                            student_answers=FLT_test_instance, **j
-                            
+                            student_answers=FLT_test_instance,
+                            question_number=j["question_number"],
+                            answer_audio=j["answer_text"],
                         )
-                else:                                          
-                    for j in i['data']:
+                else:
+                    for j in i["data"]:
                         Student_answer.objects.create(
                             student_answers=FLT_test_instance, **j
-                            
                         )
 
         return FLT_test_instance
-    
+
 
 class PracticeAnswersSerializer(serializers.ModelSerializer):
     class Meta:
         model = module
         fields = "__all__"
         depth = 2
-

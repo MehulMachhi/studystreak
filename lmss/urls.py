@@ -428,30 +428,53 @@ urlpatterns = [
         SpeakingAnswerListView.as_view(),
         name="save_speaking_response",
     ),
-    path('api/tutorcourses/', CourseTutorListView.as_view(), name='course-list'),
-    path('api/instructorcourses/', CourseInstructorListView.as_view(), name='course-list'),
-    path('api/create/order/', CreateOrderAPIView.as_view(), name='create-order'),
-    path('api/confirm/order/', TransactionView.as_view(), name='confirm-order'),
-    path('api/create-meeting/',ZoomAPiView.as_view()),
-    path("api/save-video-data/", YoutubeDataApiView.as_view(), name='creat'),
-    path('api/student-test-submit/', UpdateStudentFields.as_view(), name='update_student_fields'),
-    path('api/student-mocktest-submit/', MockTestStudentSubmit.as_view(), name='MockTestStudentSubmit'),
-    path('api/filterlisteninglistmoduleview/', FilterListeningListModuleView.as_view(), name='FilterListModuleView'),
-    path('api/filterreadinglistmoduleview/', FilterReadingListModuleView.as_view(), name='FilterReadingListModuleView'),
-    path('api/filterspeakinglistmoduleview/', FilterSpeakingListModuleView.as_view(), name='FilterSpeakingListModuleView'),
-    path('api/filterwritinglistmoduleview/', FilterWritingListModuleView.as_view(), name='FilterWritingListModuleView'),
-    path('api/answer/practice-test/', PracticeTestAnswerCreateView.as_view()),
-    path('api/answer/full-length-test/', FLTAnswerCreateView.as_view()),
-    path('api/get/flt/',FLTTestListView.as_view()),
-    path('api/get/flt/<int:pk>/',FLTTestRetrieveView.as_view()),
-    
-    path('api/practice-answers/<int:pk>/', PracticeAnswersView.as_view()),
-    path('api/flt-answers/<int:flt_id>/',FLTAnswers.as_view()),
+    path("api/tutorcourses/", CourseTutorListView.as_view(), name="course-list"),
+    path(
+        "api/instructorcourses/", CourseInstructorListView.as_view(), name="course-list"
+    ),
+    path("api/create/order/", CreateOrderAPIView.as_view(), name="create-order"),
+    path("api/confirm/order/", TransactionView.as_view(), name="confirm-order"),
+    path("api/create-meeting/", ZoomAPiView.as_view()),
+    path("api/save-video-data/", YoutubeDataApiView.as_view(), name="creat"),
+    path(
+        "api/student-test-submit/",
+        UpdateStudentFields.as_view(),
+        name="update_student_fields",
+    ),
+    path(
+        "api/student-mocktest-submit/",
+        MockTestStudentSubmit.as_view(),
+        name="MockTestStudentSubmit",
+    ),
+    path(
+        "api/filterlisteninglistmoduleview/",
+        FilterListeningListModuleView.as_view(),
+        name="FilterListModuleView",
+    ),
+    path(
+        "api/filterreadinglistmoduleview/",
+        FilterReadingListModuleView.as_view(),
+        name="FilterReadingListModuleView",
+    ),
+    path(
+        "api/filterspeakinglistmoduleview/",
+        FilterSpeakingListModuleView.as_view(),
+        name="FilterSpeakingListModuleView",
+    ),
+    path(
+        "api/filterwritinglistmoduleview/",
+        FilterWritingListModuleView.as_view(),
+        name="FilterWritingListModuleView",
+    ),
+    path("api/answer/practice-test/", PracticeTestAnswerCreateView.as_view()),
+    path("api/answer/full-length-test/", FLTAnswerCreateView.as_view()),
+    path("api/get/flt/", FLTTestListView.as_view()),
+    path("api/get/flt/<int:pk>/", FLTTestRetrieveView.as_view()),
+    path("api/practice-answers/<int:pk>/", PracticeAnswersView.as_view()),
+    path("api/flt-answers/<int:flt_id>/", FLTAnswers.as_view()),
     path("api/create-flt/", FLTCreateView.as_view()),
     path("api/save-audio-file/", SaveSpeakingAnswerFileView.as_view()),
-    
 ] + router.urls
-
 
 
 if settings.DEBUG:
