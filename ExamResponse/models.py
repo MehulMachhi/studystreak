@@ -30,9 +30,7 @@ class Student_answer(models.Model):
     def __str__(self):
         return self.answer_text
 
-
-
 class SpeakingResponse(models.Model):
     student_answers = models.ForeignKey(Studentanswer, on_delete=models.CASCADE, related_name="student_exams")
     question_number = models.IntegerField()
-    answer_audio = models.FileField()
+    answer_audio = models.FileField(upload_to='speaking-response/')

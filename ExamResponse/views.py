@@ -1,12 +1,20 @@
+
+
 from rest_framework import generics
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
-from Create_Test.models import FullLengthTest
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from Create_Test.models import FullLengthTest, module
+from exam.serializers import AnswerSerializer
+from ExamResponse.models import Studentanswer
+
 from .models import *
-from .serializers import (FLTAnswerSerializer, PracticeAnswersSerializer,
-                          PracticeTestAnswerSerializer,
-                          SpeakingAnswerSerializer, StudentanswerSerializers,
-                          StudentanswerSpeakingResponseSerializers,
-                          StudentExamSerializer)
+from .serializers import (FLTAnswerSerializer, PracticeTestAnswerSerializer,
+                          SpeakingAnswerSerializer, StudentAnswerSerializers,
+                          StudentanswerSerializers,
+                          StudentanswerSpeakingResponseSerializers)
+
 
 def get_answers(self, practice_set_instance):
         res_data = {'correct_answers':{},
@@ -50,8 +58,6 @@ class SpeakingAnswerListView(generics.ListCreateAPIView):
     # def create(self, request, *args, **kwargs):
     #     return super().create(request, *args, **kwargs)
     
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 class PracticeTestAnswerCreateView(APIView):
@@ -63,13 +69,8 @@ class PracticeTestAnswerCreateView(APIView):
     
 
         
-from django.shortcuts import get_object_or_404
 
-from Create_Test.models import module
-from exam.serializers import AnswerSerializer
-from ExamResponse.models import Studentanswer
 
-from .serializers import StudentAnswerSerializers
 
 
 class PracticeAnswersView(APIView):
@@ -125,3 +126,32 @@ class FLTAnswerCreateView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({'msg':'created'}, 201)
+
+
+import os
+
+from django.conf import settings
+
+
+class SaveSpeakingAnswerFileView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+    def post(self, request, *args, **kwargs):
+        user = str(request.user.username)
+        file=request.FILES.get("file")
+        if file:
+            user_directory = os.path.join(settings.MEDIA_ROOT, 'speaking-response', user)
+            os.makedirs(user_directory, exist_ok=True)
+            file_path = os.path.join(user_directory, file.name)
+            return_dir = os.path.join('speaking-response', user, file.name)
+
+            with open(file_path, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+                    
+            return Response({"file_path": return_dir}, status=200)
+
+        return Response({"msg": "file not found"}, status=200)
+
+class SaveAudio(generics.ListCreateAPIView):
+    queryset = SpeakingResponse.objects.all()
+    serializer_class = SpeakingAnswerSerializer

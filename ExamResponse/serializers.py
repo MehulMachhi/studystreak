@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from Create_Test.models import FullLengthTest, module
 from exam.models import Exam, ExamType
-from students.models import Student
 
 from .models import SpeakingResponse, Student_answer, Studentanswer
 
@@ -148,12 +147,18 @@ class FLTAnswerSerializer(serializers.Serializer):
                 FLT_test_instance  = Studentanswer.objects.create(**validated_data,
                                                                   exam= i['exam_id'],)
                                                                    
-                                                                  
-                for j in i['data']:
-                    Student_answer.objects.create(
-                        student_answers=FLT_test_instance, **j
-                        
-                    )
+                if i['exam_id'].test_type == ExamType.speaking:
+                    for j in i['data']:
+                        SpeakingResponse.objects.create(
+                            student_answers=FLT_test_instance, **j
+                            
+                        )
+                else:                                          
+                    for j in i['data']:
+                        Student_answer.objects.create(
+                            student_answers=FLT_test_instance, **j
+                            
+                        )
 
         return FLT_test_instance
     
@@ -163,3 +168,4 @@ class PracticeAnswersSerializer(serializers.ModelSerializer):
         model = module
         fields = "__all__"
         depth = 2
+

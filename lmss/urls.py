@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView,
@@ -25,6 +27,7 @@ from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
 from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
+                                SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, StudentAnswerListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
@@ -445,9 +448,14 @@ urlpatterns = [
     path('api/practice-answers/<int:pk>/', PracticeAnswersView.as_view()),
     path('api/flt-answers/<int:flt_id>/',FLTAnswers.as_view()),
     path("api/create-flt/", FLTCreateView.as_view()),
+    path("api/save-audio-file/", SaveSpeakingAnswerFileView.as_view()),
     
 ] + router.urls
 
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 admin.site.site_header = "StudyStreak Admin"
 admin.site.site_header = "StudyStreak"
 admin.site.index_title = "StudyStreak"
