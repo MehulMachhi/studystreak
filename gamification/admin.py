@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import FlashCard, FlashCardItem, Gamification
+from .models import Badge, FlashCard, FlashCardItem, Gamification, PointHistory
 
 
 class FlashCardItemInline(admin.TabularInline):
@@ -16,4 +16,10 @@ class FlashCardAdmin(admin.ModelAdmin):
 class GamificationAdmin(admin.ModelAdmin):...
     
     
+@admin.register(Badge)
+class BadgeAdmin(admin.ModelAdmin):...
+    
+
+@admin.register(PointHistory)
+class PointHistoryAdmin(admin.ModelAdmin):...
     

@@ -1,15 +1,13 @@
 import json
-from datetime import datetime
 
-import requests
 from django.conf import settings
 from django.http import JsonResponse
-from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 # Create your views here.
 from rest_framework.views import APIView
+from zoomus import ZoomClient
 
 from master.models import batch
 from students.models import Student
@@ -19,9 +17,6 @@ from .models import Live_Class
 from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
                           LiveClassListWithIDSerializer)
 
-zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
-from zoomus import ZoomClient
-from rest_framework.serializers import ValidationError
 Account_id = "gZOcFtX-S3GRietpBWVT-Q"
 client_id='vy_n2AFIQJyEIF_4d8g9A'
 client_secret='kdxcpDLmMyj4QZcOawul86ktHJm7bMVv'
@@ -57,6 +52,8 @@ class liveclass_list_view(generics.ListAPIView):
 class Liveclass_Create_View(generics.ListCreateAPIView):
     queryset = Live_Class.objects.all()
     serializer_class = LiveClassCreateSerializer
+    zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
+    
 # {
 #     "id": 1,
 #     "meeting_title": "IELTS ESSIENTIALS DAY 2",
@@ -86,14 +83,13 @@ class Liveclass_Create_View(generics.ListCreateAPIView):
             "close_registration":True
         }
         try:
-            zoom_returned_data = zc.create_meeting(zoom_data)
+            zoom_returned_data = self.zc.create_meeting(zoom_data)
             data['zoom_meeting_id'] = zoom_returned_data['join_url']
-        except Exception as e:
+        except Exception:
             return 
         return super().perform_create(serializer)
 
 
-from django.db.models import Count
 from django.shortcuts import get_object_or_404
 
 from students.serializers import StudentSerializers
@@ -108,11 +104,7 @@ class liveclass_listwithid_view(generics.ListAPIView):
         return Live_Class.objects.filter(select_batch=batch_instance)
 
 
-from django.db import IntegrityError
-from rest_framework.decorators import api_view
-from rest_framework.permissions import AllowAny
 
-from package.serializers import EnrollmentSerializer
 
 
 ################## code work ########################

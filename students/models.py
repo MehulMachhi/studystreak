@@ -1,16 +1,12 @@
-import base64
-import uuid
 
 from django.contrib.auth.models import BaseUserManager, User
 from django.db import models
 
 from Create_Test.models import module
 from exam.models import Exam
-from LiveClass.models import Live_Class
 # from package.models import Package  # Assuming the City, State, and Country are modeled in the Package app
 from master.models import City  # For the City, State, and Country ForeignKey
 from master.models import Country, State
-from package.models import Package
 
 
 class StudentManager(BaseUserManager):
@@ -97,7 +93,8 @@ class Student(models.Model):
     student_flt = models.ManyToManyField(module, null=True, blank=True)
     student_mock = models.ManyToManyField(Exam, null=True, blank=True, related_name="mock")
 
-
+    def get_name(self):
+        return self.user.get_full_name()
     
     def __str__(self):
         return self.user.get_full_name()

@@ -39,5 +39,29 @@ class Gamification(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
     points = models.PositiveIntegerField(default=1)
-
-     
+    
+    def __str__(self):
+        return f"{self.content_type.name}-{self.content_object.__str__()}"
+        
+class Badge(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    points_required = models.PositiveIntegerField(default=0)
+    gamification_items = models.ManyToManyField(Gamification)
+    next_badge = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.title}-{self.points_required}"
+    
+    
+class PointHistory(models.Model):
+    student = models.ForeignKey("students.Student", on_delete=models.CASCADE)
+    gamification = models.ForeignKey(Gamification, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.get_name()
+    
+    class Meta:
+        verbose_name_plural = "Point Histories"
