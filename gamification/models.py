@@ -26,7 +26,7 @@ class FlashCard(models.Model):
         return self.title
     
 class FlashCardItem(models.Model):
-    flash_card = models.ForeignKey(FlashCard, on_delete=models.CASCADE)
+    flash_card = models.ForeignKey(FlashCard, on_delete=models.CASCADE, related_name="flash_card_items")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.TextField()

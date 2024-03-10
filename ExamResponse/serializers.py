@@ -1,3 +1,4 @@
+
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -12,6 +13,9 @@ class StudentAnswerSerializers(serializers.ModelSerializer):
         model = Student_answer
         fields = ("id", "question_number", "answer_text")
         depth = 2
+        extra_kwargs = {
+            "answer_text": {"required": False},
+        }
 
 
 class StudentSpeakingSerializers(serializers.ModelSerializer):
@@ -125,6 +129,9 @@ class StudentExamSerializer(serializers.Serializer):
         queryset=Exam.objects.all(), required=True
     )
     data = StudentAnswerSerializers(many=True, required=True)
+    AI_Assessment = serializers.CharField(required=False)
+    band = serializers.CharField(required=False)   
+
 
 
 class PracticeTestAnswerSerializer(serializers.Serializer):
@@ -141,12 +148,17 @@ class PracticeTestAnswerSerializer(serializers.Serializer):
         if answer_data:
             for i in answer_data:
                 practice_test_instance = Studentanswer.objects.create(
-                    **validated_data, exam=i["exam_id"]
+                    **validated_data,
+                    exam=i["exam_id"],
+                    AI_Assessment = i.get('AI_Assessment',None),
+                    band=i.get('band',None)
                 )
                 if i["exam_id"].exam_type == ExamType.speaking:
                     for j in i["data"]:
                         SpeakingResponse.objects.create(
-                            student_answers=practice_test_instance, **j
+                            student_answers=practice_test_instance,
+                            question_number=j["question_number"],
+                            answer_audio=j["answer_text"],
                         )
                 else:
                     for j in i["data"]:

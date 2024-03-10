@@ -29,6 +29,7 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, StudentAnswerListView)
+from gamification.views import BadgeViewSet, FlashCardView
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
 from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
@@ -90,7 +91,7 @@ router.register(
     "api/full-length-test", FullLengthTestViewSet, basename="full-length-test"
 )
 router.register("api/test-types", TestTypeViewset, basename="test-types")
-
+router.register("api/blocks", BadgeViewSet, basename="blocks")
 urlpatterns = [
     path("api/live-classes/", LiveClassListView.as_view(), name="live-classes-list"),
     path(
@@ -474,6 +475,8 @@ urlpatterns = [
     path("api/flt-answers/<int:flt_id>/", FLTAnswers.as_view()),
     path("api/create-flt/", FLTCreateView.as_view()),
     path("api/save-audio-file/", SaveSpeakingAnswerFileView.as_view()),
+    path("api/create/flashcard/",FlashCardView.as_view()),
+    path("api/get/flashcard/",FlashCardView.as_view()),
     #Gamification APIs
     
 ] + router.urls
