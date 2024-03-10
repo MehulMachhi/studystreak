@@ -1,5 +1,8 @@
 
 
+import os
+
+from django.conf import settings
 from rest_framework import generics
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
@@ -123,21 +126,28 @@ class FLTAnswerCreateView(APIView):
             return Response({'msg':'created'}, 201)
 
 
-import os
 
-from django.conf import settings
+import time
 
 
 class SaveSpeakingAnswerFileView(APIView):
     parser_classes = [MultiPartParser, FormParser]
+    
     def post(self, request, *args, **kwargs):
         user = str(request.user.username)
+        
         file=request.FILES.get("file")
+        exam_id = request.data.get("exam_id",None)
+        extension = request.data.get("extension",None)
+        
         if file:
             user_directory = os.path.join(settings.MEDIA_ROOT, 'speaking-response', user)
+            file_name = f'{exam_id}-{time.strftime("%Y%m%d-%H%M%S")}.{extension}'
+            
             os.makedirs(user_directory, exist_ok=True)
-            file_path = os.path.join(user_directory, file.name)
-            return_dir = os.path.join('speaking-response', user, file.name)
+            
+            file_path = os.path.join(user_directory, file_name)
+            return_dir = os.path.join('speaking-response', user, file_name)
 
             with open(file_path, 'wb+') as destination:
                 for chunk in file.chunks():
@@ -146,6 +156,10 @@ class SaveSpeakingAnswerFileView(APIView):
             return Response({"file_path": return_dir}, status=200)
 
         return Response({"msg": "file not found"}, status=200)
+
+class SaveAudio(generics.ListCreateAPIView):
+    queryset = SpeakingResponse.objects.all()
+    serializer_class = SpeakingAnswerSerializer
 
 class SaveAudio(generics.ListCreateAPIView):
     queryset = SpeakingResponse.objects.all()
