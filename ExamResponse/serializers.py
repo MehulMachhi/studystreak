@@ -79,12 +79,12 @@ class StudentanswerSerializers(serializers.ModelSerializer):
         studentanswer = Studentanswer.objects.create(**validated_data)
 
         if student_exam_data:
-            if validated_data.get("exam_type",None) == ExamType.speaking:
+            if validated_data.get("exam").exam_type == ExamType.speaking:
                 for answer_data in student_exam_data:
                     SpeakingResponse.objects.create(
                         student_answers=studentanswer,
-                        question_number=answer_data.get("question_number"),
-                        answer_audio = answer_data.get("answeer_text")
+                        question_number=answer_data.get("question_number",None),
+                        answer_audio = answer_data.get("answer_text",None),
                     )
             else:
                 for answer_data in student_exam_data:
@@ -129,8 +129,14 @@ class StudentExamSerializer(serializers.Serializer):
         queryset=Exam.objects.all(), required=True
     )
     data = StudentAnswerSerializers(many=True, required=True)
-    AI_Assessment = serializers.CharField(required=False)
-    band = serializers.CharField(required=False)   
+    # AI_Assessment = serializers.CharField()
+    # band = serializers.CharField()   
+    
+    # class Meta:
+    #     extra_kwargs = {
+    #         "AI_Assessment": {"required": False},
+    #         "band": {"required": False},
+    #     }
 
 
 
