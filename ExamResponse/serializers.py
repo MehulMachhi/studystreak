@@ -143,7 +143,7 @@ class PracticeTestAnswerSerializer(serializers.Serializer):
                 practice_test_instance = Studentanswer.objects.create(
                     **validated_data, exam=i["exam_id"]
                 )
-                if i["exam_id"].test_type == ExamType.speaking:
+                if i["exam_id"].exam_type == ExamType.speaking:
                     for j in i["data"]:
                         SpeakingResponse.objects.create(
                             student_answers=practice_test_instance, **j
@@ -179,7 +179,7 @@ class FLTAnswerSerializer(serializers.Serializer):
                     exam=i["exam_id"],
                 )
 
-                if i["exam_id"].test_type == ExamType.speaking:
+                if i["exam_id"].exam_type == ExamType.speaking:
                     for j in i["data"]:
                         SpeakingResponse.objects.create(
                             student_answers=FLT_test_instance,
