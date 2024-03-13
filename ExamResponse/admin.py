@@ -27,6 +27,8 @@ class StudentAnswerAdmin(admin.ModelAdmin):
         "user",
        
     )
+    list_filter = ("exam", "user", "Practise_Exam", "Full_Length_Exam", "AI_Assessment", "Tutor_Assessment", "band", "exam_type")
+    search_fields = ("exam", "user", "Practise_Exam", "Full_Length_Exam", "AI_Assessment", "Tutor_Assessment", "band", "exam_type")
     inlines = [AnswerInline]
     speaking_inline = [SpeakingAnswerInline]
 

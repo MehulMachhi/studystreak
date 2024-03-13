@@ -17,7 +17,7 @@ class AnswerInline(admin.TabularInline):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ("question_number", "answer_text", "exam")
     list_filter = ("question_number", "exam")
-
+    search_fields = ("question_number", "exam", "answer_text")
 
 admin.site.register(Answer, AnswerAdmin)
 
@@ -25,6 +25,13 @@ admin.site.register(Answer, AnswerAdmin)
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
+    search_fields = ( "exam_name",
+        "block_type",
+        "exam_type",
+        "no_of_questions",
+        "exam_category",
+        "difficulty_level",
+        "block_threshold",)
     list_display = [
         "exam_name",
         "block_type",

@@ -12,11 +12,15 @@ from .models import FullLengthTest, createexam, module
 
 
 @admin.register(FullLengthTest)
-class Admin(admin.ModelAdmin):...
+class Admin(admin.ModelAdmin):
+    list_filter = ("name","reading_set", "listening_set", "speaking_set", "writing_set", "difficulty_level")
+    search_fields = ("name","reading_set", "listening_set", "speaking_set", "writing_set", "difficulty_level")
     
 
 class createexamadmin(admin.ModelAdmin):
     list_display = ("id", "ielts_names")
+    list_filter = ("IELTS",)
+    search_fields = ("IELTS",)
 
     def ielts_names(self, obj):
         return str(obj.IELTS.Name) if obj.IELTS else ""
@@ -56,7 +60,8 @@ class moduleadmin(admin.ModelAdmin):
         "verbal_reasoning_list",
     )
 
-    # list_filter = ("Reading", "Listening", "Speaking", "Writing", "exam_test")
+    list_filter = ("Name","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
+    search_fields = ("Name","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

@@ -37,7 +37,17 @@ class PackageAdmin(ImportExportModelAdmin):
         "one_to_one_doubt_solving",
         "select_course",
     ]
-    search_fields = ["package_name"]
+    search_fields = ["package_name",
+        "soft_copy",
+        "hard_copy",
+        "full_length_test",
+        "practice_test",
+        "speaking_test",
+        "writing_evaluation",
+        "live_classes_membership",
+        "group_doubt_solving",
+        "one_to_one_doubt_solving",
+        "select_course",]
 
     # Jazzmin fieldsets
     fieldsets = (

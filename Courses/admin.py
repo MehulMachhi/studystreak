@@ -9,8 +9,9 @@ from .models import Course, YoutubeDataRecord
 
 
 @admin.register(YoutubeDataRecord)
-class YoutubeDataRecordAdmin(admin.ModelAdmin):...
-    
+class YoutubeDataRecordAdmin(admin.ModelAdmin):
+    list_filter = ("student", 'course', 'lesson')
+    search_fields = ("student", 'course', 'lesson')
 
 class CourseMaterialInline(admin.TabularInline):
     model = CourseMaterial

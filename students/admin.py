@@ -145,6 +145,18 @@ class StudentAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = (
         "user__first_name",
         "user__last_name",
+        "gender",
+        "country_interested_in",
+        "state",
+        "city",
+        "ielts_taken_before",
+        "duolingo_taken_before",
+        "pte_taken_before",
+        "toefl_taken_before",
+        "gre_taken_before",
+        "gmat_taken_before",
+        "interested_in_visa_counselling",
+        "select_batch",
     )
     readonly_fields = ("referal_code",)
  
