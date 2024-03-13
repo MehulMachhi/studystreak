@@ -26,6 +26,7 @@ class FlashCardSerializer(serializers.ModelSerializer):
             "flash_card_items",
             
         )
+        depth = 1
         
     def create(self, validated_data):
         flash_card_items = validated_data.pop('flash_card_items')
