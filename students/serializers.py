@@ -43,3 +43,8 @@ class StudentRetUpdDelUserSerializers(serializers.ModelSerializer):
         # instance.create_batch.set(create_batch_data)
 
         # return instance
+
+class PackageIdwiseStudentGetSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = "__all__"
