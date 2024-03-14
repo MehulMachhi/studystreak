@@ -42,8 +42,8 @@ class Course(models.Model):
     Outcome = models.ManyToManyField(Outcomes)
 
     # Course Media
-    Course_Overview_Provider = models.CharField(max_length=200)
-    Course_Overview_URL = models.URLField()
+    Course_Overview_Provider = models.CharField(max_length=200, null=True, blank=True,)
+    Course_Overview_URL = models.URLField(null=True, blank=True,)
     Course_Thumbnail = models.ImageField(upload_to="course_thumbnails/")
     # Course SEO
     SEO_Meta_Keywords = ArrayField(models.SlugField(max_length=200), blank=True)
