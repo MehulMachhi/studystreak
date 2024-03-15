@@ -117,7 +117,7 @@ def BatchIdwiseStudentGetView(request, batch_id):
                     'interested_in_visa_counselling': student.interested_in_visa_counselling,
                     'select_batch': [batch.batch_name for batch in student.select_batch.all()],
                     'select_package': [package.package_name for package in student.select_package.all()],
-                    'Live_class_enroll': [live_class.live_class_name for live_class in student.Live_class_enroll.all()],
+                    # 'Live_class_enroll': [live_class.live_class_name for live_class in student.Live_class_enroll.all()],
                     'referal_code': student.referal_code,
                     'created_at': student.created_at.strftime("%Y-%m-%d %H:%M:%S") if student.created_at else None,
                     'updated_at': student.updated_at.strftime("%Y-%m-%d %H:%M:%S") if student.updated_at else None,
