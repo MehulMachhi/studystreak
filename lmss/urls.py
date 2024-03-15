@@ -66,7 +66,7 @@ from Reading_Exam.views import *  # noqa: F403
 from Speaking_Exam.views import *  # noqa: F403
 from students.views import (Student_List_View_Dashboard,
                             StudentRetUpdDelUserView, StudentRetUpdDelView,
-                            StudentView, PackageIdwiseStudentGetView)
+                            StudentView, PackageIdwiseStudentGetView, BatchIdwiseStudentGetView)
 from studystreak_api.views import (ChangePasswordView, GetUserRole,
                                    GetUserView, LoginView, PasswordResetView,
                                    ProfileView, RegistrationView,
@@ -478,7 +478,8 @@ urlpatterns = [
     path("api/create/flashcard/",FlashCardView.as_view()),
     path("api/get/flashcard/",FlashCardView.as_view()),
     #Gamification APIs
-    path('api/packageidwisestudentGetview/<int:package_id>/', PackageIdwiseStudentGetView, name='package_students_api'),
+    path('api/packageidwisestudentgetview/<int:package_id>/', PackageIdwiseStudentGetView, name='package_students_api'),
+    path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
 ] + router.urls
 
 
