@@ -409,15 +409,22 @@ class EnrollPackageStudentView(APIView):
                     {"detail": "Student not found for the authenticated user."},
                     status=status.HTTP_404_NOT_FOUND,
                 )
-
+            
             course_delivery = self.request.data.get("course_delivery")
             if course_delivery == "SELF-STUDY":
+                print("yes")
                 return Response(
                     {"detail": "Self-study courses can be enrolled through this API."},
                     status=status.HTTP_200_OK,
                 )
 
             package_ids = serializer.validated_data.get("package_ids", [])
+            if not package_ids:
+                return Response(
+                    {"detail": "No package IDs provided. Please provide valid package IDs."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
             packages = Package.objects.filter(pk__in=package_ids)
 
             already_enrolled_packages = student.select_package.filter(
@@ -432,13 +439,18 @@ class EnrollPackageStudentView(APIView):
                 )
 
             new_packages = packages.exclude(pk__in=already_enrolled_packages)
+            if not new_packages.exists():
+                return Response(
+                    {"detail": "No packages found with id"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
             student.select_package.add(*new_packages)
 
             return Response(
                 {"detail": f"Successfully enrolled in packages."},
                 status=status.HTTP_201_CREATED,
             )
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #     print(serializer_class)
