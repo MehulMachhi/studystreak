@@ -66,37 +66,68 @@ def PackageIdwiseStudentGetView(request, package_id):
         return JsonResponse({'error': 'Package not found'}, status=404)
     
 
+# def BatchIdwiseStudentGetView(request, batch_id):
+#     try:
+#         Batch = batch.objects.get(pk=batch_id)
+#         students = Batch.student_set.all() 
+#         serialized_students = []  
+#         if students.exists():
+#             for student in students:
+#                 serialized_student = {
+#                     'id': student.id,
+#                     'user_name': student.user.username,  
+#                     'user_first_name': student.user.first_name
+#                 }
+#                 serialized_students.append(serialized_student)
+#             return JsonResponse({'students': serialized_students}, status=200)
+#         else:
+#             return JsonResponse({'message': 'No students available in batch'}, status=200)
+#     except batch.DoesNotExist:
+#         return JsonResponse({'error': 'Batch not found'}, status=404)
+    
 def BatchIdwiseStudentGetView(request, batch_id):
     try:
-        Batch = batch.objects.get(pk=batch_id)
-        students = Batch.student_set.all() 
-        serialized_students = []  
+        batch_obj = batch.objects.get(id=batch_id)
+        students = batch_obj.student_set.all()
+        students_list = []
         if students.exists():
             for student in students:
-                serialized_student = {
+                serialized_student =  {
                     'id': student.id,
-                    'user_name': student.user.username,  
-                    'user_first_name': student.user.first_name
+                    'first_name': student.user.first_name,
+                    'last_name': student.user.last_name,
+                    'gender': student.gender,
+                    'country': student.country.name if student.country else None,
+                    'state': student.state.name if student.state else None,
+                    'city': student.city.name if student.city else None,
+                    'phone_no': student.phone_no,
+                    'whatsapp_no': student.whatsapp_no,
+                    'reference_by': student.reference_by,
+                    'country_interested_in': student.country_interested_in.name if student.country_interested_in else None,
+                    'last_education': student.last_education,
+                    'ielts_taken_before': student.ielts_taken_before,
+                    'duolingo_taken_before': student.duolingo_taken_before,
+                    'pte_taken_before': student.pte_taken_before,
+                    'toefl_taken_before': student.toefl_taken_before,
+                    'gre_taken_before': student.gre_taken_before,
+                    'gmat_taken_before': student.gmat_taken_before,
+                    'remark': student.remark,
+                    'biography': student.biography,
+                    'user_image': student.user_image.url if student.user_image else None,
+                    'interested_in_visa_counselling': student.interested_in_visa_counselling,
+                    'select_batch': [batch.batch_name for batch in student.select_batch.all()],
+                    'select_package': [package.package_name for package in student.select_package.all()],
+                    'Live_class_enroll': [live_class.live_class_name for live_class in student.Live_class_enroll.all()],
+                    'referal_code': student.referal_code,
+                    'created_at': student.created_at.strftime("%Y-%m-%d %H:%M:%S") if student.created_at else None,
+                    'updated_at': student.updated_at.strftime("%Y-%m-%d %H:%M:%S") if student.updated_at else None,
+                    'student_pt': [module.module_name for module in student.student_pt.all()],
+                    'student_flt': [module.module_name for module in student.student_flt.all()],
+                    'student_mock': [exam.exam_name for exam in student.student_mock.all()],
                 }
-                serialized_students.append(serialized_student)
-            return JsonResponse({'students': serialized_students}, status=200)
+                students_list.append(serialized_student)
+            return JsonResponse({'students': students_list}, status=200)
         else:
-            return JsonResponse({'message': 'No students available in batch'}, status=200)
+            return JsonResponse({'message': 'No Students are available'}, status=200)
     except batch.DoesNotExist:
         return JsonResponse({'error': 'Batch not found'}, status=404)
-    
-def BatchwiseIdView(request, batch_id):
-    Batch = batch.objects.get(id=batch_id)
-    students = Batch.student_set.all()
-    students_list = []
-    if students.exists():
-        for i in students:
-            serialized_students =  {
-                'id': i.id,
-                'user_name':i.user.usernamem,
-                'user_last_name':i.user.lastname
-            }
-            students_list.append(serialized_students)
-        return JsonResponse({'students': students_list}, status=200)
-    else:
-        return JsonResponse({'message': 'No Students are available'}, status = 200)
