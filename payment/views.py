@@ -23,7 +23,7 @@ class TransactionView(APIView):
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             rz_client.verify_payment(razorpay_order_id=serializer.validated_data['order_id'],
-                                     razorpay_payment_id=serializer.validated_data['                                                       '],
+                                     razorpay_payment_id=serializer.validated_data['payment_id'],
                                     razorpay_signature=serializer.validated_data['signature_id'])
             serializer.save()
             return Response({'payment_status':True}, status=200)
