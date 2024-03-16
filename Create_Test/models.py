@@ -1,12 +1,14 @@
 from typing import Collection, Iterable
 
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
 from exam.models import Difficulty, Exam, ExamType
+from gamification.models import Gamification
 
 
 class Typetest(models.TextChoices):
@@ -42,6 +44,7 @@ class module(models.Model):
         Exam, null=True, blank=True, related_name="verbal_reasoning+"
     )
     difficulty_level = models.CharField(max_length=10, choices = Difficulty.choices, default=Difficulty.easy)
+    g = GenericRelation(Gamification)
     
     
     def __str__(self):
@@ -123,5 +126,6 @@ class FullLengthTest(models.Model):
         related_name="flt_writing",
         # limit_choices_to={"Writing__exam_type": ExamType.writing},
     )
+    g = GenericRelation(Gamification)
     
     difficulty_level = models.CharField(max_length=20, choices=Difficulty.choices, default=Difficulty.easy)
