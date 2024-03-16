@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from .common import MODEL_MAPPER
 from .models import Badge, FlashCard, FlashCardItem, Gamification, PointHistory
 
 
@@ -27,7 +28,6 @@ class FlashCardSerializer(serializers.ModelSerializer):
             "flash_card_items",
             
         )
-        depth = 1
         
     def create(self, validated_data):
         flash_card_items = validated_data.pop('flash_card_items')
@@ -39,10 +39,8 @@ class FlashCardSerializer(serializers.ModelSerializer):
         return flash_card_object
 from django.contrib.contenttypes.models import ContentType
 
-from .common import MODEL_MAPPER
 
-
-class GamificationSerializer(serializers.Serializer):
+class GamificationCreateSerializer(serializers.Serializer):
     model = serializers.CharField()
     object_id = serializers.IntegerField()
     points = serializers.IntegerField()
@@ -52,6 +50,7 @@ class GamificationSerializer(serializers.Serializer):
             error_string = f"Invalid model the choices are {list(MODEL_MAPPER.keys())}"
             raise serializers.ValidationError(error_string)
         return value
+    
         
     def create(self, validated_data):
         model_class = MODEL_MAPPER[validated_data['model']]
@@ -74,3 +73,4 @@ class PointHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PointHistory
         fields = '__all__'
+        

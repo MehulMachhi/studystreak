@@ -36,7 +36,7 @@ class FlashCardItem(models.Model):
         return self.content
     
 class Gamification(models.Model):
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='gamification')
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
     points = models.PositiveIntegerField(default=1)

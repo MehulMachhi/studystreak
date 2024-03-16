@@ -62,3 +62,8 @@ class ExamRetUpdDelSerializers(serializers.ModelSerializer):
         model = Exam
         fields = "__all__"
         depth=4
+        
+class ExamSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Exam
+        fields = '__all__'

@@ -29,7 +29,8 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, StudentAnswerListView)
-from gamification.views import FlashCardView, gamificationCreateView
+from gamification.views import (FlashCardView, gamificationCreateView,
+                                gamificationListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
 from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
@@ -481,7 +482,8 @@ urlpatterns = [
     #Gamification APIs
     path('api/packageidwisestudentgetview/<int:package_id>/', PackageIdwiseStudentGetView, name='package_students_api'),
     path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
-    path('api/gamification/', gamificationCreateView.as_view(), name='gamification')   
+    path('api/create/gamification/', gamificationCreateView.as_view(), name='gamification'),
+    path('api/get/gamification/', gamificationListView.as_view()), 
     
 ] + router.urls
 
