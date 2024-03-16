@@ -29,7 +29,7 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, StudentAnswerListView)
-from gamification.views import BadgeViewSet, FlashCardView
+from gamification.views import FlashCardView, gamificationCreateView
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
 from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
@@ -64,9 +64,11 @@ from payment.views import CreateOrderAPIView, TransactionView, ZoomAPiView
 from QuestionBank.views import *  # noqa: F403
 from Reading_Exam.views import *  # noqa: F403
 from Speaking_Exam.views import *  # noqa: F403
-from students.views import (Student_List_View_Dashboard,
+from students.views import (BatchIdwiseStudentGetView,
+                            PackageIdwiseStudentGetView,
+                            Student_List_View_Dashboard,
                             StudentRetUpdDelUserView, StudentRetUpdDelView,
-                            StudentView, PackageIdwiseStudentGetView, BatchIdwiseStudentGetView)
+                            StudentView)
 from studystreak_api.views import (ChangePasswordView, GetUserRole,
                                    GetUserView, LoginView, PasswordResetView,
                                    ProfileView, RegistrationView,
@@ -91,7 +93,6 @@ router.register(
     "api/full-length-test", FullLengthTestViewSet, basename="full-length-test"
 )
 router.register("api/test-types", TestTypeViewset, basename="test-types")
-router.register("api/blocks", BadgeViewSet, basename="blocks")
 urlpatterns = [
     path("api/live-classes/", LiveClassListView.as_view(), name="live-classes-list"),
     path(
@@ -480,6 +481,8 @@ urlpatterns = [
     #Gamification APIs
     path('api/packageidwisestudentgetview/<int:package_id>/', PackageIdwiseStudentGetView, name='package_students_api'),
     path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
+    path('api/gamification/', gamificationCreateView.as_view(), name='gamification')   
+    
 ] + router.urls
 
 
