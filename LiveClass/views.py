@@ -13,13 +13,15 @@ from master.models import batch
 from students.models import Student
 from zoomApi.zoomAPI import ZOomClient
 
-from .models import Live_Class
+from .models import Live_Class, Note
 from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
                           LiveClassListWithIDSerializer)
 
-Account_id = "gZOcFtX-S3GRietpBWVT-Q"
-client_id='vy_n2AFIQJyEIF_4d8g9A'
-client_secret='kdxcpDLmMyj4QZcOawul86ktHJm7bMVv'
+base_url = 'https://zoom.us'
+token_url = "https://zoom.us/oauth/token"
+Account_id = "4h9jZgnETeC1jeCttAqewA"
+client_id = "uWxvDYmLRBGf6uW2HUWgA"
+client_secret = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 client = ZoomClient(client_id, client_secret, Account_id)
 
 class LiveClassUsersView(APIView):

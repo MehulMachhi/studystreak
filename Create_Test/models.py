@@ -15,7 +15,15 @@ class Typetest(models.TextChoices):
     practice = "Practice", "Practice"
     full_length = "Full Length", "Full Length"
 
-
+class moduleType(models.TextChoices):
+    reading = 'Reading' , 'Reading'
+    Listening = 'Listening', 'Listening'
+    Speaking = 'Speaking', 'Speaking'
+    Writing = 'Writing', 'Writing'
+    awa = 'awa', 'awa'
+    integrated_reasoning = 'integrated_reasoning', 'integrated_reasoning'
+    verbal_reasoning = 'verbal_reasoning', 'verbal_reasoning'
+    quantitative_reasoning = 'quantitative_reasoning', 'quantitative_reasoning'
 class module(models.Model):
     Name = models.CharField(max_length=100, null=True, blank=True)
     Reading = models.ManyToManyField(
@@ -43,6 +51,7 @@ class module(models.Model):
     verbal_reasoning = models.ManyToManyField(
         Exam, null=True, blank=True, related_name="verbal_reasoning+"
     )
+    practice_test_type = models.CharField(max_length=50,choices=moduleType.choices,default=moduleType.reading, null=True, blank=True)
     difficulty_level = models.CharField(max_length=10, choices = Difficulty.choices, default=Difficulty.easy)
     g = GenericRelation(Gamification)
     

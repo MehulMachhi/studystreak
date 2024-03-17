@@ -62,6 +62,7 @@ async def process_events():
         event = json.loads(payload)
         user_id = event.get("user_id")
         websocket = CONNECTIONS.get(user_id)
+        payload.pop("user_id")
         if websocket:
             await websocket.send(payload)
 
@@ -69,9 +70,8 @@ async def hello():
     print("Hello World!")
 
 async def main():
-    async with websockets.serve(handler, "localhost", 8888):
+    async with websockets.serve(handler, "0.0.0.0", 8888):
         await process_events()  # runs forever
-        await hello()
 
 if __name__ == "__main__":
     asyncio.run(main())
