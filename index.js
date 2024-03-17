@@ -1,8 +1,25 @@
+options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',},
+  body: JSON.stringify({
+    username: 'Avani02',
+    password: 'Avani02*',
+  }),
+}
+fetch('http://localhost:8000/api/login/', options)
+.then(response => response.json())
+.then(data => {
+  console.log(data);
+  localStorage.setItem('access', data.token.access);
+})
+
+
 socket = new WebSocket("ws://localhost:8888");
 socket.onopen = function () {
   console.log("Connected");
   socket.send(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNzU5ODg0LCJpYXQiOjE3MTA2NzM0ODQsImp0aSI6IjZlYzk3ZDUyNzg1NDQxYmZiOTIyM2Q0NmM3YWMzMDBjIiwidXNlcl9pZCI6M30.tD8zDMNmEqWj2uZ3HzepcQ7-0HutE-LZUaSMmIdiReI"
+    localStorage.getItem('access')
   );
 };
 socket.onmessage = function (e) {

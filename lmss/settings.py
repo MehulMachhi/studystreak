@@ -331,12 +331,17 @@ RAZORPAY_KEY_ID = config['RAZORPAY_KEY_ID']
 RAZORPAY_KEY_SECRET = config['RAZORPAY_KEY_SECRET']
 
 
-TOKEN_URL = "https://zoom.us/oauth/token"
-BASE_URL = 'https://zoom.us'
-ACCOUNT_ID = "hy5Qo6Z-T8-HWmI2vHf4og"
-CLIENT_ID = "qjhZVzGQpq3dMgNyPLdZw"
-CLIENT_SECRET = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
+# TOKEN_URL = "https://zoom.us/oauth/token"
+# BASE_URL = 'https://zoom.us'
+# ACCOUNT_ID = "hy5Qo6Z-T8-HWmI2vHf4og"
+# CLIENT_ID = "qjhZVzGQpq3dMgNyPLdZw"
+# CLIENT_SECRET = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
 
+BASE_URL = 'https://zoom.us'
+TOKEN_URL = "https://zoom.us/oauth/token"
+ACCOUNT_ID = "4h9jZgnETeC1jeCttAqewA"
+CLIENT_ID = "uWxvDYmLRBGf6uW2HUWgA"
+CLIENT_SECRET = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",

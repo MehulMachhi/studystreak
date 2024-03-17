@@ -1,6 +1,7 @@
 import base64
 import datetime
 import json
+import logging
 import pprint
 import time
 
@@ -9,11 +10,9 @@ import requests
 from .main import json_data
 
 base_url = 'https://zoom.us'
-token_url = "https://zoom.us/oauth/token"
-Account_id = "hy5Qo6Z-T8-HWmI2vHf4og"
-client_id = "qjhZVzGQpq3dMgNyPLdZw"
-client_secret = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
-import logging
+Account_id = "4h9jZgnETeC1jeCttAqewA"
+client_id = "uWxvDYmLRBGf6uW2HUWgA"
+client_secret = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)  # Set the logging level to INFO or desired level

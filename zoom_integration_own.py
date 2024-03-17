@@ -1,9 +1,13 @@
-import requests
 import json
+
+import requests
 from zoomus import ZoomClient
-Account_id = "gZOcFtX-S3GRietpBWVT-Q"
-client_id='vy_n2AFIQJyEIF_4d8g9A'
-client_secret='kdxcpDLmMyj4QZcOawul86ktHJm7bMVv'
+
+base_url = 'https://zoom.us'
+token_url = "https://zoom.us/oauth/token"
+Account_id = "4h9jZgnETeC1jeCttAqewA"
+client_id = "uWxvDYmLRBGf6uW2HUWgA"
+client_secret = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 client = ZoomClient(client_id, client_secret, Account_id)
 print("trrrrr")
 
