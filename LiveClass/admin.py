@@ -2,7 +2,7 @@ from datetime import date, datetime, time
 
 from django.contrib import admin
 
-from .models import Live_Class, Note
+from .models import Live_Class
 
 
 class LiveClassAdmin(admin.ModelAdmin):
@@ -14,6 +14,3 @@ class LiveClassAdmin(admin.ModelAdmin):
 
 admin.site.register(Live_Class, LiveClassAdmin)
 
-@admin.register(Note)
-class NoteAdmin(admin.ModelAdmin):...
-    

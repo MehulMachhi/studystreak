@@ -150,3 +150,11 @@ class LessonCreateSerializers(serializers.ModelSerializer):
 
 
 
+
+from .models import Note
+
+
+class NoteListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = '__all__'

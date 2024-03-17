@@ -13,7 +13,7 @@ from master.models import batch
 from students.models import Student
 from zoomApi.zoomAPI import ZOomClient
 
-from .models import Live_Class, Note
+from .models import Live_Class
 from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
                           LiveClassListWithIDSerializer)
 

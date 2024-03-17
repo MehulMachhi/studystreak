@@ -1,12 +1,12 @@
-from django.db import models
-
-from master.models import Section
-from exam.models import Exam
+from ckeditor.fields import RichTextField
 # from Courses.models import Course
 # Create your models here.
 from ckeditor_uploader.fields import RichTextUploadingField
-from ckeditor.fields import RichTextField
-from exam.models import ExamType, Difficulty
+from django.db import models
+
+from exam.models import Difficulty, Exam, ExamType
+from master.models import Section
+
 # class Lession_Quiz(models.Model):
 #     name = models.CharField(max_length=200)
 #     
@@ -96,4 +96,18 @@ class Quiz_Question(models.Model):
 
 
     
+class Note(models.Model):
+    student = models.ForeignKey("students.Student", on_delete=models.CASCADE, null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
+    note = RichTextUploadingField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['student', 'lesson'], name='unique_intro',violation_error_message= "You have already added note for this class"),
+        ]
+        
+    def __str__(self):
+        return f"{self.student.user.username} - {self.live_class.meeting_title}"
 

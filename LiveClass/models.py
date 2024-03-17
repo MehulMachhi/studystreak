@@ -21,17 +21,3 @@ class Live_Class(models.Model):
     def __str__(self):
         return f"{self.meeting_title}"
     
-class Note(models.Model):
-    student = models.ForeignKey("students.Student", on_delete=models.CASCADE, null=True, blank=True)
-    live_class = models.ForeignKey(Live_Class, on_delete=models.CASCADE, null=True, blank=True)
-    note = RichTextUploadingField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['student', 'live_class'], name='unique_intro',violation_error_message= "You have already added note for this class"),
-        ]
-        
-    def __str__(self):
-        return f"{self.student.user.username} - {self.live_class.meeting_title}"

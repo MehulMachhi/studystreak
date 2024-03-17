@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from .serializers import LessonListSerializers, LessonCreateSerializers
-from .models import Lesson
 from rest_framework import generics
+from rest_framework.viewsets import ModelViewSet
+
+from .models import Lesson, Note
+from .serializers import LessonCreateSerializers, LessonListSerializers
 
 # Create your views here.
 
@@ -18,3 +20,7 @@ class LessionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
 class LessonCreateView(generics.ListCreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonCreateSerializers
+    
+class NoteViewSet(ModelViewSet):
+    queryset = Note.objects.all()
+    serializer_class = LessonListSerializers

@@ -2,10 +2,10 @@ import nested_admin
 from django.contrib import admin
 from nested_admin import NestedModelAdmin
 
-from master.models import LessonAssignment, LessonAttachment
 from coursedetail.models import Quiz_Question, QuizOption
-from .models import Lesson
+from master.models import LessonAssignment, LessonAttachment
 
+from .models import Lesson, Note
 
 # class LessonAssignmentInline(nested_admin.NestedStackedInline):
 #     model = LessonAssignment
@@ -132,8 +132,7 @@ class LessonAdmin(NestedModelAdmin):
 
 admin.site.register(Lesson, LessonAdmin)
 
-# admin.site.register(Assignment_Question)
-
-# admin.site.register(Assignment_Answer)
-
+@admin.register(Note)
+class NoteAdmin(admin.ModelAdmin):
+    pass
 

@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from assessment.views import assessmentListView, assessmentRetUpdDelView
 from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
-                                LessonListView)
+                                LessonListView, NoteViewSet)
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
@@ -85,6 +85,7 @@ from website.views import (BlogListView, BlogRetUpdDelViews,
 from Writing_Exam.views import *  # noqa: F403
 
 router = DefaultRouter()
+router.register("api/notes", NoteViewSet, basename="notes")
 router.register("api/exam-blocks", ExamViewSet, basename="exam-blocks")
 router.register(
     "api/exam-blocks-answers", AnswerViewSet, basename="exam-blocks-answers"
