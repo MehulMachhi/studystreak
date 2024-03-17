@@ -337,4 +337,9 @@ ACCOUNT_ID = "hy5Qo6Z-T8-HWmI2vHf4og"
 CLIENT_ID = "qjhZVzGQpq3dMgNyPLdZw"
 CLIENT_SECRET = "y4kvGXl0fp64zuSJCQ5dd9ZBNjGlaj8H"
 
-
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+    },
+}
