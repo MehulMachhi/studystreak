@@ -422,7 +422,7 @@ class EnrollPackageStudentView(APIView):
             course_ids = serializer.validated_data.get("course_ids", [])
             if not package_ids or not course_ids:
                 return Response(
-                    {"detail": "Please provide both package IDs and course IDs."},
+                    {"detail": "No package ids and course ids"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -445,14 +445,12 @@ class EnrollPackageStudentView(APIView):
                     {"detail": "No packages found with id"},
                     status=status.HTTP_404_NOT_FOUND,
                 )
-
             student.select_package.add(*new_packages)
-
             return Response(
                 {"detail": f"Successfully enrolled in packages."},
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#     print(serializer_class)
+
      

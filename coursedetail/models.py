@@ -97,8 +97,8 @@ class Quiz_Question(models.Model):
 
     
 class Note(models.Model):
-    student = models.ForeignKey("students.Student", on_delete=models.CASCADE, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
+    student = models.ForeignKey("students.Student", on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     note = RichTextUploadingField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
