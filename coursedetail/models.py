@@ -109,5 +109,5 @@ class Note(models.Model):
         ]
         
     def __str__(self):
-        return f"{self.student.user.username} - {self.live_class.meeting_title}"
+        return f"{self.student.user.username} "
 
