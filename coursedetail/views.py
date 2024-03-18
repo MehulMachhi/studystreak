@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Lesson, Note
-from .serializers import LessonCreateSerializers, LessonListSerializers
+from .serializers import LessonCreateSerializers, LessonListSerializers, NoteListSerializers
 
 # Create your views here.
 
@@ -23,4 +23,4 @@ class LessonCreateView(generics.ListCreateAPIView):
     
 class NoteViewSet(ModelViewSet):
     queryset = Note.objects.all()
-    serializer_class = LessonListSerializers
+    serializer_class = NoteListSerializers
