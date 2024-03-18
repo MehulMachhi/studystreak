@@ -12,6 +12,7 @@ from .models import Course, YoutubeDataRecord
 class YoutubeDataRecordAdmin(admin.ModelAdmin):
     list_filter = ("student", 'course', 'lesson')
     search_fields = ("student", 'course', 'lesson')
+    list_display = ["student", "course", "timestamp", "lesson"]
 
 class CourseMaterialInline(admin.TabularInline):
     model = CourseMaterial
@@ -33,14 +34,15 @@ class CourseAdmin(ImportExportModelAdmin):
         "Language",
         "EnrollmentStartDate",
         "EnrollmentEndDate",
+        "max_enrollments",
         "is_active",
         "Featured",
         "Support_Available",
         "Course_Overview_Provider",
-        "Course_Overview_URL",
         "Course_Thumbnail",
         "SEO_Meta_Keywords",
         "Meta_Description",
+        "course_identifier",
     ]
     list_filter = (
         "Course_Title",

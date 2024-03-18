@@ -25,6 +25,11 @@ class StudentAnswerAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",
+        "exam",
+        "Practise_Exam",
+        "Full_Length_Exam",
+        "band",
+        "exam_type"
        
     )
     list_filter = ("exam", "user", "Practise_Exam", "Full_Length_Exam", "AI_Assessment", "Tutor_Assessment", "band", "exam_type")

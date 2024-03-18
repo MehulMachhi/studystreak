@@ -99,7 +99,7 @@ class Quiz_Question(models.Model):
 class Note(models.Model):
     student = models.ForeignKey("students.Student", on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-    note = RichTextUploadingField()
+    note = RichTextUploadingField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -107,7 +107,8 @@ class Note(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['student', 'lesson'], name='unique_intro',violation_error_message= "You have already added note for this class"),
         ]
-        
+          
+
     def __str__(self):
-        return f"{self.student.user.username} "
+        return f"{self.student.user.username}"
 

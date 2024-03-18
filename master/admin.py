@@ -31,25 +31,28 @@ from .models import (
 class TestTypeAdmin(admin.ModelAdmin):
     list_filter = ["test_type"]
     search_fields = ["test_type"]
+    list_display = ["test_type"]
 
 
 @admin.register(ModuleType)
 class ModuleTypeAdmin(admin.ModelAdmin):
     list_filter = ["module_type"]
     search_fields = ["module_type"]
+    list_display = ["module_type"]
 
 
 @admin.register(ExamType)
 class ExamTypeAdmin(admin.ModelAdmin):
     list_filter = ["exam_type"]
     search_fields = ["exam_type"]
+    list_display = ["exam_type"]
 
 
 @admin.register(QuestionType)
 class QuestionTypeAdmin(admin.ModelAdmin):
     list_filter = ["question_type"]
     search_fields = ["question_type"]
-
+    list_display = ["question_type"]
 
 @admin.register(Category)
 class CategoryAdmin(ImportExportModelAdmin):

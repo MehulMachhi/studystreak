@@ -132,7 +132,8 @@ class LessonAdmin(NestedModelAdmin):
 
 admin.site.register(Lesson, LessonAdmin)
 
-@admin.register(Note)
+
 class NoteAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["student", "lesson",]
+admin.site.register(Note,NoteAdmin)
 

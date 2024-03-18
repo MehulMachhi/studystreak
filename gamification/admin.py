@@ -18,16 +18,19 @@ class FlashCardAdmin(admin.ModelAdmin):
 class GamificationAdmin(admin.ModelAdmin):
     list_filter = ("content_type", "object_id", "points",)
     search_fields = ("content_type", "object_id", "points",)
+    list_display = ["content_type", "object_id", "points"]
     
     
 @admin.register(Badge)
 class BadgeAdmin(admin.ModelAdmin):
     list_filter = ("title", "points_required", "gamification_items","next_badge",)
     search_fields = ("title", "points_required", "gamification_items","next_badge",)
+    list_display = ["title", "points_required", "next_badge"]
     
 
 @admin.register(PointHistory)
 class PointHistoryAdmin(admin.ModelAdmin):
     list_filter = ("student", "gamification",)
     search_fields = ("student", "gamification",)
+    list_display = ["student", "gamification"]
     

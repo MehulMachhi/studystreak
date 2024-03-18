@@ -15,6 +15,7 @@ from .models import FullLengthTest, createexam, module
 class Admin(admin.ModelAdmin):
     list_filter = ("name","reading_set", "listening_set", "speaking_set", "writing_set", "difficulty_level")
     search_fields = ("name","reading_set", "listening_set", "speaking_set", "writing_set", "difficulty_level")
+    list_display = ["name", "reading_set", "listening_set", "speaking_set", "writing_set", "difficulty_level"]
     
 
 class createexamadmin(admin.ModelAdmin):
@@ -58,10 +59,12 @@ class moduleadmin(admin.ModelAdmin):
         "integrated_reasoning_list",
         "quantitative_reasoning_list",
         "verbal_reasoning_list",
+        "practice_test_type",
+        "difficulty_level",
     )
 
     list_filter = ("Name","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
-    search_fields = ("Name","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
+    search_fields = ("Namez","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
