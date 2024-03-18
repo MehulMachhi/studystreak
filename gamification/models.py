@@ -65,6 +65,4 @@ class FlashCardItem(models.Model):
     front = models.TextField()
     back = models.TextField()
     
-    def __str__(self):
-        return self.content
     
