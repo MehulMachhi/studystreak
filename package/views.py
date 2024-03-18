@@ -419,9 +419,10 @@ class EnrollPackageStudentView(APIView):
                 )
 
             package_ids = serializer.validated_data.get("package_ids", [])
-            if not package_ids:
+            course_ids = serializer.validated_data.get("course_ids", [])
+            if not package_ids or not course_ids:
                 return Response(
-                    {"detail": "No package IDs provided. Please provide valid package IDs."},
+                    {"detail": "Please provide both package IDs and course IDs."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

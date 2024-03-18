@@ -74,7 +74,7 @@ class CoursePackageSerializer(serializers.ModelSerializer):
 
 class EnrollmentPackageSerializer(serializers.ModelSerializer):
     package_ids = serializers.ListField(child=serializers.CharField(), required=True)
-
+    course_ids = serializers.ListField(child=serializers.IntegerField(), required=True)
     class Meta:
         model = Package
         fields ="__all__"
