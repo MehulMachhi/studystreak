@@ -60,7 +60,7 @@ class SpeakingAnswerSerializer(serializers.ModelSerializer):
 
 
 class StudentanswerSerializers(serializers.ModelSerializer):
-    student_exam = StudentAnswerSerializers(many=True, required=True)
+    student_exam = StudentAnswerSerializers(many=True, required=False)
 
     class Meta:
         model = Studentanswer
@@ -147,7 +147,7 @@ class PracticeTestAnswerSerializer(serializers.Serializer):
     Practise_Exam = serializers.PrimaryKeyRelatedField(
         queryset=module.objects.all(), required=True
     )
-    answer_data = StudentExamSerializer(many=True, required=True)
+    answer_data = StudentExamSerializer(many=True, required=False)
 
     def create(self, validated_data):
         answer_data = validated_data.pop("answer_data")
