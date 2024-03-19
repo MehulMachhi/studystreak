@@ -26,7 +26,7 @@ class Student_answer(models.Model):
     )
     question_number = models.IntegerField()
     answer_text = models.TextField(blank=True, null=True)
-
+    
     def __str__(self):
         return self.answer_text
 

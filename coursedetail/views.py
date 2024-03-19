@@ -21,7 +21,6 @@ class LessonCreateView(generics.ListCreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonCreateSerializers
     
-
 class NoteViewSet(ModelViewSet):
     serializer_class = NoteListSerializers
 
@@ -38,3 +37,8 @@ class NoteViewSet(ModelViewSet):
         if not (student_id or lesson_id):
             queryset = Note.objects.none()
         return queryset
+    
+
+class NoteCreateView(generics.ListCreateAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteListSerializers

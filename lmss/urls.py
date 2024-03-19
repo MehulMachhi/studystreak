@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from assessment.views import assessmentListView, assessmentRetUpdDelView
 from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
-                                LessonListView, NoteViewSet)
+                                LessonListView, NoteViewSet, NoteCreateView)
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
@@ -69,7 +69,7 @@ from students.views import (BatchIdwiseStudentGetView,
                             PackageIdwiseStudentGetView,
                             Student_List_View_Dashboard,
                             StudentRetUpdDelUserView, StudentRetUpdDelView,
-                            StudentView)
+                            StudentView, CourseIdwiseStudentGetView)
 from studystreak_api.views import (ChangePasswordView, GetUserRole,
                                    GetUserView, LoginView, PasswordResetView,
                                    ProfileView, RegistrationView,
@@ -97,6 +97,7 @@ router.register(
 router.register("api/test-types", TestTypeViewset, basename="test-types")
 urlpatterns = [
     path('api/notes/<int:lesson_id>/<int:student_id>/', NoteViewSet.as_view({'get': 'list'}), name='notes-list'),
+    path("api/notes/createview/", NoteCreateView.as_view(), name="createview"),
     path("api/live-classes/", LiveClassListView.as_view(), name="live-classes-list"),
     path(
         "api/live-classes-users/",
@@ -486,6 +487,7 @@ urlpatterns = [
     path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
     path('api/create/gamification/', gamificationCreateView.as_view(), name='gamification'),
     path('api/get/gamification/', gamificationListView.as_view()), 
+    path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
     
 ] + router.urls
 
