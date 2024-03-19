@@ -133,64 +133,61 @@ def BatchIdwiseStudentGetView(request, batch_id):
     except batch.DoesNotExist:
         return JsonResponse({'error': 'Batch not found'}, status=404)
 
+
+
 import logging
+from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
 def CourseIdwiseStudentGetView(self, course_id):
     try:
         course = Course.objects.get(id=course_id)
-        packages = Package.objects.filter(select_course=course)
-        
+        students = Student.objects.filter(select_package__select_course=course)
+
         students_list = []
-        for package in packages:
-            if package.user_package:  
-                students = package.user_package.student_set.all()
-                if students:
-                    for student in students:
-                        serialized_student = {
-                           'id': student.id,
-                            'first_name': student.user.first_name,
-                            'last_name': student.user.last_name,
-                            'gender': student.gender,
-                            'country': student.country.name if student.country else None,
-                            'state': student.state.name if student.state else None,
-                            'city': student.city.name if student.city else None,
-                            'phone_no': student.phone_no,
-                            'whatsapp_no': student.whatsapp_no,
-                            'reference_by': student.reference_by,
-                            'country_interested_in': student.country_interested_in.name if student.country_interested_in else None,
-                            'last_education': student.last_education,
-                            'ielts_taken_before': student.ielts_taken_before,
-                            'duolingo_taken_before': student.duolingo_taken_before,
-                            'pte_taken_before': student.pte_taken_before,
-                            'toefl_taken_before': student.toefl_taken_before,
-                            'gre_taken_before': student.gre_taken_before,
-                            'gmat_taken_before': student.gmat_taken_before,
-                            'remark': student.remark,
-                            'biography': student.biography,
-                            'user_image': student.user_image.url if student.user_image else None,
-                            'interested_in_visa_counselling': student.interested_in_visa_counselling,
-                            'select_batch': [batch.batch_name for batch in student.select_batch.all()],
-                            'select_package': [package.package_name for package in student.select_package.all()],
-                            # 'Live_class_enroll': [live_class.live_class_name for live_class in student.Live_class_enroll.all()],
-                            'referal_code': student.referal_code,
-                            'created_at': student.created_at.strftime("%Y-%m-%d %H:%M:%S") if student.created_at else None,
-                            'updated_at': student.updated_at.strftime("%Y-%m-%d %H:%M:%S") if student.updated_at else None,
-                            'student_pt': [module.module_name for module in student.student_pt.all()],
-                            'student_flt': [module.module_name for module in student.student_flt.all()],
-                            'student_mock': [exam.exam_name for exam in student.student_mock.all()],
-                        }
-                        students_list.append(serialized_student)
-                else:
-                    logger.warning(f"No students found for package {package.id} linked to course {course.id}")
+        for student in students:
+            serialized_student = {
+                'id': student.id,
+                'first_name': student.user.first_name,
+                'last_name': student.user.last_name,
+                'gender': student.gender,
+                'country': student.country.name if student.country else None,
+                'state': student.state.name if student.state else None,
+                'city': student.city.name if student.city else None,
+                'phone_no': student.phone_no,
+                'whatsapp_no': student.whatsapp_no,
+                'reference_by': student.reference_by,
+                'country_interested_in': student.country_interested_in.name if student.country_interested_in else None,
+                'last_education': student.last_education,
+                'ielts_taken_before': student.ielts_taken_before,
+                'duolingo_taken_before': student.duolingo_taken_before,
+                'pte_taken_before': student.pte_taken_before,
+                'toefl_taken_before': student.toefl_taken_before,
+                'gre_taken_before': student.gre_taken_before,
+                'gmat_taken_before': student.gmat_taken_before,
+                'remark': student.remark,
+                'biography': student.biography,
+                'user_image': student.user_image.url if student.user_image else None,
+                'interested_in_visa_counselling': student.interested_in_visa_counselling,
+                'select_batch': [batch.batch_name for batch in student.select_batch.all()],
+                'select_package': [package.package_name for package in student.select_package.all()],
+                'referal_code': student.referal_code,
+                'created_at': student.created_at.strftime("%Y-%m-%d %H:%M:%S") if student.created_at else None,
+                'updated_at': student.updated_at.strftime("%Y-%m-%d %H:%M:%S") if student.updated_at else None,
+                'student_pt': [module.module_name for module in student.student_pt.all()],
+                'student_flt': [module.module_name for module in student.student_flt.all()],
+                'student_mock': [exam.exam_name for exam in student.student_mock.all()],
+            }
+            students_list.append(serialized_student)
 
         if students_list:
             return JsonResponse({'students': students_list}, status=200)
         else:
             return JsonResponse({'message': 'No students are available for the course'}, status=200)
-    except Course.DoesNotExist:
+    except ObjectDoesNotExist:
         return JsonResponse({'error': 'Course not found'}, status=404)
     except Exception as e:
-        logger.error(f"An error occurred: {str(e)}")
-        return JsonResponse({'error': 'An unexpected error occurred'}, status=500)
+        logger.error(f"An unexpected error occurred: {str(e)}")
+        return JsonResponse({'error': 'An unexpected error occurred'}, status=500) 
