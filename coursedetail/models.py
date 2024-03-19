@@ -103,10 +103,10 @@ class Note(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['student', 'lesson'], name='unique_intro',violation_error_message= "You have already added note for this class"),
-        ]
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(fields=['student', 'lesson'], name='unique_intro',violation_error_message= "You have already added note for this class"),
+    #     ]
           
 
     def __str__(self):
