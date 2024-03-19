@@ -21,6 +21,18 @@ class LessonCreateView(generics.ListCreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonCreateSerializers
     
+
 class NoteViewSet(ModelViewSet):
-    queryset = Note.objects.all()
     serializer_class = NoteListSerializers
+
+    def get_queryset(self):
+        queryset = Note.objects.all()
+        student_id = self.request.query_params.get('student_id')
+        lesson_id = self.request.query_params.get('lesson_id')
+
+        if student_id:
+            queryset = queryset.filter(student_id=student_id)
+        if lesson_id:
+            queryset = queryset.filter(lesson_id=lesson_id)
+            print(queryset)
+        return queryset

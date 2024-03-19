@@ -148,11 +148,7 @@ class LessonCreateSerializers(serializers.ModelSerializer):
         fields = "__all__"
         depth=2
 
-
-
-
 from .models import Note
-
 
 class NoteListSerializers(serializers.ModelSerializer):
     class Meta:
