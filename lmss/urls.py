@@ -85,7 +85,7 @@ from website.views import (BlogListView, BlogRetUpdDelViews,
 from Writing_Exam.views import *  # noqa: F403
 
 router = DefaultRouter()
-router.register("api/notes", NoteViewSet, basename="notes")
+
 router.register("api/exam-blocks", ExamViewSet, basename="exam-blocks")
 router.register(
     "api/exam-blocks-answers", AnswerViewSet, basename="exam-blocks-answers"
@@ -96,6 +96,7 @@ router.register(
 )
 router.register("api/test-types", TestTypeViewset, basename="test-types")
 urlpatterns = [
+    path('api/notes/<int:lesson_id>/<int:student_id>/', NoteViewSet.as_view({'get': 'list'}), name='notes-list'),
     path("api/live-classes/", LiveClassListView.as_view(), name="live-classes-list"),
     path(
         "api/live-classes-users/",

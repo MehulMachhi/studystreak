@@ -27,12 +27,14 @@ class NoteViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = Note.objects.all()
-        student_id = self.request.query_params.get('student_id')
-        lesson_id = self.request.query_params.get('lesson_id')
+        lesson_id = self.kwargs.get('lesson_id')
+        student_id = self.kwargs.get('student_id')
 
         if student_id:
             queryset = queryset.filter(student_id=student_id)
         if lesson_id:
             queryset = queryset.filter(lesson_id=lesson_id)
-            print(queryset)
+
+        if not (student_id or lesson_id):
+            queryset = Note.objects.none()
         return queryset
