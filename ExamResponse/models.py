@@ -25,7 +25,7 @@ class Student_answer(models.Model):
         Studentanswer, related_name="student_exam", on_delete=models.CASCADE
     )
     question_number = models.IntegerField()
-    answer_text = models.TextField()
+    answer_text = models.TextField(blank=True)
 
     def __str__(self):
         return self.answer_text
