@@ -37,7 +37,7 @@ from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
                              LiveClassUsersView,
                              StudentLiveClassEnrollmentAPIView,
                              StudentRemoveLiveClassAPIView,
-                             liveclass_list_view, liveclass_listwithid_view)
+                             liveclass_list_view, liveclass_listwithid_view, AddBookSlot)
 from master.views import (AdditionalResourceListAPIView,
                           BatchListByPackageView, CategoryListView,
                           CategoryRetUpdDelView, CityListView,
@@ -488,6 +488,7 @@ urlpatterns = [
     path('api/create/gamification/', gamificationCreateView.as_view(), name='gamification'),
     path('api/get/gamification/', gamificationListView.as_view()), 
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
+    path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
     
 ] + router.urls
 

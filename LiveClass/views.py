@@ -55,7 +55,12 @@ class Liveclass_Create_View(generics.ListCreateAPIView):
     queryset = Live_Class.objects.all()
     serializer_class = LiveClassCreateSerializer
     zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
-    
+
+    def get(self, request, *args, **kwargs):
+        live_class_count = self.queryset.count()
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response({'live_class_count': live_class_count, 'live_classes': serializer.data}, status=status.HTTP_200_OK)
+
 # {
 #     "id": 1,
 #     "meeting_title": "IELTS ESSIENTIALS DAY 2",
@@ -199,3 +204,31 @@ class StudentRemoveLiveClassAPIView(generics.UpdateAPIView):
 
         except Student.DoesNotExist:
             return Response({"error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class StudentRemoveLiveClassAPIView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializers
+
+    
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Live_Class
+
+class AddBookSlot(APIView):
+    def post(self, request, pk, format=None):
+        try:
+            live_class = Live_Class.objects.get(pk=pk)
+        except Live_Class.DoesNotExist:
+            return Response({"message": "Live class not found."}, status=status.HTTP_404_NOT_FOUND)
+        if live_class.bookslot_count is not None and live_class.registration_limit is not None:
+            if live_class.bookslot_count >= live_class.registration_limit:
+                return Response({"message": f"Registration for {live_class.meeting_title} is full."}, status=status.HTTP_400_BAD_REQUEST)
+        live_class.bookslot_count = live_class.bookslot_count + 1 if live_class.bookslot_count is not None else 1
+        live_class.save()
+        return Response({"message": "Book slot successfully."}, status=status.HTTP_200_OK)
+
+    

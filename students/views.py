@@ -188,6 +188,9 @@ def CourseIdwiseStudentGetView(self, course_id):
             return JsonResponse({'message': 'No students are available for the course'}, status=200)
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'Course not found'}, status=404)
+    except ZeroDivisionError:
+        return JsonResponse({'message':'student '})
     except Exception as e:
         logger.error(f"An unexpected error occurred: {str(e)}")
         return JsonResponse({'error': 'An unexpected error occurred'}, status=500) 
+    

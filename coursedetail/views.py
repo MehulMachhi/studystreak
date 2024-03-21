@@ -17,6 +17,14 @@ class LessionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LessonListSerializers
     
 
+# def LessonNextIdView(request):
+#     user = request.user
+#     if user.exists:
+#         lessons = Lesson.objects.all()
+#         return lessons
+#     else:
+#         pass
+
 class LessonCreateView(generics.ListCreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonCreateSerializers
