@@ -75,6 +75,7 @@ class Lesson(models.Model):
         return self.Lesson_Title
 
 
+
 class QuizOption(models.Model):
     name = models.ForeignKey("Quiz_Question", on_delete=models.CASCADE)
     Answers = models.CharField(max_length=200, null=True, blank=True)
