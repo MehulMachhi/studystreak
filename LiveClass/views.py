@@ -238,15 +238,15 @@ class AddBookSlot(APIView):
 
 
 
-# class getslot(APIView):
-#     def post(self, request, pk, format=None):
-#         try:
-#             live_class = Live_Class.objects.get(pk=pk)
-#         except Live_Class.DoesNotExist:
-#             return Response({"message": "Live class not found"}, status=status.HTTP_404_NOT_FOUND)
-#         if live_class.bookslot_count is not None and live_class.registration_limit is not None:
-#             if live_class.bookslot_count > live_class.registration_limit:
-#                 return Response({"message": f"Registration For {live_class.meeting_title} Is Full !"}, status=status.HTTP_400_BAD_REQUEST)
-#         live_class.bookslot_count = live_class.bookslot_count + 1 if live_class.bookslot_count is not None else 1
-#         live_class.save()
-#         return Response({"message": "Book slot successfully"}, )    
+class getslot(APIView):
+    def post(self, request, pk, format=None):
+        try:
+            live_class = Live_Class.objects.get(pk=pk)
+        except Live_Class.DoesNotExist:
+            return Response({"message": "Live class not found"}, status=status.HTTP_404_NOT_FOUND)
+        if live_class.bookslot_count is not None and live_class.registration_limit is not None:
+            if live_class.bookslot_count > live_class.registration_limit:
+                return Response({"message": f"Registration For {live_class.meeting_title} Is Full !"}, status=status.HTTP_400_BAD_REQUEST)
+        live_class.bookslot_count = live_class.bookslot_count + 1 if live_class.bookslot_count is not None else 1
+        live_class.save()
+        return Response({"message": "Book slot successfully"}, )    

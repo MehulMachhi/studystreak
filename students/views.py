@@ -122,9 +122,9 @@ def BatchIdwiseStudentGetView(request, batch_id):
                     'referal_code': student.referal_code,
                     'created_at': student.created_at.strftime("%Y-%m-%d %H:%M:%S") if student.created_at else None,
                     'updated_at': student.updated_at.strftime("%Y-%m-%d %H:%M:%S") if student.updated_at else None,
-                    'student_pt': [module.module_name for module in student.student_pt.all()],
-                    'student_flt': [module.module_name for module in student.student_flt.all()],
-                    'student_mock': [exam.exam_name for exam in student.student_mock.all()],
+                    # 'student_pt': [module.module_name for module in student.student_pt.all()],
+                    # 'student_flt': [module.module_name for module in student.student_flt.all()],
+                    # 'student_mock': [exam.exam_name for exam in student.student_mock.all()],
                 }
                 students_list.append(serialized_student)
             return JsonResponse({'students': students_list}, status=200)
@@ -176,9 +176,9 @@ def CourseIdwiseStudentGetView(self, course_id):
                 'referal_code': student.referal_code,
                 'created_at': student.created_at.strftime("%Y-%m-%d %H:%M:%S") if student.created_at else None,
                 'updated_at': student.updated_at.strftime("%Y-%m-%d %H:%M:%S") if student.updated_at else None,
-                'student_pt': [module.module_name for module in student.student_pt.all()],
-                'student_flt': [module.module_name for module in student.student_flt.all()],
-                'student_mock': [exam.exam_name for exam in student.student_mock.all()],
+                # 'student_pt': [module.module_name for module in student.student_pt.all()],
+                # 'student_flt': [module.module_name for module in student.student_flt.all()],
+                # 'student_mock': [exam.exam_name for exam in student.student_mock.all()],
             }
             students_list.append(serialized_student)
 
