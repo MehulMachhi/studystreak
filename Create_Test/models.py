@@ -21,9 +21,9 @@ class moduleType(models.TextChoices):
     Speaking = 'Speaking', 'Speaking'
     Writing = 'Writing', 'Writing'
     AWA = "AWA", "AWA"
-    integrated_reasoning="Integrated Reasoning", "Integrated Reasoning"
-    quantitative_reasoning = "Quantitative Reasoning","Quantitative Reasoning"
-    verbal_reasoning = "Verbal Reasoning", "Verbal Reasoning"
+    integrated_reasoning="Integrated-Reasoning", "Integrated-Reasoning"
+    quantitative_reasoning = "Quantitative-Reasoning","Quantitative-Reasoning"
+    verbal_reasoning = "Verbal-Reasoning", "Verbal-Reasoning"
 class module(models.Model):
     Name = models.CharField(max_length=100, null=True, blank=True)
     Reading = models.ManyToManyField(

@@ -35,9 +35,9 @@ class ExamType(models.TextChoices):  # noqa: F811
     writing = "Writing", "Writing"
     general = "General", "General"
     AWA = "AWA", "AWA"
-    integrated_reasoning="Integrated Reasoning", "Integrated Reasoning"
-    quantitative_reasoning = "Quantitative Reasoning","Quantitative Reasoning"
-    verbal_reasoning = "Verbal Reasoning", "Verbal Reasoning"
+    integrated_reasoning="Integrated-Reasoning", "Integrated-Reasoning"
+    quantitative_reasoning = "Quantitative-Reasoning","Quantitative-Reasoning"
+    verbal_reasoning = "Verbal-Reasoning", "Verbal-Reasoning"
 
 
 # Create your models here.
