@@ -70,7 +70,12 @@ class BadgeSerializer(serializers.ModelSerializer):
         model = Badge
         fields = '__all__'
 
+class GamificationSerializerForPointHistory(serializers.ModelSerializer):
+    class Meta:
+        model = Gamification
+        fields = "__all__"
 class PointHistorySerializer(serializers.ModelSerializer):
+    gamification = GamificationSerializerForPointHistory()
     class Meta:
         model = PointHistory
         fields = '__all__'

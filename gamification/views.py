@@ -32,6 +32,7 @@ class gamificationCreateView(APIView):
 
 
 class gamificationListView(APIView):
+
     def get(self, request):
         qs = Gamification.objects.all()
         data = []
@@ -73,3 +74,38 @@ class gamificationListView(APIView):
 
         # serializer = json.loads(serializers.serialize('json', Gamification.objects.all()))
         return Response(data, status=status.HTTP_200_OK)
+
+
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.db.models import F, Value
+from django.db.models.aggregates import Count
+from django.db.models.functions import Coalesce, Concat
+from django.forms.models import model_to_dict
+from rest_framework.serializers import ValidationError
+
+from .models import PointHistory
+from .serializers import PointHistorySerializer
+
+
+class PointHistoryView(APIView):
+
+    def get_queryset(self):
+        user = self.request.user
+        try:
+            user.student
+        except Exception as e:
+            raise ValidationError(f"user {user.username} not registered as student")
+        return PointHistory.objects.filter(student=user.student).all()
+
+    def get(self, request):
+        queryset = self.get_queryset().annotate(
+            points=F("gamification__points"),
+            model=F('gamification__content_type__model'),
+            object_id=F('gamification__object_id'),
+            
+            ).values("created_at", 'points', 'model', 'object_id')
+        total_points  = queryset.aggregate(total_points = Count('points'))
+        data = list(queryset)
+        data.append(total_points)
+        return Response(data,200)    

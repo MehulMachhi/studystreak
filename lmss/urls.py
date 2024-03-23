@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from assessment.views import assessmentListView, assessmentRetUpdDelView
 from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
-                                LessonListView, NoteViewSet, NoteCreateView)
+                                LessonListView, NoteCreateView, NoteViewSet)
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
                            CourseListView, CourseRetUpdDelView,
                            CourseTutorListView, YoutubeDataApiView)
@@ -29,15 +29,15 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, StudentAnswerListView)
-from gamification.views import (FlashCardView, gamificationCreateView,
-                                gamificationListView)
+from gamification.views import (FlashCardView, PointHistoryView,
+                                gamificationCreateView, gamificationListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
-from LiveClass.views import (Liveclass_Create_View, LiveClassListView,
-                             LiveClassUsersView,
+from LiveClass.views import (AddBookSlot, Liveclass_Create_View,
+                             LiveClassListView, LiveClassUsersView,
                              StudentLiveClassEnrollmentAPIView,
                              StudentRemoveLiveClassAPIView,
-                             liveclass_list_view, liveclass_listwithid_view, AddBookSlot)
+                             liveclass_list_view, liveclass_listwithid_view)
 from master.views import (AdditionalResourceListAPIView,
                           BatchListByPackageView, CategoryListView,
                           CategoryRetUpdDelView, CityListView,
@@ -66,10 +66,11 @@ from QuestionBank.views import *  # noqa: F403
 from Reading_Exam.views import *  # noqa: F403
 from Speaking_Exam.views import *  # noqa: F403
 from students.views import (BatchIdwiseStudentGetView,
+                            CourseIdwiseStudentGetView,
                             PackageIdwiseStudentGetView,
                             Student_List_View_Dashboard,
                             StudentRetUpdDelUserView, StudentRetUpdDelView,
-                            StudentView, CourseIdwiseStudentGetView)
+                            StudentView)
 from studystreak_api.views import (ChangePasswordView, GetUserRole,
                                    GetUserView, LoginView, PasswordResetView,
                                    ProfileView, RegistrationView,
@@ -489,6 +490,7 @@ urlpatterns = [
     path('api/get/gamification/', gamificationListView.as_view()), 
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
     path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
+    path('api/pointhistory/',PointHistoryView.as_view()),
     
 ] + router.urls
 
