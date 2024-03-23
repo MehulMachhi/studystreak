@@ -76,16 +76,11 @@ class gamificationListView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.db.models import F, Value
-from django.db.models.aggregates import Count
-from django.db.models.functions import Coalesce, Concat
-from django.forms.models import model_to_dict
+from django.db.models import F
+from django.db.models.aggregates import Sum
 from rest_framework.serializers import ValidationError
 
 from .models import PointHistory
-from .serializers import PointHistorySerializer
 
 
 class PointHistoryView(APIView):
@@ -105,7 +100,7 @@ class PointHistoryView(APIView):
             object_id=F('gamification__object_id'),
             
             ).values("created_at", 'points', 'model', 'object_id')
-        total_points  = queryset.aggregate(total_points = Count('points'))
+        total_points  = queryset.aggregate(total_points = Sum('points'))
         data = list(queryset)
         data.append(total_points)
         return Response(data,200)    
