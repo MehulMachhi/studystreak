@@ -16,15 +16,15 @@ class ExamSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 2
 
-    def create(self, validated_data):
-        answers_data = validated_data.pop("answers", None)
+    # def create(self, validated_data):
+    #     answers_data = validated_data.pop("answers", None)
 
-        data = super().create(validated_data)
-        if answers_data is not None:
-            for answer_data in answers_data:
-                Answer.objects.create(exam=data, **answer_data)
+    #     data = super().create(validated_data)
+    #     if answers_data is not None:
+    #         for answer_data in answers_data:
+    #             Answer.objects.create(exam=data, **answer_data)
 
-        return data
+    #     return data
 
 
 class FullLengthTestSerializer(serializers.ModelSerializer):
