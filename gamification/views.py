@@ -102,5 +102,4 @@ class PointHistoryView(APIView):
             ).values("created_at", 'points', 'model', 'object_id').order_by('-created_at')
         total_points  = queryset.aggregate(total_points = Sum('points'))['total_points']
         data = list(queryset)
-        data.append(total_points)
         return Response({"history":data,'total_points':total_points},200)    
