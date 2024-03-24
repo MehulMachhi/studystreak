@@ -103,3 +103,29 @@ class PointHistoryView(APIView):
         total_points  = queryset.aggregate(total_points = Sum('points'))['total_points']
         data = list(queryset)
         return Response({"history":data,'total_points':total_points},200)    
+    
+from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from .utils import save_points_and_publish_message
+
+
+class FlashCardPointView(APIView):
+    class FlashCardSerializer(serializers.Serializer):
+        flashcard = serializers.PrimaryKeyRelatedField(queryset = FlashCard.objects.all())
+        
+    def post(self, request):
+        serializer = self.FlashCardSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                student = getattr(self.request.user,'student')
+            except Exception as e:
+                return Response({'error':'This user is not registered as student'},400)
+            
+            flashcard = serializer.validated_data.get('flashcard')
+            
+            if not flashcard.g.all().exists():
+                return Response({'msg':'flash card is not registered for points'},200)
+            
+            save_points_and_publish_message( flashcard.g.all().first(),self.request.user)
+            return Response(None,200)

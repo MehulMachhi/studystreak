@@ -1,11 +1,15 @@
-from django.shortcuts import render
-from .serializers import StudentSerializers, StudentRetUpdDelSerializers, StudentRetUpdDelUserSerializers
-from .models import Student
-from rest_framework import generics
 from django.contrib.auth.models import AnonymousUser, User
+from django.shortcuts import render
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from Courses.models import Course
+
+from .models import Student
+from .serializers import (StudentRetUpdDelSerializers,
+                          StudentRetUpdDelUserSerializers, StudentSerializers)
+
 # Create your views here.
 
 class StudentView(generics.ListCreateAPIView):
@@ -44,8 +48,10 @@ class Student_List_View_Dashboard(generics.ListAPIView):
 
 
 from django.http import JsonResponse
-from package.models import Package
+
 from master.models import batch
+from package.models import Package
+
 
 def PackageIdwiseStudentGetView(request, package_id):
     try:
@@ -136,8 +142,9 @@ def BatchIdwiseStudentGetView(request, batch_id):
 
 
 import logging
-from django.http import JsonResponse
+
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 
 logger = logging.getLogger(__name__)
 
@@ -194,3 +201,4 @@ def CourseIdwiseStudentGetView(self, course_id):
         logger.error(f"An unexpected error occurred: {str(e)}")
         return JsonResponse({'error': 'An unexpected error occurred'}, status=500) 
     
+
