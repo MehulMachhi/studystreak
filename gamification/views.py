@@ -100,7 +100,7 @@ class PointHistoryView(APIView):
             object_id=F('gamification__object_id'),
             
             ).values("created_at", 'points', 'model', 'object_id').order_by('-created_at')
-        total_points  = queryset.aggregate(total_points = Sum('points'))
+        total_points  = queryset.aggregate(total_points = Sum('points'))['total_points']
         data = list(queryset)
         data.append(total_points)
-        return Response(data,200)    
+        return Response({"history":data,'total_points':total_points},200)    
