@@ -4,17 +4,18 @@ on:
   push:
     branches:
       - main
-
 jobs:
-  deploy_on_Docker_VPS:
+  deploy_on_VPS_without_Docker:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
           username: ubuntu #${{ secrets.USERNAME }}
-          host: 65.20.73.247 #${{ secrets.HOST }}
-          password: amitv9493 #${{ secrets.SSH_PASSWORD }}
+          host: 65.20.89.184
+          password: anantsoftcomputing #${{ secrets.SSH_PASSWORD }}
           script: |
             cd /home/ubuntu/studystreak
             git pull
+            sudo systemctl restart gunicorn
+            sudo systemctl restart nginx
