@@ -277,7 +277,6 @@ urlpatterns = [
         UserResetPasswordView.as_view(),
         name="password_reset",
     ),
-    path("froala_editor/", include("froala_editor.urls")),
     path("api/QuestionType", QuestionTypeView.as_view()),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     # Optional UI:
