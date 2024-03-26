@@ -26,6 +26,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "studystreak.io",
     "studystreak.in",
+    "65.20.89.184",
 ]
 # ALLOWED_HOSTS = ["*"]
 # settings.py
