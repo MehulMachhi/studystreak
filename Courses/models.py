@@ -70,7 +70,7 @@ class Course(models.Model):
 class YoutubeDataRecord(models.Model):
     student = models.ForeignKey("students.Student", on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    timestamp = models.CharField()
+    timestamp = models.CharField(max_length=255)
     lesson = models.ForeignKey("coursedetail.Lesson", on_delete=models.CASCADE, related_name = 'youtube_data', null=True, blank=True)
     
     class Meta:

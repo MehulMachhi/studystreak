@@ -67,6 +67,7 @@ class Exam(models.Model):
         "master.ModuleType", on_delete=models.SET_NULL, null=True, blank=True
     )
     exam_category = models.CharField(
+        max_length=100,
         choices=Category_Type.choices, null=True, blank=True
     )
     audio_file = models.FileField(upload_to="examblockaudio/", null=True, blank=True)

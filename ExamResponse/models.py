@@ -17,7 +17,7 @@ class Studentanswer(models.Model):
     Full_Length_Exam = models.ForeignKey(FullLengthTest, on_delete=models.CASCADE, null=True, blank=True, related_name = "full_length+")
     AI_Assessment = models.TextField(null=True, blank=True)
     Tutor_Assessment = models.TextField(null=True, blank=True)
-    band = models.CharField(null=True, blank=True)
+    band = models.CharField(max_length = 50, null=True, blank=True)
     exam_type = models.CharField(max_length=30, choices = ExamType.choices, null=True, blank=True)
 
 class Student_answer(models.Model):

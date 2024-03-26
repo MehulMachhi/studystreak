@@ -140,14 +140,13 @@ WSGI_APPLICATION = "lmss.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config["DB_NAME"],  # "lmss",
-        "USER": config["DB_USER"],
-        "PASSWORD": config["DB_PASSWORD"],  # os.environ.get("DB_PASSWORD"),
-        "HOST": config["DB_HOST"],
-        "PORT": config["DB_PORT"],
+        "NAME": 'postgres', #config["DB_NAME"],  # "lmss",
+        "USER": 'postgres',#config["DB_USER"],
+        "PASSWORD": 'postgres',#config["DB_PASSWORD"],  # os.environ.get("DB_PASSWORD"),
+        "HOST": 'postgres_db',#config["DB_HOST"],
+        "PORT": 5432,#config["DB_PORT"],
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -345,6 +344,6 @@ CLIENT_SECRET = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://cache:6379/1",
     },
 }
