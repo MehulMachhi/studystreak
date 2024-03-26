@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import signal
 
 import django
 import websockets
@@ -29,7 +30,6 @@ def validate_token(token):
         return None
 
 
-
 CONNECTIONS = {}
 
 
@@ -37,9 +37,10 @@ async def handler(websocket):
     """Authenticate user and register connection in CONNECTIONS."""
     token = await websocket.recv()
     user = await asyncio.to_thread(validate_token, token)
-    
+
     if user is None:
-        await websocket.close(CloseCode.INTERNAL_ERROR, "authentication failed")
+        await websocket.close(CloseCode.INVALID_DATA, "authentication failed")
+        await websocket.send('Given Token is not valid')
         return
     CONNECTIONS[user.id] = websocket
     await websocket.send(f"authenticated as user {user.username}")
@@ -51,8 +52,8 @@ async def handler(websocket):
 
 async def process_events():
     """Listen to events in Redis and process them."""
-    
-    redis = aioredis.from_url("redis://127.0.0.1:6379/1")
+
+    redis = aioredis.from_url("redis://cache:6379/1")
     pubsub = redis.pubsub()
     await pubsub.subscribe("events")
     async for message in pubsub.listen():
@@ -66,13 +67,28 @@ async def process_events():
         if websocket:
             await websocket.send(payload)
 
-async def hello():
-    print("Hello World!")
 
 async def main():
-    async with websockets.serve(handler, "0.0.0.0", 8888):
+    # Set the stop condition when receiving SIGTERM.
+    async with websockets.serve(handler, "0.0.0.0", 8888, reuse_port=True):
         await process_events()  # runs forever
 
+
+async def shutdown(signal, loop):
+    print("Received exit signal. Closing connections...")
+    tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+    [task.cancel() for task in tasks]
+    await asyncio.gather(*tasks, return_exceptions=True)
+    loop.stop()
+
+
 if __name__ == "__main__":
-    asyncio.run(main())
-    
+    loop = asyncio.get_event_loop()
+    for signame in {'SIGINT', 'SIGTERM'}:
+        loop.add_signal_handler(getattr(signal, signame),
+                                lambda signame=signame: asyncio.create_task(shutdown(signame, loop)))
+
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass

@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       
     ports:
-      - "5432:5432"
+      - "5555:5432"
     
     expose:
       - "5432"
@@ -19,22 +19,25 @@ services:
     build: .
     restart: on-failure
     container_name: lmss
-    # command: sh -c "gunicorn --config gunicorn_config.py /app/powercrm.wsgi:application"
+    ports:
+      - "8000:8000"
+      - "8888:8888"
+    command: sh -c "supervisord -c supervisord.conf -n &"
     expose:
       - "8000"
+
     volumes:
       - ./:/app
       - staticfiles:/var/www/static/
       - media:/var/www/media/
       # - /var/certbot/conf:/etc/letsencrypt/:ro
     env_file:
-      - ./.env
+      - .env
     environment:
       - STATIC_ROOT=/var/www/static/
 
     depends_on:
       - postgres_db
-    command: ["./wait-for-it.sh", "postgres_db:16751", "--", "./entrypoint.sh"]
 
   nginx:
     build: ./nginx
@@ -50,7 +53,19 @@ services:
       - /home/studystreak/StudyStreak/build/:/home/studystreak/
     depends_on:
       - backend
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
+    expose:
+      - 6379
 volumes:
   pgdb:
   staticfiles:
   media:
+  cache:
+    driver: local
