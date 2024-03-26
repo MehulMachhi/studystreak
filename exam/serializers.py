@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from utils.dynamic_serializers import DynamicModelSerializer
+
 from .models import Answer, Exam, FullLengthTest
 
 
@@ -63,7 +65,7 @@ class ExamRetUpdDelSerializers(serializers.ModelSerializer):
         fields = "__all__"
         depth=4
         
-class ExamSerializers(serializers.ModelSerializer):
+class ExamSerializers(DynamicModelSerializer):
     class Meta:
         model = Exam
         fields = '__all__'

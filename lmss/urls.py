@@ -29,7 +29,7 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, StudentAnswerListView)
-from gamification.views import (FlashCardView, PointHistoryView,
+from gamification.views import (BadgeViewSet, FlashCardView, PointHistoryView,
                                 gamificationCreateView, gamificationListView)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
@@ -96,6 +96,7 @@ router.register(
     "api/full-length-test", FullLengthTestViewSet, basename="full-length-test"
 )
 router.register("api/test-types", TestTypeViewset, basename="test-types")
+router.register('api/badges',BadgeViewSet,basename='badge')
 urlpatterns = [
     path('api/notes/<int:lesson_id>/<int:student_id>/', NoteViewSet.as_view({'get': 'list'}), name='notes-list'),
     path("api/notes/createview/", NoteCreateView.as_view(), name="createview"),

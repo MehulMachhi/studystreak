@@ -2,6 +2,8 @@ from functools import reduce
 
 from rest_framework import serializers
 
+from utils.dynamic_serializers import DynamicModelSerializer
+
 from .models import FullLengthTest, Responses, createexam, module
 
 
@@ -46,7 +48,7 @@ class ResponsesSerializers(serializers.ModelSerializer):
         depth = 2
 
 
-class ModuleListSerializers(serializers.ModelSerializer):
+class ModuleListSerializers(DynamicModelSerializer):
     class Meta:
         model = module
         fields = "__all__"

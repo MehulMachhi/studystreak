@@ -6,15 +6,16 @@ from rest_framework.views import APIView
 from coursedetail.models import Lesson
 from coursedetail.serializers import LessonListSerializers
 from Courses.models import Course
-from Courses.serializers import CourseListSerializers
+from Courses.serializers import CourseListSerializers, CourseSimpleSerializer
 from Create_Test.models import Exam, FullLengthTest, module
 from Create_Test.serializers import FLTCreateSerializer
 from Create_Test.serializers import ModuleListSerializers as PracticeSerializer
 from exam.serializers import ExamSerializers
 from LiveClass.models import Live_Class
 
-from .models import FlashCard, Gamification
-from .serializers import FlashCardSerializer, GamificationCreateSerializer
+from .models import Badge, FlashCard, Gamification
+from .serializers import (BadgeSerializer, FlashCardSerializer,
+                          GamificationCreateSerializer)
 
 
 class FlashCardView(ListCreateAPIView):
@@ -40,7 +41,7 @@ class gamificationListView(APIView):
         for q in qs:
 
             if isinstance(q.content_object, FlashCard):
-                temp_data = FlashCardSerializer(q.content_object).data
+                temp_data = FlashCardSerializer(q.content_object,depth=0).data
                 temp_data.update({"model": "flashcard"})
                 data.append(temp_data)
 
@@ -50,12 +51,12 @@ class gamificationListView(APIView):
                 data.append(temp_data)
 
             elif isinstance(q.content_object, Course):
-                temp_data = CourseListSerializers(q.content_object).data
+                temp_data = CourseSimpleSerializer(q.content_object).data
                 temp_data.update({"model": "course"})
                 data.append(temp_data)
 
             elif isinstance(q.content_object, Exam):
-                temp_data = ExamSerializers(q.content_object).data
+                temp_data = ExamSerializers(q.content_object,fields=['id','exam_name','exam_type']).data
                 temp_data.update({"model": "exam"})
                 data.append(temp_data)
 
@@ -65,7 +66,7 @@ class gamificationListView(APIView):
                 data.append(temp_data)
 
             elif isinstance(q.content_object, module):
-                temp_data = PracticeSerializer(q.content_object).data
+                temp_data = PracticeSerializer(q.content_object,depth=0).data
                 temp_data.update({"model": "module"})
                 data.append(temp_data)
 
@@ -129,3 +130,11 @@ class FlashCardPointView(APIView):
             
             save_points_and_publish_message( flashcard.g.all().first(),self.request.user)
             return Response(None,200)
+        
+        
+from rest_framework.viewsets import ModelViewSet
+
+
+class BadgeViewSet(ModelViewSet):
+    serializer_class = BadgeSerializer
+    queryset = Badge.objects.all()

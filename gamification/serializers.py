@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from utils.dynamic_serializers import DynamicModelSerializer
+
 from .common import MODEL_MAPPER
 from .models import Badge, FlashCard, FlashCardItem, Gamification, PointHistory
 
@@ -15,7 +17,7 @@ class FlashCardItemSerializer(serializers.ModelSerializer):
             'flash_card': {'read_only': True}
         }
 
-class FlashCardSerializer(serializers.ModelSerializer):
+class FlashCardSerializer(DynamicModelSerializer):
     flash_card_items = FlashCardItemSerializer(many=True)
     class Meta:
         model = FlashCard

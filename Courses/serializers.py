@@ -9,6 +9,13 @@ from master.serializers import (AdditionalResourceListSerializers,
 from .models import Course, YoutubeDataRecord
 
 
+class CourseSimpleSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Course
+        fields = "__all__"
+
+
 class CourseListSerializers(serializers.ModelSerializer):
     lessons = LessonListSerializers(many=True, read_only=True)
     course_materials = CourseMaterialListSerializers(many=True, read_only=True)
