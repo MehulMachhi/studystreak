@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     "Speaking_Exam",
     "corsheaders",
     "exam",
-    "froala_editor",
     "ckeditor_uploader",
     "drf_spectacular",
     "django_filters",
