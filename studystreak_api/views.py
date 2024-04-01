@@ -145,7 +145,7 @@ class LoginView(APIView):
                 )
 
             return Response(
-                {"errors": "It's seems to you that verify your email"}, status=status.HTTP_404_NOT_FOUND
+                {"errors": "Please verify your email"}, status=status.HTTP_404_NOT_FOUND
             )
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
