@@ -1,4 +1,3 @@
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -20,13 +19,11 @@ def check_exam_completion(sender, instance, created, **kwargs):
         and instance.exam
         and not instance.Practise_Exam
         and not instance.Full_Length_Exam
-        and  instance.exam.g.exists()
+        and instance.exam.g.exists()
     ):
-        save_points_and_publish_message(instance.exam.g.all().first(),instance.user)
-    
+        save_points_and_publish_message(instance.exam.g.all().first(), instance.user)
 
 
-@receiver(post_save, sender=Studentanswer)
 def check_practice_test_completion(sender, instance, created, **kwargs):
     """
     The function `check_practice_test_completion` is triggered after a `Studentanswer` instance is saved, and it
@@ -46,7 +43,7 @@ def check_practice_test_completion(sender, instance, created, **kwargs):
             getattr(instance.user, "student")
         except AttributeError:
             return
-        
+
         sets = getattr(
             instance.Practise_Exam, instance.Practise_Exam.practice_test_type
         ).all()
@@ -59,12 +56,12 @@ def check_practice_test_completion(sender, instance, created, **kwargs):
             ).exists():
                 return None
 
+        save_points_and_publish_message(
+            instance.Practise_Exam.g.all().first(), instance
+        )
 
-        save_points_and_publish_message(instance.Practise_Exam.g.all().first(),instance)
 
-
-
-@receiver(post_save, sender=Studentanswer,dispatch_uid='00x123')
+@receiver(post_save, sender=Studentanswer, dispatch_uid="00x123")
 def check_FLT_submission(sender, instance, created, **kwargs):
     if (
         created
@@ -77,15 +74,19 @@ def check_FLT_submission(sender, instance, created, **kwargs):
             getattr(instance.user, "student")
         except AttributeError:
             return
-        
+
         exam_blocks = FullLengthTest.objects.filter(
-            id=instance.Full_Length_Exam.id).values_list(
-                'reading_set__Reading','speaking_set__Speaking',
-                'listening_set__Listening','writing_set__Writing')
-        
-        # unpack ids 
+            id=instance.Full_Length_Exam.id
+        ).values_list(
+            "reading_set__Reading",
+            "speaking_set__Speaking",
+            "listening_set__Listening",
+            "writing_set__Writing",
+        )
+
+        # unpack ids
         unpack_ids = list(map(lambda x: (i for i in x), exam_blocks))
-        
+
         # check if the answer exists for other exam_blocks
         for id in unpack_ids:
             if not Studentanswer.objects.filter(
@@ -96,9 +97,5 @@ def check_FLT_submission(sender, instance, created, **kwargs):
                 return
 
         gamification_object = instance.Full_Length_Exam.g.first()
-        
+
         save_points_and_publish_message(gamification_object, instance.user)
-        
-        
-        
-        

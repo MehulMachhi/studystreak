@@ -63,32 +63,18 @@ async def process_events():
         event = json.loads(payload)
         user_id = event.get("user_id")
         websocket = CONNECTIONS.get(user_id)
-        payload.pop("user_id")
         if websocket:
             await websocket.send(payload)
 
 
 async def main():
     # Set the stop condition when receiving SIGTERM.
-    async with websockets.serve(handler, "0.0.0.0", 8888, reuse_port=True):
+    async with websockets.serve(handler, "0.0.0.0", 8888):
         await process_events()  # runs forever
 
 
-async def shutdown(signal, loop):
-    print("Received exit signal. Closing connections...")
-    tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
-    [task.cancel() for task in tasks]
-    await asyncio.gather(*tasks, return_exceptions=True)
-    loop.stop()
 
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    for signame in {'SIGINT', 'SIGTERM'}:
-        loop.add_signal_handler(getattr(signal, signame),
-                                lambda signame=signame: asyncio.create_task(shutdown(signame, loop)))
-
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        pass
+    asyncio.run(main())
+    

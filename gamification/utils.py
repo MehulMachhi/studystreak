@@ -9,6 +9,17 @@ from ExamResponse.models import Studentanswer
 from gamification.models import PointHistory
 
 
+def publish_message(message:dict) -> bool:
+    'publish the given message to redis'
+    try:
+        connection = get_redis_connection("default")
+        payload = json.dumps(message)
+        connection.publish("events", payload)
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
 def check_practice_sets(instance:Studentanswer,set_type):
     sets = getattr(
                 instance.Practise_Exam, set_type
@@ -44,16 +55,5 @@ def save_points_and_publish_message(gamification_object,user,*args, **kwargs) ->
     }
     
     if created:
-       return publish_message(data)
-    return False
+       publish_message(data)
     
-def publish_message(message:dict) -> bool:
-    'publish the given message to redis'
-    try:
-        connection = get_redis_connection("default")
-        payload = json.dumps(message)
-        connection.publish("events", payload)
-    
-    except Exception as e:
-        print(e)
-        return False

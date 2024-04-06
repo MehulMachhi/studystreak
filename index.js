@@ -8,23 +8,26 @@ options = {
     password: "Avani02*",
   }),
 };
-fetch("http://localhost:8000/api/login/", options)
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    localStorage.setItem("access", data.token.access);
-  })
-  .then(() => {
-    socket = new WebSocket("ws://localhost:8888");
-    socket.onopen = function () {
-      console.log("Connected");
-      socket.send(localStorage.getItem("access"));
-    };
-    socket.onmessage = function (e) {
-      console.log(e.data);
-    };
 
-    socket.onclose = function () {
-      console.log("Disconnected");
-    };
-  });
+async function setToken() {
+  const response = await fetch("http://localhost:8000/api/login/", options);
+  const data = await response.json();
+  await localStorage.setItem("access", data.token.access);
+
+  socket = new WebSocket("ws://localhost:8888/");
+  socket.onopen = function () {
+    console.log("Connected");
+    socket.send(localStorage.getItem("access"));
+  };
+  socket.onmessage = function (e) {
+    console.log(e.data);
+  };
+
+  socket.onclose = function () {
+    console.log("Disconnected");
+  };
+  
+  return socket
+}
+
+const hello = setToken();

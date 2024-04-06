@@ -1,8 +1,3 @@
-from rest_framework import status
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from coursedetail.models import Lesson
 from coursedetail.serializers import LessonListSerializers
 from Courses.models import Course
@@ -10,10 +5,17 @@ from Courses.serializers import CourseListSerializers, CourseSimpleSerializer
 from Create_Test.models import Exam, FullLengthTest, module
 from Create_Test.serializers import FLTCreateSerializer
 from Create_Test.serializers import ModuleListSerializers as PracticeSerializer
+from django.db.models import F
+from django.db.models.aggregates import Sum
 from exam.serializers import ExamSerializers
 from LiveClass.models import Live_Class
+from rest_framework import status
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.response import Response
+from rest_framework.serializers import ValidationError
+from rest_framework.views import APIView
 
-from .models import Badge, FlashCard, Gamification
+from .models import Badge, FlashCard, Gamification, PointHistory
 from .serializers import (BadgeSerializer, FlashCardSerializer,
                           GamificationCreateSerializer)
 
@@ -42,12 +44,14 @@ class gamificationListView(APIView):
 
             if isinstance(q.content_object, FlashCard):
                 temp_data = FlashCardSerializer(q.content_object,depth=0).data
-                temp_data.update({"model": "flashcard"})
+                temp_data.update({
+                    "model": "flashcard",
+                    'gamification_id':q.id})
                 data.append(temp_data)
 
             elif isinstance(q.content_object, Lesson):
                 temp_data = LessonListSerializers(q.content_object).data
-                temp_data.update({"model": "lesson"})
+                temp_data.update({"model": "lesson", 'gamification_id':q.id})
                 data.append(temp_data)
 
             elif isinstance(q.content_object, Course):
@@ -57,17 +61,17 @@ class gamificationListView(APIView):
 
             elif isinstance(q.content_object, Exam):
                 temp_data = ExamSerializers(q.content_object,fields=['id','exam_name','exam_type']).data
-                temp_data.update({"model": "exam"})
+                temp_data.update({"model": "exam",'gamification_id':q.id})
                 data.append(temp_data)
 
             elif isinstance(q.content_object, FullLengthTest):
                 temp_data = FLTCreateSerializer(q.content_object).data
-                temp_data.update({"model": "fulllengthtest"})
+                temp_data.update({"model": "fulllengthtest",'gamification_id':q.id})
                 data.append(temp_data)
 
             elif isinstance(q.content_object, module):
                 temp_data = PracticeSerializer(q.content_object,depth=0).data
-                temp_data.update({"model": "module"})
+                temp_data.update({"model": "module",'gamification_id':q.id})
                 data.append(temp_data)
 
             elif isinstance(q.content_object, Live_Class):
@@ -77,11 +81,6 @@ class gamificationListView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-from django.db.models import F
-from django.db.models.aggregates import Sum
-from rest_framework.serializers import ValidationError
-
-from .models import PointHistory
 
 
 class PointHistoryView(APIView):

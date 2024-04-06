@@ -5,14 +5,12 @@ from LiveClass.models import Live_Class
 
 from .models import FlashCard
 
-MODEL_MAPPER = {
-    'flashcard':FlashCard,
-    'lesson':Lesson,
-    'course':Course,
-    'exam':Exam,
-    'fulllengthtest':FullLengthTest,
-    'module':module,
-    'liveclass':Live_Class,
-    
-    
+MODEL_MAPPER: dict = {
+    "flashcard": FlashCard,
+    "lesson": Lesson,
+    "course": Course,
+    "exam": Exam,
+    "fulllengthtest": FullLengthTest,
+    "module": module,
+    "liveclass": Live_Class,
 }
