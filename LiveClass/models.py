@@ -21,3 +21,8 @@ class Live_Class(models.Model):
     def __str__(self):
         return f"{self.meeting_title}"
     
+
+class LiveClassAttachment(models.Model):
+    file_name = models.CharField()
+    attachment = models.FileField(upload_to='liveclass/%y/%m/%d')
+    live_class = models.ForeignKey(Live_Class, on_delete=models.CASCADE)
