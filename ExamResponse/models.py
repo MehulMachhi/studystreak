@@ -33,3 +33,14 @@ class SpeakingResponse(models.Model):
     student_answers = models.ForeignKey(Studentanswer, on_delete=models.CASCADE, related_name="student_exams")
     question_number = models.IntegerField()
     answer_audio = models.FileField(upload_to='speaking-response/')
+
+
+class SpeakingBlockAnswer(models.Model):
+    speaking_block = models.ForeignKey('exam.SpeakingBlock',on_delete=models.CASCADE, verbose_name='speakng block')
+    question_number = models.IntegerField()
+    answer_audio = models.FileField(upload_to='speaking-response/')
+
+
+    class Meta:
+        verbose_name =  "Speaking Block Answers"
+    

@@ -2,7 +2,7 @@ from django.contrib import admin
 from exam.models import ExamType
 
 # Register your models here.
-from .models import SpeakingResponse, Student_answer, Studentanswer
+from .models import SpeakingResponse, Student_answer, Studentanswer, SpeakingBlockAnswer
 
 
 class SpeakingAnswerInline(admin.TabularInline):
@@ -47,3 +47,8 @@ class StudentAnswerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Studentanswer, StudentAnswerAdmin)
+
+
+@admin.register(SpeakingBlockAnswer)
+class SpeakingResponseModelAdmin(admin.ModelAdmin):
+    pass

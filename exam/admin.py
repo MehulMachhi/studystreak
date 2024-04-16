@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Answer, Exam
+from .models import Answer, Exam, SpeakingBlock, SpeakingBlockQuestion
 
 # Register your models here.
 
@@ -110,3 +110,17 @@ class ExamAdmin(admin.ModelAdmin):
 #         return ', '.join([exam.exam_name for exam in obj.speaking.all()])
 
 #     get_speaking_exams.short_description = 'Speaking Exams'
+
+
+
+class SpeakingAnswerInline(admin.StackedInline):
+    model = SpeakingBlockQuestion
+    fk_name = 'speaking_block'
+    extra= 2 
+@admin.register(SpeakingBlock)
+class SpeakingBlockModelAdmin(admin.ModelAdmin):
+    inlines = [SpeakingAnswerInline]
+    list_display = ('name','block_threshold','difficulty_level','no_of_questions')
+
+    def get_question(self,instance):
+        return 'hello'

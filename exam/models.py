@@ -132,3 +132,26 @@ class FullLengthTest(models.Model):
     speaking = models.ManyToManyField(
         Exam, limit_choices_to={"exam_type": "Speaking"}, null=True, blank=True
     )
+
+
+
+class SpeakingBlock(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True)
+
+    difficulty_level = models.CharField(
+        max_length=200, choices=Difficulty.choices, null=True, blank=True
+    )
+    block_threshold = models.PositiveIntegerField(null=True, blank=True)
+    g = GenericRelation(Gamification)
+
+    def no_of_questions(self):
+        return self.questions.count()
+    
+    def __str__(self):
+        return f"{self.name}"
+    class Meta:
+        db_table = 'speaking_block'
+
+class SpeakingBlockQuestion(models.Model):
+    speaking_block= models.ForeignKey(SpeakingBlock, on_delete=models.CASCADE,related_name='questions')
+    question = RichTextField(null=True, blank=True)
