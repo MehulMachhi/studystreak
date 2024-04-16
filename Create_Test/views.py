@@ -86,6 +86,39 @@ class UpdateStudentFields(APIView):
         return Response(
             {"detail": "Student fields updated successfull"}, status=status.HTTP_200_OK
         )
+    
+
+
+class FLTStudentAddFields(APIView):
+    def post(self, request):
+        student_id = request.data.get("student_id")
+        flt_id = request.data.get("flt_id")
+
+        try:
+            student_instance = Student.objects.get(pk=student_id)
+        except Student.DoesNotExist:
+            return Response(
+                {"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            flt_instance = FullLengthTest.objects.get(pk=flt_id)
+        except FullLengthTest.DoesNotExist:
+            return Response(
+                {"detail": "FLT not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+     
+        if flt_instance in student_instance.student_flt.all():
+            return Response(
+                {"detail": "FLT already associated with the student"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        student_instance.student_flt.add(flt_instance)
+
+        return Response(
+            {"detail": "Student fields updated successfully"}, status=status.HTTP_200_OK
+        )
+
+        
 
 
 class MockTestStudentSubmit(APIView):

@@ -19,7 +19,7 @@ from Create_Test.views import (FilterListeningListModuleView,
                                FilterWritingListModuleView, FLTCreateView,
                                FLTTestListView, FLTTestRetrieveView,
                                MockTestStudentSubmit, ResponsesView,
-                               UpdateStudentFields, createexamview,
+                               UpdateStudentFields, createexamview,FLTStudentAddFields,
                                moduleListView)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
@@ -491,6 +491,7 @@ urlpatterns = [
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
     path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
     path('api/pointhistory/',PointHistoryView.as_view()),
+    path('api/fltestudentaddfields/',FLTStudentAddFields.as_view()),
     
 ] + router.urls
 

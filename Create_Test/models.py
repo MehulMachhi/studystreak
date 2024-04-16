@@ -138,3 +138,6 @@ class FullLengthTest(models.Model):
     g = GenericRelation(Gamification)
     
     difficulty_level = models.CharField(max_length=20, choices=Difficulty.choices, default=Difficulty.easy)
+
+    def __str__(self):
+        return str(self.name)

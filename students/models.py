@@ -2,7 +2,7 @@
 from django.contrib.auth.models import BaseUserManager, User
 from django.db import models
 
-from Create_Test.models import module
+from Create_Test.models import module, FullLengthTest
 from exam.models import Exam
 # from package.models import Package  # Assuming the City, State, and Country are modeled in the Package app
 from master.models import City  # For the City, State, and Country ForeignKey
@@ -90,7 +90,7 @@ class Student(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     student_pt = models.ManyToManyField(module, null=True, blank=True, related_name="+")
-    student_flt = models.ManyToManyField(module, null=True, blank=True)
+    student_flt = models.ManyToManyField(FullLengthTest, null=True, blank=True)
     student_mock = models.ManyToManyField(Exam, null=True, blank=True, related_name="mock")
 
     def get_name(self):
