@@ -40,52 +40,76 @@ class UpdateStudentFields(APIView):
     def post(self, request):
         student_id = request.data.get("student_id")
         module_id = request.data.get("module_id")
-        typetest = request.data.get("typetest")
 
         try:
-            student_instance = Student.objects.get(pk=student_id)
+                student_instance = Student.objects.get(pk=student_id)
         except Student.DoesNotExist:
             return Response(
-                {"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND
-            )
+                {"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
 
         try:
-            module_instance = module.objects.get(pk=module_id)
+            flt_instance = module.objects.get(pk=module_id)
         except module.DoesNotExist:
             return Response(
-                {"detail": "Module not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-        if typetest == "Practice":
-            existing_exams = student_instance.student_pt.filter(
-                Name=module_instance.Name
-            )
-        elif typetest == "Full Length":
-            existing_exams = student_instance.student_flt.filter(
-                Name=module_instance.Name
-            )
-
-        else:
+                {"detail": "module not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+    
+        if flt_instance in student_instance.student_flt.all():
             return Response(
-                {"detail": "Invalid Typetest"}, status=status.HTTP_400_BAD_REQUEST
+                {"detail": "module already associated with the student"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        if existing_exams.exists():
-            return Response(
-                {"detail": "The exam already add"}, status=status.HTTP_400_BAD_REQUEST
-            )
-            # return Response({"detail": f"The {typetest} exam '{module_instance.Name}' already add"}, status=status.HTTP_400_BAD_REQUEST)
-
-        if typetest == "Practice":
-            # student_pt_data = {'Name': module_instance.Name}
-            student_instance.student_pt.add(module_instance)
-        elif typetest == "Full Length":
-            student_flt_data = {"Name": module_instance.Name}
-            student_instance.student_flt.create(**student_flt_data)
+        student_instance.student_pt.add(flt_instance)
 
         return Response(
-            {"detail": "Student fields updated successfull"}, status=status.HTTP_200_OK
+            {"detail": "Student fields updated successfully"}, status=status.HTTP_200_OK
         )
+    #     typetest = request.data.get("typetest")
+
+    #     try:
+    #         student_instance = Student.objects.get(pk=student_id)
+    #     except Student.DoesNotExist:
+    #         return Response(
+    #             {"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND
+    #         )
+
+    #     try:
+    #         module_instance = module.objects.get(pk=module_id)
+    #     except module.DoesNotExist:
+    #         return Response(
+    #             {"detail": "Module not found"}, status=status.HTTP_404_NOT_FOUND
+    #         )
+
+    #     if typetest == "Practice":
+    #         existing_exams = student_instance.student_pt.filter(
+    #             Name=module_instance.Name
+    #         )
+    #     elif typetest == "Full Length":
+    #         existing_exams = student_instance.student_flt.filter(
+    #             Name=module_instance.Name
+    #         )
+
+    #     else:
+    #         return Response(
+    #             {"detail": "Invalid Typetest"}, status=status.HTTP_400_BAD_REQUEST
+    #         )
+
+    #     if existing_exams.exists():
+    #         return Response(
+    #             {"detail": "The exam already add"}, status=status.HTTP_400_BAD_REQUEST
+    #         )
+    #         # return Response({"detail": f"The {typetest} exam '{module_instance.Name}' already add"}, status=status.HTTP_400_BAD_REQUEST)
+
+    #     if typetest == "Practice":
+    #         # student_pt_data = {'Name': module_instance.Name}
+    #         student_instance.student_pt.add(module_instance)
+    #     elif typetest == "Full Length":
+    #         student_flt_data = {"Name": module_instance.Name}
+    #         student_instance.student_flt.create(**student_flt_data)
+
+    #     return Response(
+    #         {"detail": "Student fields updated successfull"}, status=status.HTTP_200_OK
+    #     )
     
 
 
