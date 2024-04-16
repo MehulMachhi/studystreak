@@ -115,11 +115,12 @@ class UpdateStudentFields(APIView):
 
 class FLTStudentAddFields(APIView):
     def post(self, request):
-        student_id = request.data.get("student_id")
-        flt_id = request.data.get("flt_id")
+        # can get the student from request. as this is the authenticated route
+        user = request.user
+        flt_id = request.data.get("flt_id",None)
 
         try:
-            student_instance = Student.objects.get(pk=student_id)
+            student_instance = user.student
         except Student.DoesNotExist:
             return Response(
                 {"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -133,13 +134,13 @@ class FLTStudentAddFields(APIView):
      
         if flt_instance in student_instance.student_flt.all():
             return Response(
-                {"detail": "FLT already associated with the student"}, status=status.HTTP_400_BAD_REQUEST
+                {"detail": "FLT already associated with the student"}, status=status.HTTP_200_OK
             )
 
         student_instance.student_flt.add(flt_instance)
 
         return Response(
-            {"detail": "Student fields updated successfully"}, status=status.HTTP_200_OK
+            {"detail": "Student fields updated successfully"}, status=status.HTTP_201_CREATED
         )
 
         
