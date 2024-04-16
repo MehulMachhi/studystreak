@@ -39,7 +39,7 @@ class UpdateStudentFields(APIView):
 
     def post(self, request):
         student_id = request.data.get("student_id")
-        module_id = request.data.get("module_id")
+        module_id = request.data.get("pt_id")
 
         try:
                 student_instance = Student.objects.get(pk=student_id)
@@ -48,15 +48,15 @@ class UpdateStudentFields(APIView):
                 {"detail": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
 
         try:
-            flt_instance = module.objects.get(pk=module_id)
-        except module.DoesNotExist:
+            flt_instance = createexam.objects.get(pk=module_id)
+        except createexam.DoesNotExist:
             return Response(
-                {"detail": "module not found"}, status=status.HTTP_404_NOT_FOUND)
+                {"detail": "exam not found"}, status=status.HTTP_404_NOT_FOUND)
         
     
         if flt_instance in student_instance.student_flt.all():
             return Response(
-                {"detail": "module already associated with the student"}, status=status.HTTP_400_BAD_REQUEST
+                {"detail": "exam already associated with the student"}, status=status.HTTP_400_BAD_REQUEST
             )
 
         student_instance.student_pt.add(flt_instance)
