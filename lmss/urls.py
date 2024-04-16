@@ -444,7 +444,7 @@ urlpatterns = [
     path("api/create-meeting/", ZoomAPiView.as_view()),
     path("api/save-video-data/", YoutubeDataApiView.as_view(), name="creat"),
     path(
-        "api/student-test-submit/",
+        "api/student-pt-submit/",
         UpdateStudentFields.as_view(),
         name="update_student_fields",
     ),
@@ -491,7 +491,7 @@ urlpatterns = [
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
     path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
     path('api/pointhistory/',PointHistoryView.as_view()),
-    path('api/fltestudentaddfields/',FLTStudentAddFields.as_view()),
+    path('api/student-flt-submit/',FLTStudentAddFields.as_view()),
     
 ] + router.urls
 
