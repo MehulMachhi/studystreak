@@ -2,9 +2,7 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib.admin import RelatedFieldListFilter
 from django.utils.translation import gettext_lazy as _
-from django_admin_listfilter_dropdown.filters import (ChoiceDropdownFilter,
-                                                      DropdownFilter,
-                                                      RelatedDropdownFilter)
+from django_admin_listfilter_dropdown.filters import (RelatedDropdownFilter)
 
 from exam.models import ExamType
 
@@ -63,8 +61,8 @@ class moduleadmin(admin.ModelAdmin):
         "difficulty_level",
     )
 
-    list_filter = ("Name","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
-    search_fields = ("Namez","Reading", "Listening", "Speaking", "Writing", "exam_test", "awa", "difficulty_level")
+    list_filter = ("Name","Reading", "Writing", "exam_test", "awa", "difficulty_level")
+    search_fields = ("Namez","Reading", "Listening", "Writing", "exam_test", "awa", "difficulty_level")
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

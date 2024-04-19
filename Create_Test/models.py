@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
-from exam.models import Difficulty, Exam, ExamType
+from exam.models import Difficulty, Exam, ExamType, SpeakingBlock
 from gamification.models import Gamification
 
 
@@ -33,7 +33,7 @@ class module(models.Model):
         Exam, null=True, blank=True, related_name="listening+"
     )
     Speaking = models.ManyToManyField(
-        Exam, null=True, blank=True, related_name="Speaking+"
+        SpeakingBlock, null=True, blank=True, related_name="Speaking+"
     )
     Writing = models.ManyToManyField(
         Exam, null=True, blank=True, related_name="writing+"

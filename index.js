@@ -10,11 +10,11 @@ options = {
 };
 
 async function setToken() {
-  const response = await fetch("http://localhost:8000/api/login/", options);
+  const response = await fetch("http://65.20.89.184/api/login/", options);
   const data = await response.json();
   await localStorage.setItem("access", data.token.access);
 
-  socket = new WebSocket("ws://localhost:8888/");
+  socket = new WebSocket("ws://65.20.89.184:8888/");
   socket.onopen = function () {
     console.log("Connected");
     socket.send(localStorage.getItem("access"));
