@@ -2,13 +2,14 @@ from rest_framework import serializers
 
 from utils.dynamic_serializers import DynamicModelSerializer
 
-from .models import Answer, Exam, FullLengthTest
+from .models import Answer, Exam, FullLengthTest, SpeakingBlock, SpeakingBlockQuestion
 
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = ("id", "question_number", "answer_text")
+
 
 class ExamSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
@@ -39,10 +40,11 @@ class FullLengthTestSerializer(serializers.ModelSerializer):
         data["test_type"] = instance.test_type.__str__()
         return data
 
+
 class ExamListSerializers(serializers.ModelSerializer):
     class Meta:
         model = Exam
-        fields = '__all__'
+        fields = "__all__"
         depth = 2
 
 
@@ -51,6 +53,7 @@ class AnswerListSerializers(serializers.ModelSerializer):
         model = Answer
         fields = "__all__"
         depth = 2
+
 
 class AnswerRetUpdDelSerializers(serializers.ModelSerializer):
     class Meta:
@@ -63,9 +66,43 @@ class ExamRetUpdDelSerializers(serializers.ModelSerializer):
     class Meta:
         model = Exam
         fields = "__all__"
-        depth=4
-        
+        depth = 4
+
+
 class ExamSerializers(DynamicModelSerializer):
     class Meta:
         model = Exam
-        fields = '__all__'
+        fields = "__all__"
+
+
+class SpeakingBlockQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpeakingBlockQuestion
+        fields = "__all__"
+        extra_kwargs = {"speaking_block": {"write_only": True, "required": False}}
+
+
+class SpeakingBlockSerializer(serializers.ModelSerializer):
+    questions = SpeakingBlockQuestionSerializer(many=True)
+
+    class Meta:
+        model = SpeakingBlock
+        fields = (
+            "id",
+            "name",
+            "difficulty_level",
+            "block_threshold",
+            "questions",
+        )
+
+    def create(self, validated_data):
+        questions = validated_data.pop("questions", None)
+        speaking_block = super().create(validated_data)
+
+        if questions:
+            for question in questions:
+                SpeakingBlockQuestion.objects.create(
+                    **question, speaking_block=speaking_block
+                )
+
+        return speaking_block

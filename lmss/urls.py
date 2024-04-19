@@ -23,7 +23,7 @@ from Create_Test.views import (FilterListeningListModuleView,
                                moduleListView)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
-                        ExamViewSet, FullLengthTestViewSet)
+                        ExamViewSet, FullLengthTestViewSet, SpeakingBlockView)
 from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
@@ -492,6 +492,9 @@ urlpatterns = [
     path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
     path('api/pointhistory/',PointHistoryView.as_view()),
     path('api/student-flt-submit/',FLTStudentAddFields.as_view()),
+    
+    #speaking block view
+    path('api/speaking-block/',SpeakingBlockView.as_view()),
     
 ] + router.urls
 

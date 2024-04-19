@@ -1,12 +1,20 @@
-from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, viewsets
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
-# Create your views here.
-from .models import Answer, Exam, FullLengthTest
-from .serializers import AnswerSerializer, ExamSerializer, FullLengthTestSerializer, ExamListSerializers, AnswerListSerializers, AnswerRetUpdDelSerializers, ExamRetUpdDelSerializers
-from rest_framework import generics 
-from django.shortcuts import get_object_or_404
-from rest_framework import generics
+from .models import Answer, Exam, FullLengthTest, SpeakingBlock
+from .serializers import (
+    AnswerListSerializers,
+    AnswerRetUpdDelSerializers,
+    AnswerSerializer,
+    ExamListSerializers,
+    ExamRetUpdDelSerializers,
+    ExamSerializer,
+    FullLengthTestSerializer,
+    SpeakingBlockSerializer,
+)
+
 
 class ExamViewSet(viewsets.ModelViewSet):
     queryset = Exam.objects.all()
@@ -27,7 +35,10 @@ class FullLengthTestViewSet(viewsets.ModelViewSet):
     queryset = FullLengthTest.objects.all()
     serializer_class = FullLengthTestSerializer
 
-from django_filters.rest_framework import DjangoFilterBackend
+
+    serializer_class = FullLengthTestSerializer
+
+
 
 class ExamListView(generics.ListAPIView):
     queryset = Exam.objects.all()
@@ -91,3 +102,10 @@ class AnswerRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
 class ExamRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Exam.objects.all()
     serializer_class = ExamRetUpdDelSerializers
+    
+
+class SpeakingBlockView(generics.ListCreateAPIView):
+    serializer_class = SpeakingBlockSerializer
+    queryset = SpeakingBlock.objects.all()
+    
+    

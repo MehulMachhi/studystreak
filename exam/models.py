@@ -136,10 +136,10 @@ class FullLengthTest(models.Model):
 
 
 class SpeakingBlock(models.Model):
-    name = models.CharField(max_length=200, null=True, blank=True)
+    name = models.CharField(max_length=200)
 
     difficulty_level = models.CharField(
-        max_length=200, choices=Difficulty.choices, null=True, blank=True
+        max_length=200, choices=Difficulty.choices
     )
     block_threshold = models.PositiveIntegerField(null=True, blank=True)
     g = GenericRelation(Gamification)
@@ -154,4 +154,4 @@ class SpeakingBlock(models.Model):
 
 class SpeakingBlockQuestion(models.Model):
     speaking_block= models.ForeignKey(SpeakingBlock, on_delete=models.CASCADE,related_name='questions')
-    question = RichTextField(null=True, blank=True)
+    question = RichTextField()
