@@ -1,13 +1,11 @@
-from typing import Collection, Iterable
 
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import ArrayField
-from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
-from exam.models import Difficulty, Exam, ExamType, SpeakingBlock
+from exam.models import Difficulty, Exam, SpeakingBlock
 from gamification.models import Gamification
 
 

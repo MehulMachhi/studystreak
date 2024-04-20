@@ -93,6 +93,7 @@ class SpeakingBlockSerializer(serializers.ModelSerializer):
             "difficulty_level",
             "block_threshold",
             "questions",
+            
         )
 
     def create(self, validated_data):

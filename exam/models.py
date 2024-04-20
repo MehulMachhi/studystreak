@@ -4,7 +4,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
 from gamification.models import Gamification
-from master.models import Category, ExamType, TestType
+from master.models import ExamType, TestType
 
 
 class BlockType(models.TextChoices):
