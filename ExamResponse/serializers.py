@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from Create_Test.models import FullLengthTest, module
 from exam.models import Exam, ExamType
+from utils.dynamic_serializers import DynamicModelSerializer
 
 from .models import SpeakingBlockAnswer, SpeakingResponse, Student_answer, Studentanswer
 
@@ -17,6 +18,14 @@ class StudentAnswerSerializers(serializers.ModelSerializer):
             "answer_text": {"required": False},
         }
 
+class StudentAnswerSerializersDynamic(DynamicModelSerializer):
+    class Meta:
+        model = Student_answer
+        fields = "__all__"
+        depth = 2
+        extra_kwargs = {
+            "answer_text": {"required": False},
+        }
 
 class StudentSpeakingSerializers(serializers.ModelSerializer):
     class Meta:
@@ -84,7 +93,7 @@ class StudentanswerSerializers(serializers.ModelSerializer):
                     SpeakingResponse.objects.create(
                         student_answers=studentanswer,
                         question_number=answer_data.get("question_number",None),
-                        answer_audio = answer_data.get("answer_text",None),
+                        answer_text = answer_data.get("answer_text",None),
                     )
             else:
                 for answer_data in student_exam_data:
@@ -220,7 +229,7 @@ class PracticeAnswersSerializer(serializers.ModelSerializer):
         depth = 2
 
 
-class SpeakingAnswerBlockSerializer(serializers.ModelSerializer):
+class SpeakingAnswerBlockSerializer(DynamicModelSerializer):
     class Meta:
         model = SpeakingBlockAnswer
         fields = '__all__'
