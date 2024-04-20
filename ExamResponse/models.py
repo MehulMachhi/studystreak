@@ -36,11 +36,16 @@ class SpeakingResponse(models.Model):
 
 
 class SpeakingBlockAnswer(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,)
+    
+    flt = models.ForeignKey(FullLengthTest, on_delete=models.CASCADE, null=True, blank=True, related_name = "full_length+")
+    practise_test = models.ForeignKey(module, on_delete=models.CASCADE, null=True, blank=True)
     speaking_block = models.ForeignKey('exam.SpeakingBlock',on_delete=models.CASCADE, verbose_name='speakng block')
+    
     question_number = models.IntegerField()
     answer_audio = models.FileField(upload_to='speaking-response/')
 
 
     class Meta:
-        verbose_name =  "Speaking Block Answers"
+        verbose_name =  "Speaking Block Answer"
     
