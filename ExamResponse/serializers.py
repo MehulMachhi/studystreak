@@ -5,7 +5,7 @@ from rest_framework import serializers
 from Create_Test.models import FullLengthTest, module
 from exam.models import Exam, ExamType
 
-from .models import SpeakingResponse, Student_answer, Studentanswer
+from .models import SpeakingBlockAnswer, SpeakingResponse, Student_answer, Studentanswer
 
 
 class StudentAnswerSerializers(serializers.ModelSerializer):
@@ -218,3 +218,9 @@ class PracticeAnswersSerializer(serializers.ModelSerializer):
         model = module
         fields = "__all__"
         depth = 2
+
+
+class SpeakingAnswerBlockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpeakingBlockAnswer
+        fields = '__all__'

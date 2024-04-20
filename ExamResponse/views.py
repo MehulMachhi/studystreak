@@ -11,9 +11,10 @@ from rest_framework.views import APIView
 from Create_Test.models import FullLengthTest, module
 from exam.serializers import AnswerSerializer
 from ExamResponse.models import Studentanswer
+import time
 
-from .models import *
-from .serializers import (FLTAnswerSerializer, PracticeTestAnswerSerializer,
+from .models import SpeakingBlockAnswer, SpeakingResponse
+from .serializers import (FLTAnswerSerializer, PracticeTestAnswerSerializer, SpeakingAnswerBlockSerializer,
                           SpeakingAnswerSerializer, StudentAnswerSerializers,
                           StudentanswerSerializers,
                           StudentanswerSpeakingResponseSerializers)
@@ -65,8 +66,6 @@ class PracticeTestAnswerCreateView(APIView):
             serializer.save()  
             return Response({'msg':'created'}, 201)
     
-
-        
 
 
 
@@ -127,7 +126,6 @@ class FLTAnswerCreateView(APIView):
 
 
 
-import time
 
 
 class SaveSpeakingAnswerFileView(APIView):
@@ -161,6 +159,9 @@ class SaveAudio(generics.ListCreateAPIView):
     queryset = SpeakingResponse.objects.all()
     serializer_class = SpeakingAnswerSerializer
 
-class SaveAudio(generics.ListCreateAPIView):
-    queryset = SpeakingResponse.objects.all()
-    serializer_class = SpeakingAnswerSerializer
+
+
+
+class SpeakingAnswerView(generics.CreateAPIView):
+    serializer_class = SpeakingAnswerBlockSerializer
+    queryset = SpeakingBlockAnswer.objects.all()

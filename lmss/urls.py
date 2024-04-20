@@ -28,7 +28,7 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
-                                SpeakingAnswerListView, StudentAnswerListView)
+                                SpeakingAnswerListView, SpeakingAnswerView, StudentAnswerListView)
 from gamification.views import (BadgeViewSet, FlashCardView, PointHistoryView,
                                 gamificationCreateView, gamificationListView)
 from Listening_Exam.views import (ListeningExamListView,
@@ -495,7 +495,7 @@ urlpatterns = [
     
     #speaking block view
     path('api/speaking-block/',SpeakingBlockView.as_view()),
-    
+    path('api/speaking-answers/',SpeakingAnswerView.as_view()),    
 ] + router.urls
 
 
