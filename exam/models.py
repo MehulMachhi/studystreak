@@ -155,3 +155,4 @@ class SpeakingBlock(models.Model):
 class SpeakingBlockQuestion(models.Model):
     speaking_block= models.ForeignKey(SpeakingBlock, on_delete=models.CASCADE,related_name='questions')
     question = RichTextField()
+    question_number =  models.PositiveIntegerField()

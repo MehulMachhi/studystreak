@@ -28,7 +28,7 @@ from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
-                                SpeakingAnswerListView, SpeakingAnswerView, StudentAnswerListView)
+                                SpeakingAnswerListView, SpeakingAnswerView, SpeakingPracticeView, StudentAnswerListView)
 from gamification.views import (BadgeViewSet, FlashCardView, PointHistoryView,
                                 gamificationCreateView, gamificationListView)
 from Listening_Exam.views import (ListeningExamListView,
@@ -479,7 +479,7 @@ urlpatterns = [
     path("api/get/flt/<int:pk>/", FLTTestRetrieveView.as_view()),
     path("api/practice-answers/<int:pk>/", PracticeAnswersView.as_view()),
     path("api/flt-answers/<int:flt_id>/", FLTAnswers.as_view()),
-    path("api/create-flt/", FLTCreateView.as_view()),
+    path("api/create-flt/", FLTCreateView.as_view()),   
     path("api/save-audio-file/", SaveSpeakingAnswerFileView.as_view()),
     path("api/create/flashcard/",FlashCardView.as_view()),
     path("api/get/flashcard/",FlashCardView.as_view()),
@@ -495,7 +495,8 @@ urlpatterns = [
     
     #speaking block view
     path('api/speaking-block/',SpeakingBlockView.as_view()),
-    path('api/speaking-answers/',SpeakingAnswerView.as_view()),    
+    path('api/speaking-answers/',SpeakingAnswerView.as_view()), 
+    path('api/speaking/practice-test/<int:id>/',SpeakingPracticeView.as_view()),
 ] + router.urls
 
 

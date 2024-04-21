@@ -230,6 +230,16 @@ class PracticeAnswersSerializer(serializers.ModelSerializer):
 
 
 class SpeakingAnswerBlockSerializer(DynamicModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset= User.objects.all(), write_only=True)
     class Meta:
         model = SpeakingBlockAnswer
         fields = '__all__'
+        
+    def create(self, validated_data):
+        user = validated_data.pop('user',None)
+        try:
+            student = user.student
+        except Exception:
+            raise serializers.ValidationError('student does not exists')
+        validated_data['user'] = student
+        return super().create(validated_data)

@@ -37,11 +37,11 @@ class StudentAnswerAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
     speaking_inline = [SpeakingAnswerInline]
 
-    def get_inlines(self, request, obj):
-        if obj:
-            if obj.exam.exam_type == ExamType.speaking:
-                return self.speaking_inline
-        return super().get_inlines(request, obj)
+    # def get_inlines(self, request, obj):
+    #     if obj:
+    #         if obj.exam.exam_type == ExamType.speaking:
+    #             return self.speaking_inline
+    #     return super().get_inlines(request, obj)
 
     # readonly_fields = ("band",)
 
