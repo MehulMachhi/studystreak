@@ -108,4 +108,8 @@ class SpeakingBlockView(generics.ListCreateAPIView):
     serializer_class = SpeakingBlockSerializer
     queryset = SpeakingBlock.objects.all()
     
+
+class SpeakingBlockRetrieveView(generics.RetrieveAPIView):
+    serializer_class = SpeakingBlockSerializer
+    queryset = SpeakingBlock.objects.all()
     
