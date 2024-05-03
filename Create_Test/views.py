@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # Create your views here.
-from exam.models import Exam
+from exam.models import Exam, SpeakingBlock
 from students.models import Student
 
 from .models import FullLengthTest, Responses, createexam, module
@@ -185,6 +185,29 @@ class MockTestStudentSubmit(APIView):
         return Response(
             {"details": "Student Updated Successfully"}, status=status.HTTP_200_OK
         )
+    
+class StudentSpeakingBlock(APIView):
+    def post(self, request):
+        student_id = request.data.get("student_id")
+        speakingblock_id = request.data.get("speakingblock_id")
+
+        try:
+            student_instance = Student.objects.get(pk=student_id)
+        except Student.DoesNotExist:
+            return Response({"details": "Student Not Found"}, status = status.HTTP_404_NOT_FOUND)
+
+        try:
+            speakingbook_instance = SpeakingBlock.objects.get(pk=speakingblock_id)
+        except SpeakingBlock.DoesNotExist:
+            return Response({"details": "SpeakingBlock Not Found"}, status = status.HTTP_404_NOT_FOUND)
+        
+        
+        if speakingbook_instance in student_instance.student_speakingblock.all():
+            return Response({"details": "SpeakingBlock is already associated with the student"}, status=status.HTTP_200_OK)
+        
+        student_instance.student_speakingblock.add(speakingblock_id)
+
+        return Response({"Details":"Student Updated successfully."}, status=status.HTTP_201_CREATED)
 
 
 class FilterListeningListModuleView(generics.ListAPIView):

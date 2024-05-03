@@ -109,6 +109,7 @@ class StudentAdmin(ExportMixin, admin.ModelAdmin):
                 "student_pt",
                 "student_flt",
                 "student_mock",
+                "student_speakingblock",
             ),
         },
     ),

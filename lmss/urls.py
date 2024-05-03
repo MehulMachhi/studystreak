@@ -20,7 +20,7 @@ from Create_Test.views import (FilterListeningListModuleView,
                                FLTTestListView, FLTTestRetrieveView,
                                MockTestStudentSubmit, ResponsesView,
                                UpdateStudentFields, createexamview,FLTStudentAddFields,
-                               moduleListView)
+                               moduleListView, StudentSpeakingBlock)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
                         ExamViewSet, FullLengthTestViewSet, SpeakingBlockRetrieveView, SpeakingBlockView)
@@ -70,7 +70,7 @@ from students.views import (BatchIdwiseStudentGetView,
                             PackageIdwiseStudentGetView,
                             Student_List_View_Dashboard,
                             StudentRetUpdDelUserView, StudentRetUpdDelView,
-                            StudentView)
+                            StudentView, )
 from studystreak_api.views import (ChangePasswordView, GetUserRole,
                                    GetUserView, LoginView, PasswordResetView,
                                    ProfileView, RegistrationView,
@@ -452,6 +452,11 @@ urlpatterns = [
         "api/student-mocktest-submit/",
         MockTestStudentSubmit.as_view(),
         name="MockTestStudentSubmit",
+    ),
+    path(
+        "api/student-speakingblock-submit/",
+        StudentSpeakingBlock.as_view(),
+        name="StudentSpeakingBlock",
     ),
     path(
         "api/filterlisteninglistmoduleview/",
