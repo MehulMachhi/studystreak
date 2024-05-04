@@ -229,8 +229,10 @@ class SpeakingPracticeView(APIView):
             user = self.request.user.student
         except Exception:
             return Response('Student does not exists')
-        
-        m = module.objects.get(id=id)
+        try:
+            m = module.objects.get(id=id)
+        except module.DoesNotExist:
+            return Response({'error':'Practice test with this id does not exists'},400)
         res_data = {}
         for speaking_block in m.Speaking.all():
             questions_dict ={}
