@@ -3,6 +3,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
+from Create_Test.models import module
+
 from .models import Answer, Exam, FullLengthTest, SpeakingBlock
 from .serializers import (
     AnswerListSerializers,
@@ -13,6 +15,7 @@ from .serializers import (
     ExamSerializer,
     FullLengthTestSerializer,
     SpeakingBlockSerializer,
+    SpeakingPracticeSetSerializer,
 )
 
 
@@ -113,3 +116,6 @@ class SpeakingBlockRetrieveView(generics.RetrieveAPIView):
     serializer_class = SpeakingBlockSerializer
     queryset = SpeakingBlock.objects.all()
     
+class SpeakingPracticeSetView(generics.RetrieveAPIView):
+    serializer_class=  SpeakingPracticeSetSerializer
+    queryset = module.objects.all()

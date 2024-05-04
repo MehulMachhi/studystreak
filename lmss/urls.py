@@ -23,7 +23,7 @@ from Create_Test.views import (FilterListeningListModuleView,
                                moduleListView, StudentSpeakingBlock)
 from exam.views import (AnswerListView, AnswerRetUpdDelView, AnswerViewSet,
                         ExamListFilterView, ExamListView, ExamRetUpdDelView,
-                        ExamViewSet, FullLengthTestViewSet, SpeakingBlockRetrieveView, SpeakingBlockView)
+                        ExamViewSet, FullLengthTestViewSet, SpeakingBlockRetrieveView, SpeakingBlockView, SpeakingPracticeSetView)
 from ExamResponse.views import (FLTAnswerCreateView, FLTAnswers,
                                 PracticeAnswersView,
                                 PracticeTestAnswerCreateView,
@@ -504,7 +504,9 @@ urlpatterns = [
     
     
     path('api/speaking-answers/',SpeakingAnswerView.as_view()), 
-    path('api/speaking/practice-test/<int:id>/',SpeakingPracticeView.as_view()),
+    path('api/speaking/practice-test/assesement/<int:id>/',SpeakingPracticeView.as_view()),
+    path('api/speaking/practice-test/<int:pk>/',SpeakingPracticeSetView.as_view()),
+    
 ] + router.urls
 
 

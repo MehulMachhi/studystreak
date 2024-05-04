@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from Create_Test.models import module
 from utils.dynamic_serializers import DynamicModelSerializer
 
 from .models import Answer, Exam, FullLengthTest, SpeakingBlock, SpeakingBlockQuestion
@@ -78,7 +79,7 @@ class ExamSerializers(DynamicModelSerializer):
 class SpeakingBlockQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SpeakingBlockQuestion
-        fields = "__all__"
+        fields = ("speaking_block","question","question_number",)
         extra_kwargs = {"speaking_block": {"write_only": True, "required": False}}
 
 
@@ -107,3 +108,25 @@ class SpeakingBlockSerializer(serializers.ModelSerializer):
                 )
 
         return speaking_block
+
+
+class SpeakingPracticeSetSerializer(serializers.ModelSerializer):
+    Speaking  = SpeakingBlockSerializer(many=True)
+    
+    def to_representation(self, instance):
+        data =  super().to_representation(instance)
+        fields_to_remove =  []
+        
+        for k, v in data.items():
+            if isinstance(v, list) and not v:
+                fields_to_remove.append(k)
+            elif v is None:
+                fields_to_remove.append(k)
+        
+        for i in fields_to_remove:
+            data.pop(i)
+        return data
+    class Meta:
+        fields = '__all__'
+        model = module
+        
