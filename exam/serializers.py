@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from Create_Test.models import module
+from Create_Test.models import createexam, module
 from utils.dynamic_serializers import DynamicModelSerializer
 
 from .models import Answer, Exam, FullLengthTest, SpeakingBlock, SpeakingBlockQuestion
@@ -129,4 +129,9 @@ class SpeakingPracticeSetSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = module
-        
+    
+class CreateExamSerializer(serializers.ModelSerializer):
+    IELTS = SpeakingPracticeSetSerializer()
+    class Meta:
+        fields = "__all__"
+        model = createexam
