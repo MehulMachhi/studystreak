@@ -2,6 +2,7 @@ from functools import reduce
 
 from rest_framework import serializers
 
+from exam.serializers import SpeakingPracticeSetSerializer
 from utils.dynamic_serializers import DynamicModelSerializer
 
 from .models import FullLengthTest, Responses, createexam, module
@@ -79,7 +80,9 @@ class FLTCreateSerializer(serializers.ModelSerializer):
         model = FullLengthTest
         fields = "__all__"
         
+
 class FLTserializer(serializers.ModelSerializer):
+    speaking_set = SpeakingPracticeSetSerializer()
     class Meta:
         model = FullLengthTest
         fields = "__all__"
