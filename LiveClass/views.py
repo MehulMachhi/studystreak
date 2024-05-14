@@ -7,11 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 # Create your views here.
 from rest_framework.views import APIView
-from zoomus import ZoomClient
 
 from master.models import batch
 from students.models import Student
-from zoomApi.zoomAPI import ZOomClient
+from zoomApi.zoomAPI import ZoomClient
 
 from .models import Live_Class
 from .serializers import (LiveClassCreateSerializer, LiveClassListSerializer,
@@ -54,7 +53,7 @@ class liveclass_list_view(generics.ListAPIView):
 class Liveclass_Create_View(generics.ListCreateAPIView):
     queryset = Live_Class.objects.all()
     serializer_class = LiveClassCreateSerializer
-    zc = ZOomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
+    zc = ZoomClient(settings.ACCOUNT_ID, settings.CLIENT_ID, settings.CLIENT_SECRET)
 
     def get(self, request, *args, **kwargs):
         live_class_count = self.queryset.count()

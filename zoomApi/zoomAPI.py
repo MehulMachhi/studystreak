@@ -1,13 +1,10 @@
 import base64
-import datetime
 import json
 import logging
-import pprint
 import time
 
 import requests
 
-from .main import json_data
 
 base_url = 'https://zoom.us'
 Account_id = "4h9jZgnETeC1jeCttAqewA"
@@ -15,7 +12,7 @@ client_id = "uWxvDYmLRBGf6uW2HUWgA"
 client_secret = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)  # Set the logging level to INFO or desired level
+logger.setLevel(logging.INFO)
 
 ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
@@ -27,16 +24,15 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-class ZOomClient:
+class ZoomClient:
     __client_id = None
     __client_secret = None
     __access_token = None
     expiry = None
 
     def __init__(self, account_id, client_id, client_secret) -> None:
-        self.__class__.__client_id = client_id
-        self.__class__.__client_secret = client_secret
-        self.check_and_set_token()
+        ZoomClient.__client_id = client_id
+        ZoomClient.__client_secret = client_secret
 
     @property
     def access_token(cls):
@@ -49,7 +45,7 @@ class ZOomClient:
     def __get_access_token(self):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": f'Basic {base64.b64encode(f"{self.__class__.__client_id}:{self.__class__.__client_secret}".encode("utf-8")).decode("utf-8")}',
+            "Authorization": f'Basic {base64.b64encode(f"{ZoomClient.__client_id}:{ZoomClient.__client_secret}".encode("utf-8")).decode("utf-8")}',
         }
 
         data = {
@@ -75,8 +71,8 @@ class ZOomClient:
         with open(".zoom_token", "w") as f:
             json.dump(token_data, f)
 
-        self.__class__.access_token = token["access_token"]
-        self.__class__.expiry = expiry_time
+        ZoomClient.access_token = token["access_token"]
+        ZoomClient.expiry = expiry_time
         return self
     
     def validate(self):
@@ -87,12 +83,12 @@ class ZOomClient:
                     logger.info('Token is expired. Setting up a new token.')
                     self.__save_token()
                 else:
-                    self.__class__.access_token = token_data["access_token"]
+                    ZoomClient.access_token = token_data["access_token"]
         except FileNotFoundError:
             logger.info('File not found. Setting up new token.')
             self.__save_token()
         except Exception as e:
-            print(e)
+            logger.error(e)
             raise Exception(f"Error checking token expiry: {e}")
         return self
         
