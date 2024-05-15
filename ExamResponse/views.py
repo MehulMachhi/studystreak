@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 
 from Create_Test.models import FullLengthTest, module
 from Create_Test.serializers import createexamserializers
-from exam.models import SpeakingBlock
+from exam.models import Exam, SpeakingBlock
 from exam.serializers import AnswerSerializer
 from ExamResponse.models import Studentanswer
 
@@ -27,47 +27,6 @@ from .serializers import (
     StudentanswerSpeakingResponseSerializers,
 )
 
-# class GetAnswerData:
-#     fields_mappings = {'r':'Reading', 'l':'Listening', 's':'Speaking', 'w':'Writing'}
-
-#     res_data = {'correct_answers':{},
-#                 'student_answers':{}}
-    
-#     def __get_data(self,practice_set_instance,field:Literal['r','w','s','l']):
-#         field = self.fields_mappings['field']
-        
-#         for i in practice_instance_data:
-
-#             for j in getattr(practice_set_instance, i).all():
-#                 serializer = AnswerSerializer(j.answers.all(), many=True)
-#                 if res_data['correct_answers'].get(i,None):
-#                     res_data['correct_answers'][i].append({'block_id':j.id, "answers":serializer.data})
-#                 else:
-#                     res_data['correct_answers'][i] = [{'block_id':j.id, "answers":serializer.data}]
-
-#                 studentanswer_instance = Studentanswer.objects.filter(Practise_Exam=practice_set_instance,user=self.request.user, exam = j).first()
-#                 if (studentanswer_instance):
-#                     student_data = StudentAnswerSerializers(studentanswer_instance.student_exam.all(), many=True).data
-#                     if res_data['student_answers'].get(i,None):
-#                         res_data['student_answers'][i].append({'block_id':j.id, "answers":student_data})
-#                     else:
-#                         res_data['student_answers'][i] = [{'block_id':j.id, "answers":student_data}]
-
-
-#         return res_data
-        
-#     def get_reading_data(self,practice_set_instance):
-#         self.__get_data(practice_set_instance,field='r')
-    
-#     def get_writing_data(self,practice_set_instance):
-#         self.__get_data(practice_set_instance,field='w')
-    
-#     def get_listening_data(self, practice_set_instance):
-#         self.__get_data(practice_set_instance,'l')
-    
-#     def get_speaking_data(self,)
-        
-#     def get_speaking_data():...
 
 class GetAnswerDataMixin:
     
@@ -301,3 +260,30 @@ class SpeakingBlockAnswerView(APIView):
             res_data.update({'ai_assesement':student_ans.AI_Assessment,'band':student_ans.band,'tutor_assesement':student_ans.Tutor_Assessment})      
         return Response(res_data,200)
     
+
+
+class ExamBlockAnswerView(APIView):
+    def get(self, request,pk):
+        try:
+            exam_block = Exam.objects.get(id=pk)
+        except Exam.DoesNotExist:
+            
+            return Response('object not found ',400)
+        
+        res_data = {'correct_answers':[],
+            'student_answers':[]}
+        
+    
+        serializer = AnswerSerializer(exam_block.answers.all(), many=True)
+        res_data['correct_answers'].extend(serializer.data)
+
+        studentanswer_instance = Studentanswer.objects.filter(Practise_Exam__isnull=True,user=self.request.user, exam = exam_block).first()
+        if (studentanswer_instance):
+            student_data = StudentAnswerSerializers(studentanswer_instance.student_exam.all(), many=True).data
+        
+            res_data['student_answers'].extend(student_data)
+        
+            res_data.update({"AI_Assessment":studentanswer_instance.AI_Assessment,
+                             'Tutor_Assessment':studentanswer_instance.Tutor_Assessment})
+
+        return Response(res_data)
