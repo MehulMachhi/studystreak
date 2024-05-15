@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 
 from Create_Test.models import FullLengthTest, module
 from Create_Test.serializers import createexamserializers
+from exam.models import SpeakingBlock
 from exam.serializers import AnswerSerializer
 from ExamResponse.models import Studentanswer
 
@@ -254,7 +255,49 @@ class SpeakingPracticeView(APIView):
                         if res_data.get(speaking_block.id,None):
                             res_data[speaking_block.id].append({'question':v,'question_number':k,'answer_audio':d["answer_audio"]})
                         else:
-                            res_data[speaking_block.id] = [{'question':v,'question_number':k,'answer_audio':d["answer_audio"]}]
-                            
-            
+                            res_data[speaking_block.id] = [{'question':v,'question_number':k,'answer_audio':d["answer_audio"]}]                   
         return Response(res_data,200)
+    
+class SpeakingBlockAnswerView(APIView):
+    queryset = SpeakingBlockAnswer.objects.all()
+    serializer_class = SpeakingAnswerBlockSerializer
+    def get(self,request,pk):
+        try:
+            speaking_block = SpeakingBlock.objects.get(id=pk)
+        except SpeakingBlock.DoesNotExist:
+            return Response('detail not found',400)
+        
+        try:
+            user = self.request.user.student
+        except Exception:
+            return Response('Student does not exists')
+        
+        questions_dict ={}
+        for question in speaking_block.questions.all():
+
+            questions_dict[question.question_number] = question.question
+
+        qs = SpeakingBlockAnswer.objects.filter(
+                                                speaking_block=speaking_block,
+                                                practise_test__isnull=True,
+                                                user=user,
+                                                Flt__isnull=True,)
+            
+        data = self.serializer_class(qs,many=True, fields=['question_number','answer_audio','user']).data
+        
+        res_data = {"student_answers":[]}
+        for d in data:
+            for k,v in questions_dict.items():
+                if d['question_number'] == k:
+                    res_data['student_answers'].append({'question':v,'question_number':k,'answer_audio':d["answer_audio"]})  
+        
+        student_ans = Studentanswer.objects.filter(
+            user=request.user,
+            Practise_Exam__isnull=True,
+            Full_Length_Exam__isnull=True,
+            speaking_block=speaking_block
+        ).first()
+        if student_ans:
+            res_data.update({'ai_assesement':student_ans.AI_Assessment,'band':student_ans.band,'tutor_assesement':student_ans.Tutor_Assessment})      
+        return Response(res_data,200)
+    
