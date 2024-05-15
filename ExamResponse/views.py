@@ -256,8 +256,13 @@ class SpeakingBlockAnswerView(APIView):
             Full_Length_Exam__isnull=True,
             speaking_block=speaking_block
         ).first()
-        if student_ans:
-            res_data.update({'ai_assesement':student_ans.AI_Assessment,'band':student_ans.band,'tutor_assesement':student_ans.Tutor_Assessment})      
+        if student_ans: 
+            
+            res_data.update({"AI_Assessment":student_ans.AI_Assessment,
+                             'Tutor_Assessment':student_ans.Tutor_Assessment,
+                             'exam_name':speaking_block.name,
+                             'band':student_ans.band,
+                             })  
         return Response(res_data,200)
     
 
@@ -284,6 +289,11 @@ class ExamBlockAnswerView(APIView):
             res_data['student_answers'].extend(student_data)
         
             res_data.update({"AI_Assessment":studentanswer_instance.AI_Assessment,
-                             'Tutor_Assessment':studentanswer_instance.Tutor_Assessment})
+                             'Tutor_Assessment':studentanswer_instance.Tutor_Assessment,
+                             'exam_name':exam_block.exam_name,
+                             'exam_type':exam_block.exam_type,
+                             'exam_catogery':exam_block.exam_category,
+                             'band':studentanswer_instance.band,
+                             })
 
         return Response(res_data)
