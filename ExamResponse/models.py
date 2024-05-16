@@ -41,7 +41,9 @@ class SpeakingBlockAnswer(models.Model):
     practise_test = models.ForeignKey(module, on_delete=models.CASCADE, null=True, blank=True)
     speaking_block = models.ForeignKey('exam.SpeakingBlock',on_delete=models.CASCADE, verbose_name='speakng block',related_name='answers')
     Flt = models.ForeignKey(FullLengthTest, on_delete=models.CASCADE, null=True, blank=True, related_name = "full_length+")
-    
+    AI_Assessment = models.TextField(null=True, blank=True)
+    Tutor_Assessment = models.TextField(null=True, blank=True)
+    band = models.CharField(max_length = 50, null=True, blank=True)
     question_number = models.IntegerField()
     answer_audio = models.FileField(upload_to='speaking-response/')
 
