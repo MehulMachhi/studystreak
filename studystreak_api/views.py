@@ -111,7 +111,7 @@ class RegistrationView(APIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+from django.contrib.auth.forms import AuthenticationForm
 
 @method_decorator(csrf_exempt, name="dispatch")
 class LoginView(APIView):
@@ -143,12 +143,16 @@ class LoginView(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
-
+            else:
+                return Response(
+                    {"errors": "Password is incorrect."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+        else:
             return Response(
-                {"errors": "Please verify your email"}, status=status.HTTP_404_NOT_FOUND
+                {"errors": "Incomplete login information provided."},
+                status=status.HTTP_400_BAD_REQUEST
             )
-        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
-
 
 class ProfileView(APIView):
     renderer_classes = [UserRenderes]
