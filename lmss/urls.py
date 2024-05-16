@@ -8,6 +8,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from assessment.views import assessmentListView, assessmentRetUpdDelView
+from auth.views import callback
 from coursedetail.views import (LessionRetUpdDelView, LessonCreateView,
                                 LessonListView, NoteCreateView, NoteViewSet)
 from Courses.views import (Course_list_forpackage, CourseInstructorListView,
@@ -507,6 +508,9 @@ urlpatterns = [
     path('api/speaking-answers/',SpeakingAnswerView.as_view()), 
     path('api/speaking/practice-test/assesement/<int:id>/',SpeakingPracticeView.as_view()),
     path('api/speaking/practice-test/<int:pk>/',SpeakingPracticeSetView.as_view()),
+    # path('login/',login),
+    path('api/auth/',include('auth.urls')),
+    path('api/google/',callback),
     
 ] + router.urls
 
