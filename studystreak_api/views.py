@@ -145,7 +145,7 @@ class LoginView(APIView):
                 )
             else:
                 return Response(
-                    {"errors": "Password is incorrect."},
+                    {"errors": "Please Check Your Username and Password."},
                     status=status.HTTP_404_NOT_FOUND
                 )
         else:
