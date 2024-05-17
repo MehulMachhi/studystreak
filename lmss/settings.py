@@ -337,7 +337,7 @@ CLIENT_SECRET = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": config['REDIS_URL'],
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
