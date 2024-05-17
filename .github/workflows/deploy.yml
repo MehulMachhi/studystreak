@@ -8,7 +8,19 @@ on:
 jobs:
   deploy_on_Docker_VPS:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      
+      - name: Set up path filter
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            requirements:
+              - 'requirements.txt'
+
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
@@ -19,3 +31,10 @@ jobs:
             cd /home/ubuntu/studystreak-new/studystreak
 
             git pull
+
+            if [ "${{ steps.filter.outputs.requirements }}" == "true" ]; then
+              echo "requirements.file has changed, building the Docker image..."
+              docker compose up backend --build
+            else
+              echo "requirements.file has not changed, skipping Docker build."
+              docker compose restart backend
