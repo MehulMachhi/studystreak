@@ -22,7 +22,7 @@ class SaveToken(PublicAPI):
             rand_id = rand_id + str((random.randint(1,9)))
             
         state_token = get_token(request)
-        cache.set(rand_id,state_token,60 *2)
+        cache.set(rand_id,state_token,60 *5)
         return Response(f'{rand_id}-{state_token}',200)
 
 def state_token(request):
