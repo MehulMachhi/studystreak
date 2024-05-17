@@ -29,7 +29,7 @@ def state_token(request):
 
 
 class GoogleVerificationView(PublicAPI):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         serializer = GoogleAUthVerifiedData(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
