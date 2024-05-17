@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.cache import cache
 from django.contrib.auth.models import User
 
+from students.models import Student
+
 class GoogleVerificationSerializer(serializers.Serializer):
     # state_token = serializers.CharField()
     code = serializers.CharField()
@@ -55,5 +57,5 @@ class GoogleAUthVerifiedData(serializers.Serializer):
         email= validated_data['email']
         username = email.split('@')[0]
         user,created = User.objects.get_or_create(email=email,first_name=first_name,last_name=last_name,username=username)
-        
+        Student.objects.get_or_create(user=user)
         return user
