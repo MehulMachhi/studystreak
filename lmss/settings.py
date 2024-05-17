@@ -343,3 +343,6 @@ CACHES = {
         },
     }
 }
+
+GOOGLE_CLIENT_ID = config['GOOGLE_CLIENT_ID']
+GOOGLE_CLIENT_SECRET = config['GOOGLE_CLIENT_SECRET']
