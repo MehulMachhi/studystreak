@@ -262,9 +262,8 @@ class SpeakingBlockAnswerView(APIView):
             Full_Length_Exam__isnull=True,
             speaking_block=speaking_block
         ).first()
-        if student_ans: 
+        res_data.update({'exam_name':speaking_block.name,})  
             
-            res_data.update({'exam_name':speaking_block.name,})  
         return Response(res_data,200)
     
 
