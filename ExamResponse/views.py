@@ -242,13 +242,19 @@ class SpeakingBlockAnswerView(APIView):
                                                 user=user,
                                                 Flt__isnull=True,)
             
-        data = self.serializer_class(qs,many=True, fields=['question_number','answer_audio','user']).data
+        data = self.serializer_class(qs,many=True, fields=['question_number','answer_audio','user','AI_Assessment','Tutor_Assessment']).data
         
         res_data = {"student_answers":[]}
         for d in data:
             for k,v in questions_dict.items():
                 if d['question_number'] == k:
-                    res_data['student_answers'].append({'question':v,'question_number':k,'answer_audio':d["answer_audio"]})  
+                    _data = {'question':v,
+                             'question_number':k,
+                             'answer_audio':d["answer_audio"],
+                             'AI_Assessment':d['AI_Assessment'],
+                             'Tutor_Assessment':d['Tutor_Assessment'],
+                             }
+                    res_data['student_answers'].append(_data)  
         
         student_ans = Studentanswer.objects.filter(
             user=request.user,
@@ -258,11 +264,7 @@ class SpeakingBlockAnswerView(APIView):
         ).first()
         if student_ans: 
             
-            res_data.update({"AI_Assessment":student_ans.AI_Assessment,
-                             'Tutor_Assessment':student_ans.Tutor_Assessment,
-                             'exam_name':speaking_block.name,
-                             'band':student_ans.band,
-                             })  
+            res_data.update({'exam_name':speaking_block.name,})  
         return Response(res_data,200)
     
 
