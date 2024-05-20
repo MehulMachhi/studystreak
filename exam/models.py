@@ -133,6 +133,14 @@ class FullLengthTest(models.Model):
         Exam, limit_choices_to={"exam_type": "Speaking"}, null=True, blank=True
     )
 
+class Category_Type(models.TextChoices):
+    IELTS = "IELTS", "IELTS"
+    GRE = "GRE", "GRE"
+    TOFEL = "TOFEL", "TOFEL"
+    GMAT = "GMAT", "GMAT"
+    PTE = "PTE", "PTE"
+    GENERAL = "GENERAL", "GENERAL"
+    DUOLINGO = "DUOLINGO", "DUOLINGO"
 
 
 class SpeakingBlock(models.Model):
@@ -143,6 +151,10 @@ class SpeakingBlock(models.Model):
     )
     block_threshold = models.PositiveIntegerField(null=True, blank=True)
     g = GenericRelation(Gamification)
+    exam_category = models.CharField(
+        max_length=100,
+        choices=Category_Type.choices, null=True, blank=True
+    )
 
     def no_of_questions(self):
         return self.questions.count()
