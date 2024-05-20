@@ -334,15 +334,15 @@ TOKEN_URL = "https://zoom.us/oauth/token"
 ACCOUNT_ID = "4h9jZgnETeC1jeCttAqewA"
 CLIENT_ID = "uWxvDYmLRBGf6uW2HUWgA"
 CLIENT_SECRET = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": config['REDIS_URL'],
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": config['REDIS_URL'],
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
+#         },
+#     }
+# }
 
 GOOGLE_CLIENT_ID = config['GOOGLE_CLIENT_ID']
 GOOGLE_CLIENT_SECRET = config['GOOGLE_CLIENT_SECRET']
