@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.middleware.csrf import get_token
@@ -25,8 +26,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from students.models import Student
 from studystreak_api.utils import account_activation_token, get_user_role
-
-from .form import RedirectForm
+from utils.views import PublicAPI
+from rest_framework import serializers
 from .renderers import UserRenderes
 from .serializers import (
     ChangePasswordSerializer,
@@ -111,10 +112,9 @@ class RegistrationView(APIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-from django.contrib.auth.forms import AuthenticationForm
 
 @method_decorator(csrf_exempt, name="dispatch")
-class LoginView(APIView):
+class LoginView(PublicAPI):
     authentication_classes = []
     permission_classes = []
 
@@ -132,7 +132,21 @@ class LoginView(APIView):
 
                 token = get_tokens_for_user(user)
                 user_role = get_user_role(user)
-
+                
+                if user_role == 'student':
+                    student = user.student
+                    
+                    if student.active_tokens and len(student.active_tokens) == settings.ALLOWED_STUDENTS_SESSIONS:
+                        active_tokens = student.active_tokens.copy()
+                        blacklist_token = active_tokens.pop(0)
+                        active_tokens.append(token['refresh'])
+                        student.active_tokens = active_tokens
+                        RefreshToken(blacklist_token).blacklist()
+                        student.save()
+                    else:
+                         student.active_tokens.append(token['refresh'])
+                         student.save()
+                    
                 return Response(
                     {
                         "token": token,

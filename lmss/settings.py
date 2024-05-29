@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "ExamResponse",
     'django_admin_listfilter_dropdown',
     'gamification',
+    'rest_framework_simplejwt.token_blacklist',
     # "dj_rest_auth",
     #  'rest_framework.authtoken',
     # "dj_rest_auth.registration",
@@ -346,3 +347,6 @@ CLIENT_SECRET = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
 
 GOOGLE_CLIENT_ID = config['GOOGLE_CLIENT_ID']
 GOOGLE_CLIENT_SECRET = config['GOOGLE_CLIENT_SECRET']
+
+
+ALLOWED_STUDENTS_SESSIONS = 2

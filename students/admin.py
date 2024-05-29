@@ -110,6 +110,7 @@ class StudentAdmin(ExportMixin, admin.ModelAdmin):
                 "student_flt",
                 "student_mock",
                 "student_speakingblock",
+                'active_tokens',
             ),
         },
     ),
@@ -117,7 +118,6 @@ class StudentAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_batch_names(self, obj):
         return ", ".join([batch.batch_name for batch in obj.select_batch.all()])
-        get_batch_names.short_description = 'Batch Names'
 
     admin.display(empty_value="???")
 

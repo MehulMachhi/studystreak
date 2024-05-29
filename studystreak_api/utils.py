@@ -1,3 +1,4 @@
+from typing import Optional
 import six
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.exceptions import ObjectDoesNotExist
@@ -15,7 +16,7 @@ class TokenGenerator(PasswordResetTokenGenerator):
 account_activation_token = TokenGenerator()
 
 
-def get_user_role(user):
+def get_user_role(user)-> Optional[None | str]:
     role = None
     try:
         if user.student:
