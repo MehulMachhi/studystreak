@@ -249,7 +249,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_SAMESITE = None
-CORS_ALLOW_ALL_ORIGINS = True
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
@@ -271,6 +270,7 @@ PASSWORD_RESET_TIMEOUT = 60 * 30
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES':[
       "rest_framework.permissions.IsAuthenticated",  
@@ -287,29 +287,7 @@ SIMPLE_JWT = {
 
 ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
-# {"web":
-#     {"client_id":"246152471027-8ql9ui19kphk2t0hp2pd57lb7bd1op3v.apps.googleusercontent.com",
-#      "project_id":"fresh-ocean-412305",
-#      "auth_uri":"https://accounts.google.com/o/oauth2/auth",
-#      "token_uri":"https://oauth2.googleapis.com/token",
-#      "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
-#      "client_secret":"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",
-#      "redirect_uris":["http://127.0.0.1:8000/accounts/google/login/callback/",
-#                       "http://localhost:8000/accounts/google/login/callback/"],
-#      "javascript_origins":["http://127.0.0.1:8000","http://localhost:8000"]}
-#     }
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-        "OAUTH_PKCE_ENABLED": True,
-    }
-}
+
 
 KEY_ID = "rzp_test_QyWQWfJeARzOZG"
 KEY_SECRET = "CbjpLbEoily2YroYWMuvNfxG"
@@ -317,6 +295,7 @@ KEY_SECRET = "CbjpLbEoily2YroYWMuvNfxG"
 CSRF_TRUSTED_ORIGINS = [
     "https://studystreak.in",
     "http://studystreak.in",
+    'http://localhost:5173'
 ]
 
 
@@ -335,16 +314,16 @@ TOKEN_URL = "https://zoom.us/oauth/token"
 ACCOUNT_ID = "4h9jZgnETeC1jeCttAqewA"
 CLIENT_ID = "uWxvDYmLRBGf6uW2HUWgA"
 CLIENT_SECRET = "B8Xg5H6UJbjppdTptwa2IOjn6mQaFsBs"
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": config['REDIS_URL'],
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
-#         },
-#     }
-# }
-
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config['REDIS_URL'],
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+    }
+}
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 GOOGLE_CLIENT_ID = config['GOOGLE_CLIENT_ID']
 GOOGLE_CLIENT_SECRET = config['GOOGLE_CLIENT_SECRET']
 

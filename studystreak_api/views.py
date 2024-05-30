@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 
 from django.conf import settings
@@ -147,7 +148,7 @@ class LoginView(PublicAPI):
                          student.active_tokens.append(token['refresh'])
                          student.save()
                     
-                return Response(
+                response = Response(
                     {
                         "token": token,
                         "msg": "Login Successful",
@@ -157,6 +158,14 @@ class LoginView(PublicAPI):
                     },
                     status=status.HTTP_200_OK,
                 )
+                response.set_cookie('refresh',
+                                    token['refresh'],
+                                    samesite='Strict',
+                                    httponly=True,
+                                    expires=datetime.now() + settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
+
+                                    )
+                return response
             else:
                 return Response(
                     {"errors": "Please Check Your Username and Password."},
@@ -445,6 +454,7 @@ def logout_view(request):
 
 
 @require_POST
+@csrf_exempt
 def login_view(request):
     """
     This will be `/api/login/` on `urls.py`
@@ -529,3 +539,25 @@ class GetUserRole(APIView):
 class GetUserView(generics.ListAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+class RefreshTokenView(PublicAPI):
+    def post(self, request,format=None):
+        print(refresh_token:=(request.COOKIES.get('refresh')))
+        try:
+            access_token = RefreshToken(token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxNzE3OTIwOCwiaWF0IjoxNzE3MDA2NDA4LCJqdGkiOiJiNjEzODNhNDI4N2I0MDJjOGIxZjQ1NDBkZDI2YTkyZiIsInVzZXJfaWQiOjF9.laaYOD9fAnQncprCHV2h0h01QshnBwVTjXBnAgyr7Vo').access_token
+        except Exception as e:
+            response = Response('token blacklisted',status.HTTP_406_NOT_ACCEPTABLE)
+            response.delete_cookie('refresh')
+            return response
+        return Response(access_token,200)
+    
+    
+class SessionLogin(PublicAPI):
+    def post(self, request, format=None):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        user = authenticate(username,password)
+        if user:
+            login

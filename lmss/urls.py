@@ -74,10 +74,10 @@ from students.views import (BatchIdwiseStudentGetView,
                             StudentView, )
 from studystreak_api.views import (ChangePasswordView, GetUserRole,
                                    GetUserView, LoginView, PasswordResetView,
-                                   ProfileView, RegistrationView,
+                                   ProfileView, RefreshTokenView, RegistrationView,
                                    SendPasswordResetView,
                                    UserResetPasswordView, confirm_user,
-                                   get_csrf_token)
+                                   get_csrf_token, login_view, logout_view)
 from website.views import (BlogListView, BlogRetUpdDelViews,
                            HomepageSection1ListView,
                            HomepageSection1RetUpdDelView,
@@ -511,6 +511,9 @@ urlpatterns = [
     # path('login/',login),
     path('api/auth/',include('auth.urls')),
     path('api/google/',callback),
+    path('api/refresh/',RefreshTokenView.as_view()),
+    path('api/session/',login_view),
+    path('api/session/logout/',logout_view),
     
 ] + router.urls
 
