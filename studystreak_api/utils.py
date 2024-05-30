@@ -16,7 +16,7 @@ class TokenGenerator(PasswordResetTokenGenerator):
 account_activation_token = TokenGenerator()
 
 
-def get_user_role(user)-> Optional[None | str]:
+def get_user_role(user):
     role = None
     try:
         if user.student:
