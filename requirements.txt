@@ -1,7 +1,9 @@
 aioredis==2.0.1
+apitally==0.8.0
 asgiref==3.7.2
 async-timeout==4.0.3
 attrs==23.1.0
+backoff==2.2.1
 beautifulsoup4==4.12.3
 cachetools==5.3.3
 certifi==2023.11.17

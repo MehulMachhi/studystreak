@@ -68,6 +68,8 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    "apitally.django_rest_framework.ApitallyMiddleware",
+
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -78,6 +80,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
+
+APITALLY_MIDDLEWARE = {
+    "client_id": "ce0b80e9-3c41-43a3-b032-012b989acb2f",
+    "env": "prod",  # or "dev"
+}
 
 ROOT_URLCONF = "lmss.urls"
 
