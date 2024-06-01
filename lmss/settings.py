@@ -29,6 +29,8 @@ JWT_AUTH = {
 
 
 INSTALLED_APPS = [
+    # 'slik',
+    
     "jazzmin",
     "master",
     "Courses",
@@ -64,10 +66,12 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     'gamification',
     'rest_framework_simplejwt.token_blacklist',
+    "silk",
 ]
 
 
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     "apitally.django_rest_framework.ApitallyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -77,7 +81,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 APITALLY_MIDDLEWARE = {

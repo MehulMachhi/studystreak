@@ -65,11 +65,12 @@ INSTALLED_APPS = [
     'gamification',
     'rest_framework_simplejwt.token_blacklist',
     'django_extensions',
+    "silk",
 ]
 
 
 MIDDLEWARE = [
-
+    'silk.middleware.SilkyMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",

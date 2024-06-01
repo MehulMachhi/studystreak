@@ -508,12 +508,14 @@ urlpatterns = [
     
     #Gamification APIs 
     path('api/gamification/',include('gamification.api.urls')),
+    path('silk/', include('silk.urls', namespace='silk')),
     
 ] + router.urls
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
 admin.site.site_header = "StudyStreak Admin"
 admin.site.site_header = "StudyStreak"
 admin.site.index_title = "StudyStreak"
