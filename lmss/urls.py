@@ -30,8 +30,7 @@ from ExamResponse.views import (ExamBlockAnswerView, FLTAnswerCreateView, FLTAns
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, SpeakingAnswerView, SpeakingBlockAnswerView, SpeakingPracticeView, StudentAnswerListView)
-from gamification.views import (BadgeViewSet, FlashCardView, PointHistoryView,
-                                gamificationCreateView, gamificationListView)
+from gamification.api.views import (FlashCardView, PointHistoryView,)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
 from LiveClass.views import (AddBookSlot, Liveclass_Create_View,
@@ -97,7 +96,6 @@ router.register(
     "api/full-length-test", FullLengthTestViewSet, basename="full-length-test"
 )
 router.register("api/test-types", TestTypeViewset, basename="test-types")
-router.register('api/badges',BadgeViewSet,basename='badge')
 urlpatterns = [
     path('api/notes/<int:lesson_id>/<int:student_id>/', NoteViewSet.as_view({'get': 'list'}), name='notes-list'),
     path("api/notes/createview/", NoteCreateView.as_view(), name="createview"),
@@ -490,11 +488,8 @@ urlpatterns = [
     path("api/save-audio-file/", SaveSpeakingAnswerFileView.as_view()),
     path("api/create/flashcard/",FlashCardView.as_view()),
     path("api/get/flashcard/",FlashCardView.as_view()),
-    #Gamification APIs
     path('api/packageidwisestudentgetview/<int:package_id>/', PackageIdwiseStudentGetView, name='package_students_api'),
     path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
-    path('api/create/gamification/', gamificationCreateView.as_view(), name='gamification'),
-    path('api/get/gamification/', gamificationListView.as_view()), 
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
     path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
     path('api/pointhistory/',PointHistoryView.as_view()),
@@ -511,6 +506,9 @@ urlpatterns = [
     # path('login/',login),
     path('api/auth/',include('auth.urls')),
     path('api/google/',callback),
+    
+    #Gamification APIs 
+    path('api/gamification/',include('gamification.api.urls')),
     
 ] + router.urls
 

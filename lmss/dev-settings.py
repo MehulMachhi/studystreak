@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     'gamification',
     'rest_framework_simplejwt.token_blacklist',
+    'django_extensions',
 ]
 
 
