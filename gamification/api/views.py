@@ -29,7 +29,7 @@ from .serializers import (
 from ..utils import save_points_and_publish_message
 
 
-class FlashCardView(ListCreateAPIView):
+class FlashCardView(ViewSet):
     queryset = FlashCard.objects.all()
     serializer_class = FlashCardSerializer
 

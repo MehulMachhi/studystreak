@@ -486,8 +486,7 @@ urlpatterns = [
     path('api/exam-block-answers/<int:pk>/',ExamBlockAnswerView.as_view()),
     path("api/create-flt/", FLTCreateView.as_view()),   
     path("api/save-audio-file/", SaveSpeakingAnswerFileView.as_view()),
-    path("api/create/flashcard/",FlashCardView.as_view()),
-    path("api/get/flashcard/",FlashCardView.as_view()),
+
     path('api/packageidwisestudentgetview/<int:package_id>/', PackageIdwiseStudentGetView, name='package_students_api'),
     path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
