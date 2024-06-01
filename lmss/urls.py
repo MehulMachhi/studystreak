@@ -508,7 +508,7 @@ urlpatterns = [
     
     #Gamification APIs 
     path('api/gamification/',include('gamification.api.urls')),
-    path('silk/', include('silk.urls', namespace='silk')),
+    path('api/silk/', include('silk.urls', namespace='silk')),
     
 ] + router.urls
 
