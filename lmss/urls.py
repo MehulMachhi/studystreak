@@ -30,7 +30,6 @@ from ExamResponse.views import (ExamBlockAnswerView, FLTAnswerCreateView, FLTAns
                                 PracticeTestAnswerCreateView,
                                 SaveSpeakingAnswerFileView,
                                 SpeakingAnswerListView, SpeakingAnswerView, SpeakingBlockAnswerView, SpeakingPracticeView, StudentAnswerListView)
-from gamification.api.views import (FlashCardView, PointHistoryView,)
 from Listening_Exam.views import (ListeningExamListView,
                                   ListeningExamRetUpdDelViews)
 from LiveClass.views import (AddBookSlot, Liveclass_Create_View,
@@ -491,7 +490,6 @@ urlpatterns = [
     path('api/batchidwisestudentgetview/<int:batch_id>/', BatchIdwiseStudentGetView, name='batch_students_api'),
     path('api/courseidwisestudentgetview/<int:course_id>/', CourseIdwiseStudentGetView, name='course_students_api'),
     path('api/add-bookslot/<int:pk>/', AddBookSlot.as_view(), name='add-bookslot'),
-    path('api/pointhistory/',PointHistoryView.as_view()),
     path('api/student-flt-submit/',FLTStudentAddFields.as_view()),
     
     #speaking block view

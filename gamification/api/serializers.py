@@ -58,7 +58,6 @@ class GamificationCreateSerializer(serializers.Serializer):
             raise serializers.ValidationError({'object_id':'object does not exists'})
         
     def validate(self, attrs):
-        # self.__validate_model(attrs.get('model'))
         self.__validate_object_id(attrs.get('object_id'))
         return super().validate(attrs)
     
@@ -69,7 +68,7 @@ class GamificationCreateSerializer(serializers.Serializer):
         object_id = validated_data['object_id']
         points = validated_data['points']
         
-        Gamification.objects.create(
+        Gamification.objects.get_or_create(
             content_type=content_object,
             object_id=object_id,
             points=points

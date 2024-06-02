@@ -21,9 +21,9 @@ class ModelMapper:
         return [i[1] for i in self.MODEL_MAPPER.values()]
     
     def get_model_for_rep(self,model_rep:str):
-        for i in self.MODEL_MAPPER.values():
-            if model_rep == i[1]:
-                return i[0]
+        for k,v  in self.MODEL_MAPPER.items():
+            if model_rep == v[1] or model_rep == k:
+                return v[0]
         return None
     
     def get_model_dict(self):
