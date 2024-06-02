@@ -1,16 +1,16 @@
+import requests
+import json
 
+url = "https://studystreak.in/api/login/"
 
-MODEL_MAPPER: dict = {
-    "lesson": ('Lesson','Lesson'),
-    "course": ('Course','Course'),
-    "exam": ('Exam','Exam'),
-    "fulllengthtest": ('FullLengthTest','Full Length Test'),
-    "module": ('module','Mock Test'),
-    "liveclass":( 'Live_Class', 'Live Class'),
+payload = json.dumps({
+  "username": "admin",
+  "password": "admin"
+})
+headers = {
+  'Content-Type': 'application/json',
 }
-x = {
-    1:11,
-    2:22
-}
-for i in x:
-    print(i)
+for _ in range(50):
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response.text)

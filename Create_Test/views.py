@@ -26,7 +26,16 @@ class ResponsesView(generics.ListCreateAPIView):
 
 
 class moduleListView(generics.ListCreateAPIView):
-    queryset = module.objects.all()
+    queryset = module.objects.all().prefetch_related(
+                "Reading",
+                "Listening",
+                "Speaking",
+                "Writing",
+                "awa",
+                "integrated_reasoning",
+                "quantitative_reasoning",
+                "verbal_reasoning",
+    )
     serializer_class = ModuleListSerializers
 
     def get_serializer_class(self):
