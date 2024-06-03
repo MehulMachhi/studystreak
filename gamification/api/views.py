@@ -98,7 +98,10 @@ class GamificationViewSet(ViewSet):
         if not model:
             return Response({},204)
         model_class = ModelMapper().get_model_for_rep(model)
-        return Response([{'object_id':i.id,'rep_name':i.__str__()} for i in model_class.objects.all()],200)
+        if model_class:
+            return Response([{'object_id':i.id,'rep_name':i.__str__()} for i in model_class.objects.all()],200)
+        else:
+            return Response({"error":'Bad request'},400)
             
             
 class PointHistoryViewSet(ViewSet):
