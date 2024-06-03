@@ -93,7 +93,7 @@ class Student(models.Model):
     student_flt = models.ManyToManyField(FullLengthTest, null=True, blank=True)
     student_mock = models.ManyToManyField(Exam, null=True, blank=True, related_name="mock")
     student_speakingblock = models.ManyToManyField(SpeakingBlock, null=True, blank=True, related_name="speakingblock")
-    active_tokens = fields.ArrayField(base_field=models.CharField(max_length=255),size=2,default=list)
+    active_tokens = fields.ArrayField(base_field=models.CharField(max_length=255),size=2,default=list,blank=True)
     
     def get_name(self):
         return self.user.get_full_name()
