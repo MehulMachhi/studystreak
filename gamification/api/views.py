@@ -43,49 +43,49 @@ class GamificationViewSet(ViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response("bad request", status=status.HTTP_201_CREATED)
+        return Response({"error":"Bad request"}, status=status.HTTP_201_CREATED)
 
     def list(self,request):
         
         qs = Gamification.objects.all()
         data = []
 
-        for q in qs:
-            if isinstance(q.content_object, FlashCard):
-                temp_data = FlashCardSerializer(q.content_object, depth=0).data
-                temp_data.update({"model": "flashcard", "gamification_id": q.id})
-                data.append(temp_data)
+        # for q in qs:
+        #     if isinstance(q.content_object, FlashCard):
+        #         temp_data = FlashCardSerializer(q.content_object, depth=0).data
+        #         temp_data.update({"model": "flashcard", "gamification_id": q.id})
+        #         data.append(temp_data)
 
-            elif isinstance(q.content_object, Lesson):
-                temp_data = LessonListSerializers(q.content_object).data
-                temp_data.update({"model": "lesson", "gamification_id": q.id})
-                data.append(temp_data)
+        #     elif isinstance(q.content_object, Lesson):
+        #         temp_data = LessonListSerializers(q.content_object).data
+        #         temp_data.update({"model": "lesson", "gamification_id": q.id})
+        #         data.append(temp_data)
 
-            elif isinstance(q.content_object, Course):
-                temp_data = CourseSimpleSerializer(q.content_object).data
-                temp_data.update({"model": "course"})
-                data.append(temp_data)
+        #     elif isinstance(q.content_object, Course):
+        #         temp_data = CourseSimpleSerializer(q.content_object).data
+        #         temp_data.update({"model": "course"})
+        #         data.append(temp_data)
 
-            elif isinstance(q.content_object, Exam):
-                temp_data = ExamSerializers(
-                    q.content_object, fields=["id", "exam_name", "exam_type"]
-                ).data
-                temp_data.update({"model": "exam", "gamification_id": q.id})
-                data.append(temp_data)
+        #     elif isinstance(q.content_object, Exam):
+        #         temp_data = ExamSerializers(
+        #             q.content_object, fields=["id", "exam_name", "exam_type"]
+        #         ).data
+        #         temp_data.update({"model": "exam", "gamification_id": q.id})
+        #         data.append(temp_data)
 
-            elif isinstance(q.content_object, FullLengthTest):
-                temp_data = FLTCreateSerializer(q.content_object).data
-                temp_data.update({"model": "fulllengthtest", "gamification_id": q.id})
-                data.append(temp_data)
+        #     elif isinstance(q.content_object, FullLengthTest):
+        #         temp_data = FLTCreateSerializer(q.content_object).data
+        #         temp_data.update({"model": "fulllengthtest", "gamification_id": q.id})
+        #         data.append(temp_data)
 
-            elif isinstance(q.content_object, module):
-                temp_data = PracticeSerializer(q.content_object, depth=0).data
-                temp_data.update({"model": "module", "gamification_id": q.id})
-                data.append(temp_data)
+        #     elif isinstance(q.content_object, module):
+        #         temp_data = PracticeSerializer(q.content_object, depth=0).data
+        #         temp_data.update({"model": "module", "gamification_id": q.id})
+        #         data.append(temp_data)
 
-            elif isinstance(q.content_object, Live_Class):
-                pass
-
+        #     elif isinstance(q.content_object, Live_Class):
+        #         pass
+        data = GamificationCreateSerializer(qs,many=True).data
         return Response(data, status=status.HTTP_200_OK)
     
     @action(detail=False,methods=['get'],url_path='models')

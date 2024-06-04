@@ -44,12 +44,15 @@ class FlashCardSerializer(DynamicModelSerializer):
     
 
 
-class GamificationCreateSerializer(serializers.Serializer):
+class GamificationCreateSerializer(serializers.Serializer):             
     model = serializers.ChoiceField(choices=ModelMapper().get_models_repr())
-    object_id = serializers.IntegerField()
+    object_id = serializers.IntegerField(write_only=True)
     points = serializers.IntegerField()
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(read_only=True)
     
-    
+   
+        
     def __validate_object_id(self,value):
         model =ModelMapper().get_model_for_rep(self.initial_data.get('model')) 
         
@@ -68,12 +71,14 @@ class GamificationCreateSerializer(serializers.Serializer):
         object_id = validated_data['object_id']
         points = validated_data['points']
         
-        Gamification.objects.get_or_create(
+        instance,_ = Gamification.objects.get_or_create(
             content_type=content_object,
             object_id=object_id,
             points=points
         )
-        return validated_data
+        return instance
+    
+    
 class BadgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Badge

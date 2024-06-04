@@ -14,7 +14,15 @@ class Gamification(models.Model):
     
     def __str__(self):
         return f"{self.content_type.name}-{self.content_object.__str__()}"
-        
+    
+    @property
+    def model(self):
+        return f'{self.content_object.__class__.__name__}'
+    
+    @property
+    def name(self):
+        return f'{self.content_object.__str__()}'
+    
 class Badge(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
