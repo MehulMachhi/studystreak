@@ -115,7 +115,7 @@ class PointHistoryViewSet(ViewSet):
                 else:
                     return Response({"msg": "already exists"}, 200)
             else:
-                return Response('Gamification is not available for this model.',400)
+                return Response('Gamification is not available for this object_id.',400)
         return Response('model is not available for the points.', 400)
 
 
