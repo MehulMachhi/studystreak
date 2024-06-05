@@ -100,7 +100,7 @@ class PointHistoryViewSet(ViewSet):
         model = request.data.get('model')
         object_id = request.data.get('object_id')
 
-        if not model and not object_id:
+        if not model or not object_id:
             return Response({"error": 'model or object_id cannot be blank'}, 400)
 
         model_class = ModelMapper().get_model_for_rep(model)
@@ -114,6 +114,8 @@ class PointHistoryViewSet(ViewSet):
                     return Response({'msg': "Created"}, 201)
                 else:
                     return Response({"msg": "already exists"}, 200)
+            else:
+                return Response('Gamification is not available for this model.',400)
         return Response('model is not available for the points.', 400)
 
 
