@@ -54,9 +54,8 @@ class GamificationCreateSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
 
     def __validate_object_id(self, value):
-        model = ModelMapper().get_model_for_rep(self.initial_data.get('model'))
+        model_class = ModelMapper().get_model_for_rep(self.initial_data.get('model'))
 
-        model_class = ContentType.objects.get_for_model(model).model_class()
         if not model_class.objects.filter(id=value).exists():
             raise serializers.ValidationError({'object_id': 'object does not exists'})
 
