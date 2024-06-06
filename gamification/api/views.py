@@ -1,25 +1,15 @@
-from django.contrib.auth.models import User
 from django.db.models import F
 from django.db.models.aggregates import Sum
 from rest_framework import serializers, status
-from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from django.contrib.contenttypes.models import ContentType
 
+from django.http import StreamingHttpResponse
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from .common import model_mapper
 from rest_framework.viewsets import ViewSet
-from coursedetail.models import Lesson
-from coursedetail.serializers import LessonListSerializers
-from Courses.models import Course
-from Courses.serializers import CourseSimpleSerializer
-from Create_Test.models import Exam, FullLengthTest, module
-from Create_Test.serializers import FLTCreateSerializer
-from Create_Test.serializers import ModuleListSerializers as PracticeSerializer
-from exam.serializers import ExamSerializers
-from LiveClass.models import Live_Class
 from rest_framework.decorators import action
 
 from ..models import Badge, FlashCard, Gamification, PointHistory
@@ -74,7 +64,7 @@ class PointHistoryViewSet(ViewSet):
             user.student
         except Exception as e:
             raise ValidationError(f"user {user.username} not registered as student")
-        return PointHistory.objects.filter(student=user.student).all()
+        return PointHistory.objects.filter(student=user.student).select_related("student","gamification")
 
     def get(self, request):
         queryset = (
@@ -84,12 +74,12 @@ class PointHistoryViewSet(ViewSet):
                 model=F("gamification__content_type__model"),
                 object_id=F("gamification__object_id"),
             )
-            .values("created_at", "points", "model", "object_id")
+            .values("created_at", "points", 'model',"object_id")
             .order_by("-created_at")
         )
-        total_points = queryset.aggregate(total_points=Sum("points"))["total_points"]
-        data = list(queryset)
-        return Response({"history": data, "total_points": total_points}, 200)
+        for i in queryset:
+            i['model'] = model_mapper.get_model_for_rep(i['model'],return_rep=True)
+        return Response(list(queryset), 200)
 
     def create(self, request):
         try:
@@ -149,8 +139,6 @@ class BadgeViewSet(ModelViewSet):
     queryset = Badge.objects.all()
 
 
-from django.http import StreamingHttpResponse
-from rest_framework.decorators import api_view
 
 
 def Notification(request):
