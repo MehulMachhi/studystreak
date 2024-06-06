@@ -96,10 +96,6 @@ class StudentAnswerListView(generics.ListCreateAPIView):
     queryset = Studentanswer.objects.all()
     serializer_class = StudentanswerSerializers
 
-class SpeakingAnswerListView(generics.ListCreateAPIView):
-    parser_classes = [MultiPartParser, FormParser, JSONParser]
-    queryset = Studentanswer.objects.all()
-    serializer_class = StudentanswerSpeakingResponseSerializers
 
     # def create(self, request, *args, **kwargs):
     #     return super().create(request, *args, **kwargs)
@@ -112,26 +108,6 @@ class PracticeTestAnswerCreateView(APIView):
         if serializer.is_valid(raise_exception=True): 
             serializer.save()  
             return Response({'msg':'created'}, 201)
-    
-class FLTAnswers(GetAnswerDataMixin,APIView):
-    def get(self, request, flt_id):
-        try:
-            flt_instance = FullLengthTest.objects.get(pk=flt_id)
-        except FullLengthTest.DoesNotExist:
-            return Response('record with this id does not exists',400)
-
-        reading_set_data = self.get_answers(flt_instance.reading_set)
-        speaking_set_data = self.get_speaking_data(flt_instance.speaking_set)
-        writing_set_data = self.get_answers(flt_instance.writing_set)
-        listening_set_data = self.get_answers(flt_instance.listening_set)
-
-        return Response({
-            "reading_set":reading_set_data,
-            "speaking_set":speaking_set_data,
-            "writing_set":writing_set_data,
-            "listening_set":listening_set_data,
-        }, 200)
-    
 
         
 class FLTAnswerCreateView(APIView):
@@ -145,32 +121,32 @@ class FLTAnswerCreateView(APIView):
 
 
 
-class SaveSpeakingAnswerFileView(APIView):
-    parser_classes = [MultiPartParser, FormParser]
+# class SaveSpeakingAnswerFileView(APIView):
+#     parser_classes = [MultiPartParser, FormParser]
     
-    def post(self, request, *args, **kwargs):
-        user = str(request.user.username)
+#     def post(self, request, *args, **kwargs):
+#         user = str(request.user.username)
         
-        file=request.FILES.get("file")
-        exam_id = request.data.get("exam_id",None)
-        extension = request.data.get("extension",None)
+#         file=request.FILES.get("file")
+#         exam_id = request.data.get("exam_id",None)
+#         extension = request.data.get("extension",None)
         
-        if file:
-            user_directory = os.path.join(settings.MEDIA_ROOT, 'speaking-response', user)
-            file_name = f'{exam_id}-{time.strftime("%Y%m%d-%H%M%S")}.{extension}'
+#         if file:
+#             user_directory = os.path.join(settings.MEDIA_ROOT, 'speaking-response', user)
+#             file_name = f'{exam_id}-{time.strftime("%Y%m%d-%H%M%S")}.{extension}'
             
-            os.makedirs(user_directory, exist_ok=True)
+#             os.makedirs(user_directory, exist_ok=True)
             
-            file_path = os.path.join(user_directory, file_name)
-            return_dir = os.path.join('speaking-response', user, file_name)
+#             file_path = os.path.join(user_directory, file_name)
+#             return_dir = os.path.join('speaking-response', user, file_name)
 
-            with open(file_path, 'wb+') as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
+#             with open(file_path, 'wb+') as destination:
+#                 for chunk in file.chunks():
+#                     destination.write(chunk)
                     
-            return Response({"file_path": return_dir}, status=200)
+#             return Response({"file_path": return_dir}, status=200)
 
-        return Response({"msg": "file not found"}, status=200)
+#         return Response({"msg": "file not found"}, status=200)
 
 class SaveAudio(generics.ListCreateAPIView):
     queryset = SpeakingResponse.objects.all()
@@ -181,41 +157,41 @@ class SpeakingAnswerView(generics.CreateAPIView):
     serializer_class = SpeakingAnswerBlockSerializer
     queryset = SpeakingBlockAnswer.objects.all()
 
-class SpeakingPracticeView(APIView):
-    queryset = SpeakingBlockAnswer.objects.all()
-    serializer_class = SpeakingAnswerBlockSerializer
+# class SpeakingPracticeView(APIView):
+#     queryset = SpeakingBlockAnswer.objects.all()
+#     serializer_class = SpeakingAnswerBlockSerializer
     
-    def get(self, request,id):
-        try:
-            user = self.request.user.student
-        except Exception:
-            return Response('Student does not exists')
-        try:
-            m = module.objects.get(id=id)
-        except module.DoesNotExist:
-            return Response({'error':'Practice test with this id does not exists'},400)
-        res_data = {}
-        for speaking_block in m.Speaking.all():
-            questions_dict ={}
-            for question in speaking_block.questions.all():
+#     def get(self, request,id):
+#         try:
+#             user = self.request.user.student
+#         except Exception:
+#             return Response('Student does not exists')
+#         try:
+#             m = module.objects.get(id=id)
+#         except module.DoesNotExist:
+#             return Response({'error':'Practice test with this id does not exists'},400)
+#         res_data = {}
+#         for speaking_block in m.Speaking.all():
+#             questions_dict ={}
+#             for question in speaking_block.questions.all():
 
-                questions_dict[question.question_number] = question.question
+#                 questions_dict[question.question_number] = question.question
 
-            qs = self.queryset.filter(practise_test=m, user=user,Flt__isnull=True,speaking_block=speaking_block)
+#             qs = self.queryset.filter(practise_test=m, user=user,Flt__isnull=True,speaking_block=speaking_block)
             
-            data = self.serializer_class(qs,many=True, fields=['question_number','answer_audio','user']).data
-            print('======================================')
-            data = [dict(d) for d in data]
-            print('======================================')
+#             data = self.serializer_class(qs,many=True, fields=['question_number','answer_audio','user']).data
+#             print('======================================')
+#             data = [dict(d) for d in data]
+#             print('======================================')
             
-            for d in data:
-                for k,v in questions_dict.items():
-                    if d['question_number'] == k:
-                        if res_data.get(speaking_block.id,None):
-                            res_data[speaking_block.id].append({'question':v,'question_number':k,'answer_audio':d["answer_audio"]})
-                        else:
-                            res_data[speaking_block.id] = [{'question':v,'question_number':k,'answer_audio':d["answer_audio"]}]                   
-        return Response(res_data,200)
+#             for d in data:
+#                 for k,v in questions_dict.items():
+#                     if d['question_number'] == k:
+#                         if res_data.get(speaking_block.id,None):
+#                             res_data[speaking_block.id].append({'question':v,'question_number':k,'answer_audio':d["answer_audio"]})
+#                         else:
+#                             res_data[speaking_block.id] = [{'question':v,'question_number':k,'answer_audio':d["answer_audio"]}]                   
+#         return Response(res_data,200)
     
 class SpeakingBlockAnswerView(APIView):
     queryset = SpeakingBlockAnswer.objects.all()

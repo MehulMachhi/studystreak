@@ -12,9 +12,9 @@ class LessonListView(generics.ListCreateAPIView):
     serializer_class = LessonListSerializers
 
 
-class LessionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Lesson.objects.all()
-    serializer_class = LessonListSerializers
+# class LessionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Lesson.objects.all()
+#     serializer_class = LessonListSerializers
     
 
 # def LessonNextIdView(request):
@@ -25,9 +25,7 @@ class LessionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
 #     else:
 #         pass
 
-class LessonCreateView(generics.ListCreateAPIView):
-    queryset = Lesson.objects.all()
-    serializer_class = LessonCreateSerializers
+
     
 class NoteViewSet(ModelViewSet):
     serializer_class = NoteListSerializers

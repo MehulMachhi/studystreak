@@ -5,14 +5,14 @@ from .models import assessment
 
 # Create your views here.
 
-class assessmentListView(generics.ListCreateAPIView):
-    queryset = assessment.objects.all()
-    serializer_class = assessmentListSerializer
+# class assessmentListView(generics.ListCreateAPIView):
+#     queryset = assessment.objects.all()
+#     serializer_class = assessmentListSerializer
         
     
-class assessmentRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = assessment.objects.all()
-    serializer_class = assessmentListSerializer
+# class assessmentRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = assessment.objects.all()
+#     serializer_class = assessmentListSerializer
     
     
 

@@ -35,20 +35,14 @@ class AnswerViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
 
 
-class FullLengthTestViewSet(viewsets.ModelViewSet):
-    queryset = FullLengthTest.objects.all()
-    serializer_class = FullLengthTestSerializer
+# class FullLengthTestViewSet(viewsets.ModelViewSet):
+#     queryset = FullLengthTest.objects.all()
+#     serializer_class = FullLengthTestSerializer
 
 
-    serializer_class = FullLengthTestSerializer
+#     serializer_class = FullLengthTestSerializer
 
 
-
-class ExamListView(generics.ListAPIView):
-    queryset = Exam.objects.all()
-    serializer_class =  ExamListSerializers
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['exam_name'] 
 
 
 
@@ -62,21 +56,10 @@ class ExamListView(generics.ListAPIView):
 #         return queryset
 
 
-class ExamListFilterView(generics.ListAPIView):
-    serializer_class = ExamListSerializers
-
-    def get_queryset(self):
-        block_type = self.request.query_params.get('block_type', None)
-        queryset = Exam.objects.all()
-
-        if block_type:
-            queryset = queryset.filter(block_type=block_type)
-
-        return queryset
 
 
-class AnswerListView(generics.ListAPIView):
-    serializer_class = AnswerListSerializers
+# class AnswerListView(generics.ListAPIView):
+#     serializer_class = AnswerListSerializers
     # queryset = Answer.objects.all()
     # def get_queryset(self):
     #     # exam_id = self.kwargs.get('exam_id')
@@ -94,19 +77,11 @@ class AnswerListView(generics.ListAPIView):
     #     exam = get_object_or_404(Exam, id=exam_id)
     #     queryset = Answer.objects.filter(exam=exam, question_number=question_number)
     
-    def get_queryset(self):
-        self.exam_id = get_object_or_404(Exam, id=self.kwargs['exam_id'])
-        return Answer.objects.filter(exam=self.exam_id)
-
-class AnswerRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerRetUpdDelSerializers
+    # def get_queryset(self):
+    #     self.exam_id = get_object_or_404(Exam, id=self.kwargs['exam_id'])
+    #     return Answer.objects.filter(exam=self.exam_id)
 
 
-class ExamRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Exam.objects.all()
-    serializer_class = ExamRetUpdDelSerializers
-    
 
 class SpeakingBlockView(generics.ListCreateAPIView):
     serializer_class = SpeakingBlockSerializer

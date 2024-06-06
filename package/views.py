@@ -33,11 +33,7 @@ class PackageListView(generics.ListCreateAPIView):
     #     user = self.request.user
     #     return Package.objects.filter(user_package=user)
     
-    
-class PackageRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Package.objects.all()
-    serializer_class = PackageRetUpdDelSerializers
-    
+
 
     # def get(self, request, *args, **kwargs):
     #         queryset = self.get_queryset()

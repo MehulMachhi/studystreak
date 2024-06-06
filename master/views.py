@@ -74,19 +74,15 @@ class CategoryListView(generics.ListCreateAPIView):
     serializer_class = CategoryListSerializers
 
 
-class CategoryRetUpdDelView(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategoryRetUpdDelSerializers
-
 
 class LevelListView(generics.ListCreateAPIView):
     queryset = Level.objects.all()
     serializer_class = LevelListSerializers
 
 
-class LevelRetUpdDelView(generics.ListCreateAPIView):
-    queryset = Level.objects.all()
-    serializer_class = LevelRetUpdDelSerializers
+# class LevelRetUpdDelView(generics.ListCreateAPIView):
+#     queryset = Level.objects.all()
+#     serializer_class = LevelRetUpdDelSerializers
 
 
 class RequirementsListView(generics.ListCreateAPIView):
@@ -104,9 +100,9 @@ class OutcomesListView(generics.ListCreateAPIView):
     serializer_class = OutcomesListSerializers
 
 
-class OutcomesRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Outcomes.objects.all()
-    serializer_class = OutcomesRetUpdDelSerializers
+# class OutcomesRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Outcomes.objects.all()
+#     serializer_class = OutcomesRetUpdDelSerializers
 
 
 class LanguageListView(generics.ListCreateAPIView):
@@ -114,29 +110,9 @@ class LanguageListView(generics.ListCreateAPIView):
     serializer_class = LanguageListSerializers
 
 
-class LanguageRetUpdDelView(generics.ListCreateAPIView):
-    queryset = Language.objects.all()
-    serializer_class = LanguageRetUpdDelSerializers
 
 
-class CourseOverviewListView(generics.ListCreateAPIView):
-    queryset = CourseOverview.objects.all()
-    serializer_class = CourseOverviewListSerializers
 
-
-class CourseOverviewRetUpdDelView(generics.ListCreateAPIView):
-    queryset = CourseOverview.objects.all()
-    serializer_class = CourseOverviewRetUpdDelSerializers
-
-
-class SEOMetakeywordsListView(generics.ListCreateAPIView):
-    queryset = SEOMetakeywords.objects.all()
-    serializer_class = SEOMetakeywordsListSerializers
-
-
-class SEOMetakeywordsRetUpdDelView(generics.ListCreateAPIView):
-    queryset = SEOMetakeywords.objects.all()
-    serializer_class = SEOMetakeywordsRetUpdDelSerializers
 
 
 class PackageTypeListView(generics.ListCreateAPIView):
@@ -144,55 +120,12 @@ class PackageTypeListView(generics.ListCreateAPIView):
     serializer_class = PackageTypeListSerializers
 
 
-class PackageTypeRetUpdDelView(generics.ListCreateAPIView):
-    queryset = PackageType.objects.all()
-    serializer_class = PackageTypeRetUpdDelSerializers
+# class PackageTypeRetUpdDelView(generics.ListCreateAPIView):
+#     queryset = PackageType.objects.all()
+#     serializer_class = PackageTypeRetUpdDelSerializers
 
 
 ###############################################
-
-
-class CountryListView(generics.ListCreateAPIView):
-    queryset = Country.objects.all()
-    serializer_class = CountryListSerializers
-
-class CountryInterestedListView(generics.ListCreateAPIView):
-    queryset = Country.objects.all()
-    serializer_class = CountryInterestedListSerializers
-
-class CountryRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Country.objects.all()
-    serializer_class = CountryRetUpdDelSerializers
-
-
-class StateListView(generics.ListCreateAPIView):
-    queryset = State.objects.all()
-    serializer_class = StateListSerializers
-
-
-class StateRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = State.objects.all()
-    serializer_class = StateRetUpdDelSerializers
-
-
-class CityListView(generics.ListCreateAPIView):
-    queryset = City.objects.all()
-    serializer_class = CityListSerializers
-
-
-class CityRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = City.objects.all()
-    serializer_class = CityRetUpdDelSerializers
-
-
-class SectionListView(generics.ListCreateAPIView):
-    queryset = Section.objects.all()
-    serializer_class = SectionListSerializers
-
-
-class SectionRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Section.objects.all()
-    serializer_class = SectionRetUpdDelSerializers
 
 
 """############################################"""
@@ -203,14 +136,7 @@ class batchListView(generics.ListCreateAPIView):
     serializer_class = batchListSerializers
 
 
-class batchRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = batch.objects.all()
-    serializer_class = batchListSerializers
 
-
-class QuestionTypeView(generics.ListCreateAPIView):
-    serializer_class = QuestionTypeSerializers
-    queryset = QuestionType.objects.all()
 
 
 class TestTypeViewset(ModelViewSet):
@@ -246,9 +172,6 @@ class CourseMaterialListView(generics.ListAPIView):
         count = queryset.count()
         return Response({'count': count, 'data': serializer.data})
     
-class CourseMaterialRetUpdDelView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CourseMaterial.objects.all()
-    serializer_class = CourseMaterialRetUpdDelSerializers
 
 
 class AdditionalResourceListAPIView(generics.ListAPIView):
@@ -257,33 +180,6 @@ class AdditionalResourceListAPIView(generics.ListAPIView):
     def get_queryset(self):
         course_id = self.kwargs['course_id']
         return AdditionalResource.objects.filter(course_id=course_id)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        count = queryset.count()
-        return Response({'count': count, 'data': serializer.data})
-
-
-class LessonAssignmentListAPIView(generics.ListAPIView):
-    serializer_class = LessonAssignmentSerializer
-
-    def get_queryset(self):
-        lesson_id = self.kwargs['lesson_id']
-        return LessonAssignment.objects.filter(lesson_id=lesson_id)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        count = queryset.count()
-        return Response({'count': count, 'data': serializer.data})
-
-class LessonAttachmentListAPIView(generics.ListAPIView):
-    serializer_class = LessonAttachmentSerializer
-
-    def get_queryset(self):
-        lesson_id = self.kwargs['lesson_id']
-        return LessonAttachment.objects.filter(lesson_id=lesson_id)
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
