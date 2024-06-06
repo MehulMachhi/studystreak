@@ -518,14 +518,3 @@ def confirm_user(request, uid, token):
     
     return HttpResponseRedirect(f"http://{get_current_site(request).domain}/login")
 
-class GetUserRole(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        return Response(get_user_role(request.user), 200)
-
-
-class GetUserView(generics.ListAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()

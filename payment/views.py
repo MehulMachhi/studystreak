@@ -30,7 +30,7 @@ class TransactionView(APIView):
  
 
 
-class ZoomAPiView(APIView):...
+# class ZoomAPiView(APIView):...
     # def post(self, request, format=None):
     #     client = zoomClient
     #     try:

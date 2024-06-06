@@ -219,33 +219,8 @@ class StudentSpeakingBlock(APIView):
         return Response({"Details":"Student Updated successfully."}, status=status.HTTP_201_CREATED)
 
 
-class FilterListeningListModuleView(generics.ListAPIView):
-    serializer_class = FilterListModuleSerializers
-
-    def get_queryset(self):
-        return module.objects.filter(Listening__isnull=False)
 
 
-class FilterReadingListModuleView(generics.ListAPIView):
-    serializer_class = FilterListModuleSerializers
-
-    def get_queryset(self):
-        # return module.objects.filter(Reading__isnull=False)
-        return module.objects.exclude(Reading=None)
-
-
-class FilterWritingListModuleView(generics.ListAPIView):
-    serializer_class = FilterListModuleSerializers
-
-    def get_queryset(self):
-        return module.objects.filter(Writing__isnull=False)
-
-
-class FilterSpeakingListModuleView(generics.ListAPIView):
-    serializer_class = FilterListModuleSerializers
-
-    def get_queryset(self):
-        return module.objects.filter(Speaking__isnull=False)
 
 
 
