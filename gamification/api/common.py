@@ -20,7 +20,7 @@ class __ModelMapper:
         """User `return_rep` to return the model's representation for the frontend"""
         if kwargs.get("return_rep"):
             for k, v in self.MODEL_MAPPER.items():
-                if model_rep == v[1].lower() or model_rep == k or model_rep == v[2]:
+                if model_rep.lower() == v[1].lower() or model_rep == k or model_rep == v[2]:
                     return v[-1]
 
         else:
