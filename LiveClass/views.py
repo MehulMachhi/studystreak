@@ -40,7 +40,6 @@ class LiveClassListView(APIView):
             'type': 2,  # 1 for instant meeting, 2 for scheduled meeting
             'password': 'YourMeetingPassword12345'
         })
-        print("meeting_list",meeting_list.json())
         return JsonResponse(data= meeting_list.json(), status=200)
         
         

@@ -2,10 +2,7 @@ from django.contrib.contenttypes.fields import (GenericForeignKey,
                                                 GenericRelation)
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-
-
-# Create your models here.
-
+from .api.common import model_mapper
 
 class Gamification(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='gamification')
@@ -18,7 +15,7 @@ class Gamification(models.Model):
 
     @property
     def model(self):
-        return f'{self.content_object.__class__.__name__}'
+        return model_mapper.get_model_for_rep(self.content_object.__class__.__name__, return_rep=True)
 
     @property
     def name(self):

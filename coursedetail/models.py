@@ -4,7 +4,6 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 
-from exam.models import Difficulty, Exam, ExamType
 from master.models import Section
 
 # class Lession_Quiz(models.Model):
@@ -67,9 +66,8 @@ class Lesson(models.Model):
         max_length=200, null=True, blank=True, default=None
     )
     active = models.BooleanField(default=False)
-    lesson_assignment = models.ManyToManyField(Exam, related_name="lesson_assignment", null=True, blank=True)
+    lesson_assignment = models.ManyToManyField('exam.Exam', related_name="lesson_assignment", null=True, blank=True)
     sequence = models.PositiveIntegerField(default=0) 
-    # lesson_quiz = models.ManyToManyField(Exam)
 
     def __str__(self):
         return self.Lesson_Title

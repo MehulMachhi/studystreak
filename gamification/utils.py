@@ -17,7 +17,6 @@ def publish_message(message:dict) -> bool:
         connection.publish("events", payload)
         return True
     except Exception as e:
-        print(e)
         return False
 
 def check_practice_sets(instance:Studentanswer,set_type):

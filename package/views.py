@@ -391,7 +391,6 @@ class PackageCreateView(generics.CreateAPIView):
 
     queryset = Package.objects.all()
     serializer_class = PackageCreateSerializers
-    print(serializer_class)
 
 class EnrollPackageStudentView(APIView):
     permission_classes = [IsAuthenticated]
@@ -400,7 +399,6 @@ class EnrollPackageStudentView(APIView):
         serializer = EnrollmentPackageSerializer(data=request.data)
         if serializer.is_valid():
             user = self.request.user
-            print(user)
 
             try:
                 student = Student.objects.get(user=user)
@@ -412,7 +410,6 @@ class EnrollPackageStudentView(APIView):
             
             course_delivery = self.request.data.get("course_delivery")
             if course_delivery == "SELF-STUDY":
-                print("yes")
                 return Response(
                     {"detail": "Self-study courses can be enrolled through this API."},
                     status=status.HTTP_200_OK,

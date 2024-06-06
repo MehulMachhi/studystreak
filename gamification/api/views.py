@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from .common import ModelMapper
+from .common import model_mapper
 from rest_framework.viewsets import ViewSet
 from coursedetail.models import Lesson
 from coursedetail.serializers import LessonListSerializers
@@ -53,14 +53,14 @@ class GamificationViewSet(ViewSet):
 
     @action(detail=False, methods=['get'], url_path='models')
     def models(self, request):
-        return Response(ModelMapper().get_model_dict(), 200)
+        return Response(model_mapper.get_model_dict(), 200)
 
     @action(detail=False, methods=['get'], url_path='objects')
     def objects(self, request):
         model = request.query_params.get('model')
         if not model:
             return Response({}, 204)
-        model_class = ModelMapper().get_model_for_rep(model)
+        model_class = model_mapper.get_model_for_rep(model)
         if model_class:
             return Response([{'object_id': i.id, 'rep_name': i.__str__()} for i in model_class.objects.all()], 200)
         else:
@@ -103,7 +103,7 @@ class PointHistoryViewSet(ViewSet):
         if not model or not object_id:
             return Response({"error": 'model or object_id cannot be blank'}, 400)
 
-        model_class = ModelMapper().get_model_for_rep(model)
+        model_class = model_mapper.get_model_for_rep(model)
 
         if model_class:
             content_type = ContentType.objects.get_for_model(model_class)
