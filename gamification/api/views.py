@@ -78,6 +78,7 @@ class PointHistoryViewSet(ViewSet):
             .order_by("-created_at")
         )
         for i in queryset:
+            print(i)
             i['model'] = model_mapper.get_model_for_rep(i['model'],return_rep=True)
         return Response(list(queryset), 200)
 
