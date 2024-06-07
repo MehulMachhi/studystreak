@@ -1,8 +1,5 @@
 from django.apps import apps
 class __ModelMapper:
-    def __init__(self) -> None:
-        print('loading ModelMapper')
-
     MODEL_MAPPER: dict = {
         "flashcard": ('gamification', 'FlashCard', 'Flash Card'),
         "lesson": ('coursedetail', 'Lesson', 'Lesson'),
